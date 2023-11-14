@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5nv2jrhdp0yc"]
+
+[ext_resource type="PackedScene" uid="uid://bdg6hiohjx720" path="res://variable.tscn" id="1_t0nqu"]
+
+[node name="Test" type="Node2D"]
+
+[node name="Variable" parent="." instance=ExtResource("1_t0nqu")]
+variable_name = "a"
