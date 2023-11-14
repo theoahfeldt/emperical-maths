@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://c5nv2jrhdp0yc"]
+[gd_scene load_steps=5 format=3 uid="uid://c5nv2jrhdp0yc"]
 
 [ext_resource type="PackedScene" uid="uid://ca5nxd4726ve2" path="res://sum.tscn" id="1_iew4d"]
 [ext_resource type="Script" path="res://test.gd" id="1_kljmg"]
 [ext_resource type="PackedScene" uid="uid://bdg6hiohjx720" path="res://variable.tscn" id="1_t0nqu"]
+[ext_resource type="PackedScene" uid="uid://tjrwnnixkfgc" path="res://expression_selector.tscn" id="4_mfjwm"]
 
 [node name="Test" type="Node2D"]
 script = ExtResource("1_kljmg")
@@ -23,3 +24,6 @@ variable_name = "b"
 
 [node name="VariableC" parent="Sum/Sum" instance=ExtResource("1_t0nqu")]
 variable_name = "c"
+
+[node name="ExpressionSelector" parent="." node_paths=PackedStringArray("selected_expression") instance=ExtResource("4_mfjwm")]
+selected_expression = NodePath("../Sum")
