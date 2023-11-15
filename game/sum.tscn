@@ -8,9 +8,15 @@ script = ExtResource("1_ygf5j")
 
 [node name="Sign" parent="." instance=ExtResource("2_ia6g6")]
 text = "+"
+deep_color = null
+shallow_color = null
 
 [node name="LeftParenthesis" parent="." instance=ExtResource("2_ia6g6")]
 text = "("
+deep_color = null
+shallow_color = null
 
 [node name="RightParenthesis" parent="." instance=ExtResource("2_ia6g6")]
 text = ")"
+deep_color = null
+shallow_color = null

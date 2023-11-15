@@ -14,6 +14,10 @@ b = NodePath("Sum")
 
 [node name="VariableA" parent="Sum" instance=ExtResource("1_t0nqu")]
 variable_name = "a"
+default_color = null
+selected_color = null
+deep_color = null
+shallow_color = null
 
 [node name="Sum" parent="Sum" node_paths=PackedStringArray("a", "b") instance=ExtResource("1_iew4d")]
 a = NodePath("VariableB")
@@ -21,9 +25,17 @@ b = NodePath("VariableC")
 
 [node name="VariableB" parent="Sum/Sum" instance=ExtResource("1_t0nqu")]
 variable_name = "b"
+default_color = null
+selected_color = null
+deep_color = null
+shallow_color = null
 
 [node name="VariableC" parent="Sum/Sum" instance=ExtResource("1_t0nqu")]
 variable_name = "c"
+default_color = null
+selected_color = null
+deep_color = null
+shallow_color = null
 
 [node name="ExpressionSelector" parent="." node_paths=PackedStringArray("selected_expression") instance=ExtResource("4_mfjwm")]
 selected_expression = NodePath("../Sum")
