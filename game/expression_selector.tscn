@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://tjrwnnixkfgc"]
-
-[ext_resource type="Script" path="res://expression_selector.gd" id="1_jpry7"]
-
-[node name="ExpressionSelector" type="Node2D"]
-script = ExtResource("1_jpry7")

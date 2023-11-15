@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dh0dfwhx8toxd"]
-
-[ext_resource type="Script" path="res://algebraic_expression.gd" id="1_vblqq"]
-
-[node name="AlgebraicExpression" type="Node2D"]
-script = ExtResource("1_vblqq")

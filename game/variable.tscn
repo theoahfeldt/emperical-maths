@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://bdg6hiohjx720"]
-
-[ext_resource type="Script" path="res://variable.gd" id="1_cq0kt"]
-[ext_resource type="PackedScene" uid="uid://dy34w7fvnx6ba" path="res://glyph.tscn" id="2_o8h12"]
-
-[node name="Variable" type="Node2D"]
-script = ExtResource("1_cq0kt")
-
-[node name="Glyph" parent="." instance=ExtResource("2_o8h12")]

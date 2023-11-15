@@ -1,7 +1,7 @@
 extends Node2D
 
 
-const CommutativitySum = preload("res://commutativity_sum.gd")
+const CommutativitySum = preload("res://algebra/rules/commutativity_sum.gd")
 
 
 var selected_stack: Array

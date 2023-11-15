@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://c5nv2jrhdp0yc"]
 
-[ext_resource type="PackedScene" uid="uid://ca5nxd4726ve2" path="res://sum.tscn" id="1_iew4d"]
+[ext_resource type="PackedScene" uid="uid://ca5nxd4726ve2" path="res://algebra/expressions/sum.tscn" id="1_iew4d"]
 [ext_resource type="Script" path="res://test.gd" id="1_kljmg"]
-[ext_resource type="PackedScene" uid="uid://bdg6hiohjx720" path="res://variable.tscn" id="1_t0nqu"]
-[ext_resource type="PackedScene" uid="uid://tjrwnnixkfgc" path="res://expression_selector.tscn" id="4_mfjwm"]
+[ext_resource type="PackedScene" uid="uid://bdg6hiohjx720" path="res://algebra/expressions/variable.tscn" id="1_t0nqu"]
+[ext_resource type="PackedScene" uid="uid://tjrwnnixkfgc" path="res://algebra/expressions/expression_selector.tscn" id="4_mfjwm"]
 
 [node name="Test" type="Node2D"]
 script = ExtResource("1_kljmg")
