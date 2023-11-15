@@ -33,6 +33,10 @@ func set_color_by_depth(depth: int) -> void:
 		component.set_color_by_depth(depth + 1)
 
 
+func update() -> void:
+	set_term_positions()
+
+
 func set_term_positions() -> void:
 	var width = 0
 	for component in _get_components():

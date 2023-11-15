@@ -1,6 +1,9 @@
 extends Node2D
 
 
+const CommutativitySum = preload("res://commutativity_sum.gd")
+
+
 var selected_stack: Array
 @export var selected_expression: AlgebraicExpression
 
@@ -34,6 +37,12 @@ func select_right() -> void:
 		select(selected_stack.back().b)
 
 
+func apply_rule(rule: AlgebraicRule) -> void:
+	if rule.applicable(selected_expression):
+		rule.apply(selected_expression)
+		selected_expression.update()
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -49,3 +58,5 @@ func _process(delta: float) -> void:
 		select_left()
 	if Input.is_action_just_pressed("expression_right"):
 		select_right()
+	if Input.is_action_just_pressed("apply_rule"):
+		apply_rule(CommutativitySum.new())
