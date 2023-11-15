@@ -6,7 +6,7 @@ class_name Sum
 @export var b: AlgebraicExpression
 
 
-func get_components():
+func _get_components() -> Array:
 	return [
 		$LeftParenthesis,
 		a,
@@ -18,24 +18,24 @@ func get_components():
 
 func get_width() -> int:
 	var width = 0
-	for component in get_components():
+	for component in _get_components():
 		width += component.get_width()
 	return width
 
 
-	for component in get_components():
 func set_color(color: Color) -> void:
+	for component in _get_components():
 		component.set_color(color)
 
 
-	for component in get_components():
 func set_color_by_depth(depth: int) -> void:
+	for component in _get_components():
 		component.set_color_by_depth(depth + 1)
 
 
 func set_term_positions() -> void:
 	var width = 0
-	for component in get_components():
+	for component in _get_components():
 		component.position = Vector2(width, 0)
 		width += component.get_width()
 
