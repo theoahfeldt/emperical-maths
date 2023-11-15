@@ -8,19 +8,19 @@ const margin: int = 1
 @export var selected_color: Color = Color.AQUA
 
 
-func selected():
+func selected() -> void:
 	set_color(selected_color)
 
 
-func deselected():
+func deselected() -> void:
 	set_color(default_color)
 
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(delta) -> void:
 	pass

@@ -7,29 +7,29 @@ var selected_stack: Array
 
 # Add signals for when an expression is selected and deselected
 # React to signals in AlgebraicExpression
-func select(expression: AlgebraicExpression):
+func select(expression: AlgebraicExpression) -> void:
 	selected_expression.deselected()
 	selected_expression = expression
 	expression.selected()
 
 
-func select_inner():
+func select_inner() -> void:
 	if selected_expression is Sum:
 		selected_stack.append(selected_expression)
 		select(selected_expression.a)
 
 
-func select_outer():
+func select_outer() -> void:
 	if selected_stack.size() > 0:
 		select(selected_stack.pop_back())
 
 
-func select_left():
+func select_left() -> void:
 	if selected_stack.size() > 0:
 		select(selected_stack.back().a)
 
 
-func select_right():
+func select_right() -> void:
 	if selected_stack.size() > 0:
 		select(selected_stack.back().b)
 
