@@ -1,19 +1,13 @@
-extends AlgebraicExpression
-class_name Sum
+class_name GraphicalSum
+extends GraphicalExpression
 
 
-@export var a: AlgebraicExpression
-@export var b: AlgebraicExpression
+var left_term: GraphicalExpression
+var right_term: GraphicalExpression
 
 
-func _get_components() -> Array:
-	return [
-		$LeftParenthesis,
-		a,
-		$Sign,
-		b,
-		$RightParenthesis,
-	]
+func _ready() -> void:
+	set_term_positions()
 
 
 func get_width() -> int:
@@ -33,10 +27,6 @@ func set_color_by_depth(depth: int) -> void:
 		component.set_color_by_depth(depth + 1)
 
 
-func update() -> void:
-	set_term_positions()
-
-
 func set_term_positions() -> void:
 	var width = 0
 	for component in _get_components():
@@ -44,12 +34,11 @@ func set_term_positions() -> void:
 		width += component.get_width()
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	set_term_positions()
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta) -> void:
-	pass
+func _get_components() -> Array:
+	return [
+		$LeftParenthesis,
+		left_term,
+		$Sign,
+		right_term,
+		$RightParenthesis,
+	]

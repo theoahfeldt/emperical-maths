@@ -1,41 +1,34 @@
 [gd_scene load_steps=5 format=3 uid="uid://c5nv2jrhdp0yc"]
 
-[ext_resource type="PackedScene" uid="uid://ca5nxd4726ve2" path="res://algebra/expressions/sum.tscn" id="1_iew4d"]
 [ext_resource type="Script" path="res://test.gd" id="1_kljmg"]
-[ext_resource type="PackedScene" uid="uid://bdg6hiohjx720" path="res://algebra/expressions/variable.tscn" id="1_t0nqu"]
-[ext_resource type="PackedScene" uid="uid://tjrwnnixkfgc" path="res://algebra/expressions/expression_selector.tscn" id="4_mfjwm"]
+[ext_resource type="Script" path="res://algebra/logic/expressions/algebraic_sum.gd" id="2_v0oty"]
+[ext_resource type="Script" path="res://algebra/logic/expressions/algebraic_variable.gd" id="3_hamqr"]
+[ext_resource type="PackedScene" uid="uid://bt45ap1aaxjfr" path="res://expression.tscn" id="4_rqnef"]
 
 [node name="Test" type="Node2D"]
 script = ExtResource("1_kljmg")
 
-[node name="Sum" parent="." node_paths=PackedStringArray("a", "b") instance=ExtResource("1_iew4d")]
-a = NodePath("VariableA")
-b = NodePath("Sum")
+[node name="AlgebraicSum" type="Node" parent="." node_paths=PackedStringArray("left_term", "right_term")]
+script = ExtResource("2_v0oty")
+left_term = NodePath("AlgebraicVariable")
+right_term = NodePath("AlgebraicSum")
 
-[node name="VariableA" parent="Sum" instance=ExtResource("1_t0nqu")]
+[node name="AlgebraicVariable" type="Node" parent="AlgebraicSum"]
+script = ExtResource("3_hamqr")
 variable_name = "a"
-default_color = null
-selected_color = null
-deep_color = null
-shallow_color = null
 
-[node name="Sum" parent="Sum" node_paths=PackedStringArray("a", "b") instance=ExtResource("1_iew4d")]
-a = NodePath("VariableB")
-b = NodePath("VariableC")
+[node name="AlgebraicSum" type="Node" parent="AlgebraicSum" node_paths=PackedStringArray("left_term", "right_term")]
+script = ExtResource("2_v0oty")
+left_term = NodePath("AlgebraicVariable")
+right_term = NodePath("AlgebraicVariable2")
 
-[node name="VariableB" parent="Sum/Sum" instance=ExtResource("1_t0nqu")]
+[node name="AlgebraicVariable" type="Node" parent="AlgebraicSum/AlgebraicSum"]
+script = ExtResource("3_hamqr")
 variable_name = "b"
-default_color = null
-selected_color = null
-deep_color = null
-shallow_color = null
 
-[node name="VariableC" parent="Sum/Sum" instance=ExtResource("1_t0nqu")]
+[node name="AlgebraicVariable2" type="Node" parent="AlgebraicSum/AlgebraicSum"]
+script = ExtResource("3_hamqr")
 variable_name = "c"
-default_color = null
-selected_color = null
-deep_color = null
-shallow_color = null
 
-[node name="ExpressionSelector" parent="." node_paths=PackedStringArray("selected_expression") instance=ExtResource("4_mfjwm")]
-selected_expression = NodePath("../Sum")
+[node name="Expression" parent="." node_paths=PackedStringArray("algebraic_expression") instance=ExtResource("4_rqnef")]
+algebraic_expression = NodePath("../AlgebraicSum")

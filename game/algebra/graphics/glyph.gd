@@ -30,12 +30,5 @@ func set_color_by_depth(depth: int) -> void:
 	set_color(color_by_depth(depth))
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	set_text(text)
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta) -> void:
-	pass

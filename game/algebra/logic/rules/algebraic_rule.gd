@@ -6,6 +6,6 @@ func applicable(expression: AlgebraicExpression) -> bool:
 	return false
 
 
-func apply(expression: AlgebraicExpression) -> void:
+func apply(expression) -> AlgebraicExpression:
 	push_error("Function not implemented")
-	return
+	return AlgebraicExpression.new()

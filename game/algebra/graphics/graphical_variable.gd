@@ -1,7 +1,13 @@
-extends AlgebraicExpression
+class_name GraphicalVariable
+extends GraphicalExpression
 
 
 @export var variable_name: String
+
+
+func _ready() -> void:
+	set_label_position()
+	set_label_text()
 
 
 func get_width() -> int:
@@ -22,14 +28,3 @@ func set_label_position() -> void:
 
 func set_label_text() -> void:
 	$Glyph.set_text(variable_name)
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	set_label_position()
-	set_label_text()
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta) -> void:
-	pass

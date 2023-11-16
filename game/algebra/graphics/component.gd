@@ -1,6 +1,6 @@
-# Abstract class
-extends Node2D
 class_name Component
+extends Node2D
+## Abstract class
 
 
 @export var deep_color: Color = Color.INDIGO
@@ -25,13 +25,3 @@ func color_by_depth(depth: int) -> Color:
 func set_color_by_depth(depth: int) -> void:
 	push_error("Function not implemented")
 	return
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta) -> void:
-	pass
