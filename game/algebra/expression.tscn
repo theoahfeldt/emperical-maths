@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bt45ap1aaxjfr"]
+
+[ext_resource type="Script" path="res://algebra/expression.gd" id="1_eqjtc"]
+[ext_resource type="Script" path="res://algebra/expression_controller.gd" id="2_6s60j"]
+
+[node name="Expression" type="Node2D"]
+script = ExtResource("1_eqjtc")
+
+[node name="ExpressionController" type="Node" parent="."]
+script = ExtResource("2_6s60j")
+
+[connection signal="expression_updated" from="ExpressionController" to="." method="_on_expression_controller_expression_updated"]
+[connection signal="selection_updated" from="ExpressionController" to="." method="_on_expression_controller_selection_updated"]

@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://test.gd" id="1_kljmg"]
 [ext_resource type="Script" path="res://algebra/logic/expressions/algebraic_sum.gd" id="2_v0oty"]
 [ext_resource type="Script" path="res://algebra/logic/expressions/algebraic_variable.gd" id="3_hamqr"]
-[ext_resource type="PackedScene" uid="uid://bt45ap1aaxjfr" path="res://expression.tscn" id="4_rqnef"]
+[ext_resource type="PackedScene" uid="uid://bt45ap1aaxjfr" path="res://algebra/expression.tscn" id="4_rqnef"]
 
 [node name="Test" type="Node2D"]
 script = ExtResource("1_kljmg")
