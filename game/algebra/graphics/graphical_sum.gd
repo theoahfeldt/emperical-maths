@@ -11,27 +11,21 @@ func _ready() -> void:
 
 
 func get_width() -> int:
-	var width = 0
-	for component in _get_components():
-		width += component.get_width()
-	return width
+	return _get_components().reduce(
+			func(w, c): return w + c.get_width(), 0)
 
 
 func set_color(color: Color) -> void:
-	for component in _get_components():
-		component.set_color(color)
+	_get_components().map(func(c): c.set_color(color))
 
 
 func set_color_by_depth(depth: int) -> void:
-	for component in _get_components():
-		component.set_color_by_depth(depth + 1)
+	_get_components().map(func(c): c.set_color_by_depth(depth + 1))
 
 
 func set_term_positions() -> void:
-	var width = 0
-	for component in _get_components():
-		component.position = Vector2(width, 0)
-		width += component.get_width()
+	_get_components().reduce(
+			func(x, c): c.position = Vector2(x, 0); return x + c.get_width(), 0)
 
 
 func _get_components() -> Array:
