@@ -2,7 +2,7 @@ class_name GraphicalVariable
 extends GraphicalExpression
 
 
-@export var variable_name: String
+var variable_name: String
 
 
 func _ready() -> void:
