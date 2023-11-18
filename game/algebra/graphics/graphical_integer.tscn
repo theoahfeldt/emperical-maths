@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfrenaxmelava"]
+
+[ext_resource type="Script" path="res://algebra/graphics/graphical_integer.gd" id="1_f37eq"]
+[ext_resource type="PackedScene" uid="uid://dy34w7fvnx6ba" path="res://algebra/graphics/glyph.tscn" id="2_xiyni"]
+
+[node name="GraphicalInteger" type="Node2D"]
+script = ExtResource("1_f37eq")
+
+[node name="Glyph" parent="." instance=ExtResource("2_xiyni")]

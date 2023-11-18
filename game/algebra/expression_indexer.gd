@@ -125,6 +125,8 @@ static func _move_index_in_position(
 static func _num_children(expression: AlgebraicExpression) -> int:
 	if expression is AlgebraicVariable:
 		return 0
+	if expression is AlgebraicInteger:
+		return 0
 	if expression is AlgebraicSum:
 		return 2
 	push_error("Method not implemented for: ", expression.get_class())

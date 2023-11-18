@@ -2,12 +2,19 @@ extends Node
 
 
 const variable_scene := preload("res://algebra/graphics/graphical_variable.tscn")
+const integer_scene := preload("res://algebra/graphics/graphical_integer.tscn")
 const sum_scene := preload("res://algebra/graphics/graphical_sum.tscn")
 
 
 static func convert_variable(variable: AlgebraicVariable) -> GraphicalExpression:
 	var new: GraphicalVariable = variable_scene.instantiate()
 	new.variable_name = variable.variable_name
+	return new
+
+
+static func convert_integer(integer: AlgebraicInteger) -> GraphicalExpression:
+	var new: GraphicalInteger = integer_scene.instantiate()
+	new.value = integer.value
 	return new
 
 
@@ -21,6 +28,8 @@ static func algebraic_to_graphical(
 		expression: AlgebraicExpression) -> GraphicalExpression:
 	if expression is AlgebraicVariable:
 		return convert_variable(expression)
+	elif expression is AlgebraicInteger:
+		return convert_integer(expression)
 	elif expression is AlgebraicSum:
 		return convert_sum(expression)
 	else:
@@ -35,6 +44,13 @@ static func convert_variable_menu(
 	return convert_variable(variable)
 
 
+static func convert_integer_menu(
+		integer: AlgebraicInteger, rules: Array) -> GraphicalExpression:
+	if integer.is_selected:
+		return ExpressionsMenu.from_expression(integer, rules)
+	return convert_integer(integer)
+
+
 static func convert_sum_menu(sum: AlgebraicSum, rules: Array) -> GraphicalExpression:
 	if sum.is_selected:
 		return ExpressionsMenu.from_expression(sum, rules)
@@ -47,6 +63,8 @@ static func algebraic_to_graphical_menu(
 		expression: AlgebraicExpression, rules: Array) -> GraphicalExpression:
 	if expression is AlgebraicVariable:
 		return convert_variable_menu(expression, rules)
+	elif expression is AlgebraicInteger:
+		return convert_integer_menu(expression, rules)
 	elif expression is AlgebraicSum:
 		return convert_sum_menu(expression, rules)
 	else:
