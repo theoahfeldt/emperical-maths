@@ -1,71 +1,85 @@
-class_name ExpressionController
-extends Node
+extends Node2D
 
 
-signal expression_updated(selected_expression_index)
-signal selection_updated(selected_expression_index)
+const ExpressionIndexer := preload("res://algebra/expression_indexer.gd")
+const GraphicalConversion := preload("res://algebra/graphics/graphical_conversion.gd")
+const Rules := preload("res://algebra/logic/rules/rules.gd")
 
-const ExpressionIndexer = preload("res://algebra/expression_indexer.gd")
-const Rules = preload("res://algebra/logic/rules/rules.gd")
+@export var algebraic_expression: AlgebraicExpression
 
+var graphical_expression: GraphicalExpression
+var expression_is_selected := false
 var rules = Rules.rules()
-var selected_rule_index: int = 0
-var base_expression: AlgebraicExpression
-var selected_expression_index := []
 
 
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("expression_in"):
-		select_inner()
-	if Input.is_action_just_pressed("expression_out"):
-		select_outer()
-	if Input.is_action_just_pressed("expression_left"):
-		select_left()
-	if Input.is_action_just_pressed("expression_right"):
-		select_right()
-	if Input.is_action_just_pressed("apply_rule"):
-		apply_selected_rule()
-	if Input.is_action_just_pressed("cycle_rule"):
-		cycle_rule()
+func _ready() -> void:
+	$ExpressionSelector.base_expression = algebraic_expression
+	_set_graphics()
+	_update_mark([])
 
 
-func selected_expression() -> AlgebraicExpression:
-	return ExpressionIndexer.algebraic_subexpression(
-			base_expression, selected_expression_index)
+func _process(_delta: float) -> void:
+	if expression_is_selected:
+		$ExpressionsMenuSelector.process_input()
+	else:
+		$ExpressionSelector.process_input()
 
 
-func select_inner() -> void:
-	ExpressionIndexer.move_index_in(base_expression, selected_expression_index)
-	selection_updated.emit(selected_expression_index)
+func _set_graphics() -> void:
+	graphical_expression = GraphicalConversion.algebraic_to_graphical_menu(
+			algebraic_expression, rules)
+	graphical_expression.initialize()
+	add_child(graphical_expression)
 
 
-func select_outer() -> void:
-	ExpressionIndexer.move_index_out(selected_expression_index)
-	selection_updated.emit(selected_expression_index)
+func _update_mark(mark: Array) -> void:
+	graphical_expression.initialize()
+	var marked_expression: GraphicalExpression = ExpressionIndexer.graphical_subexpression(
+			graphical_expression, mark)
+	marked_expression.mark()
 
 
-func select_left() -> void:
-	ExpressionIndexer.move_index_left(
-			base_expression, selected_expression_index)
-	selection_updated.emit(selected_expression_index)
+func _update_graphics() -> void:
+	graphical_expression.queue_free()
+	_set_graphics()
 
 
-func select_right() -> void:
-	ExpressionIndexer.move_index_right(
-			base_expression, selected_expression_index)
-	selection_updated.emit(selected_expression_index)
+func _select_expression(mark: Array) -> void:
+	var selected_expression: AlgebraicExpression = ExpressionIndexer.algebraic_subexpression(
+			algebraic_expression, mark)
+	selected_expression.is_selected = true
+	_update_graphics()
+	var menu = ExpressionIndexer.graphical_subexpression(
+			graphical_expression, mark)
+	$ExpressionsMenuSelector.initialize(menu, mark)
+	expression_is_selected = true
 
 
-func apply_rule(rule: AlgebraicRule) -> void:
-	if rule.applicable(selected_expression()):
-		var new = rule.apply(selected_expression())
-		selected_expression().replace(new)
-		expression_updated.emit(selected_expression_index)
+func _replace_base_expression(new: AlgebraicExpression) -> void:
+	remove_child(algebraic_expression)
+	algebraic_expression.queue_free()
+	add_child(new)
+	algebraic_expression = new
+	$ExpressionSelector.base_expression = algebraic_expression
 
 
-func apply_selected_rule() -> void:
-	apply_rule(rules[selected_rule_index])
+func _replace_subexpression(mark: Array, new: AlgebraicExpression) -> void:
+	if mark.is_empty():
+		_replace_base_expression(new)
+	else:
+		ExpressionIndexer.replace_algebraic_subexpression(algebraic_expression, new, mark)
 
 
-func cycle_rule() -> void:
-	selected_rule_index = (selected_rule_index + 1) % rules.size()
+func _on_expression_selector_mark_updated(mark) -> void:
+	_update_mark(mark)
+
+
+func _on_expression_selector_selected(mark) -> void:
+	_select_expression(mark)
+
+
+func _on_expressions_menu_selector_selected(expression, mark) -> void:
+	_replace_subexpression(mark, expression)
+	_update_graphics()
+	_update_mark(mark)
+	expression_is_selected = false

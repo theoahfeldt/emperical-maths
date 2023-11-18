@@ -11,5 +11,11 @@ static func create(name: String) -> AlgebraicVariable:
 	return variable
 
 
-func _to_string() -> String:
+func copy() -> AlgebraicExpression:
+	var new = AlgebraicVariable.new()
+	new.variable_name = variable_name
+	return new
+
+
+func pretty_string() -> String:
 	return variable_name

@@ -8,15 +8,38 @@ extends AlgebraicExpression
 
 static func create(a: AlgebraicExpression, b: AlgebraicExpression) -> AlgebraicSum:
 	var sum = AlgebraicSum.new()
-	sum.left_term = a
-	sum.right_term = b
+	sum.initialize(a, b)
 	return sum
 
 
-func replace(other: AlgebraicSum) -> void:
-	left_term = other.left_term
-	right_term = other.right_term
+func initialize(a: AlgebraicExpression, b: AlgebraicExpression) -> void:
+	add_child(a)
+	add_child(b)
+	left_term = a
+	right_term = b
 
 
-func _to_string() -> String:
+func copy() -> AlgebraicExpression:
+	var new = AlgebraicSum.new()
+	var a = left_term.copy()
+	var b = right_term.copy()
+	new.initialize(a, b)
+	return new
+
+
+func replace_left_term(new: AlgebraicExpression) -> void:
+	remove_child(left_term)
+	left_term.queue_free()
+	add_child(new)
+	left_term = new
+
+
+func replace_right_term(new: AlgebraicExpression) -> void:
+	remove_child(right_term)
+	right_term.queue_free()
+	add_child(new)
+	right_term = new
+
+
+func pretty_string() -> String:
 	return "(%s + %s)" % [str(left_term), str(right_term)]

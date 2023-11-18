@@ -8,7 +8,7 @@ func applicable(expression: AlgebraicExpression) -> bool:
 
 
 func apply(sum: AlgebraicSum) -> AlgebraicExpression:
-	var a = sum.left_term.left_term
-	var b = sum.left_term.right_term
-	var c = sum.right_term
+	var a = sum.left_term.left_term.copy()
+	var b = sum.left_term.right_term.copy()
+	var c = sum.right_term.copy()
 	return AlgebraicSum.create(a, AlgebraicSum.create(b, c))

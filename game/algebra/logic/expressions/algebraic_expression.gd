@@ -2,13 +2,14 @@ extends Node
 class_name AlgebraicExpression
 
 
-var is_selected: bool = false
+var is_selected := false
 
 
-func replace(other) -> void:
-	push_error("Function not implemented")
+func copy() -> AlgebraicExpression:
+	push_error("Method not implemented.")
+	return AlgebraicExpression.new()
 
 
-func to_graphical() -> GraphicalExpression:
-	push_error("Function not implemented")
-	return GraphicalExpression.new()
+func pretty_string() -> String:
+	push_error("Method not implemented.")
+	return ""

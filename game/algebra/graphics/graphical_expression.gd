@@ -3,11 +3,11 @@ class_name GraphicalExpression
 
 
 @export var default_color := Color.WHITE
-@export var selected_color := Color.AQUA
+@export var marked_color := Color.AQUA
 
 
-func select() -> void:
-	set_color(selected_color)
+func mark() -> void:
+	set_color(marked_color)
 
 
 func initialize() -> void:

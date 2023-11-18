@@ -3,32 +3,32 @@
 [ext_resource type="Script" path="res://test.gd" id="1_kljmg"]
 [ext_resource type="Script" path="res://algebra/logic/expressions/algebraic_sum.gd" id="2_v0oty"]
 [ext_resource type="Script" path="res://algebra/logic/expressions/algebraic_variable.gd" id="3_hamqr"]
-[ext_resource type="PackedScene" uid="uid://bt45ap1aaxjfr" path="res://algebra/expression.tscn" id="4_rqnef"]
+[ext_resource type="PackedScene" uid="uid://bt45ap1aaxjfr" path="res://algebra/expression_controller.tscn" id="4_rqnef"]
 
 [node name="Test" type="Node2D"]
 script = ExtResource("1_kljmg")
 
-[node name="AlgebraicSum" type="Node" parent="." node_paths=PackedStringArray("left_term", "right_term")]
+[node name="ExpressionController" parent="." node_paths=PackedStringArray("algebraic_expression") instance=ExtResource("4_rqnef")]
+algebraic_expression = NodePath("AlgebraicSum")
+
+[node name="AlgebraicSum" type="Node" parent="ExpressionController" node_paths=PackedStringArray("left_term", "right_term")]
 script = ExtResource("2_v0oty")
 left_term = NodePath("AlgebraicVariable")
 right_term = NodePath("AlgebraicSum")
 
-[node name="AlgebraicVariable" type="Node" parent="AlgebraicSum"]
+[node name="AlgebraicVariable" type="Node" parent="ExpressionController/AlgebraicSum"]
 script = ExtResource("3_hamqr")
 variable_name = "a"
 
-[node name="AlgebraicSum" type="Node" parent="AlgebraicSum" node_paths=PackedStringArray("left_term", "right_term")]
+[node name="AlgebraicSum" type="Node" parent="ExpressionController/AlgebraicSum" node_paths=PackedStringArray("left_term", "right_term")]
 script = ExtResource("2_v0oty")
 left_term = NodePath("AlgebraicVariable")
 right_term = NodePath("AlgebraicVariable2")
 
-[node name="AlgebraicVariable" type="Node" parent="AlgebraicSum/AlgebraicSum"]
+[node name="AlgebraicVariable" type="Node" parent="ExpressionController/AlgebraicSum/AlgebraicSum"]
 script = ExtResource("3_hamqr")
 variable_name = "b"
 
-[node name="AlgebraicVariable2" type="Node" parent="AlgebraicSum/AlgebraicSum"]
+[node name="AlgebraicVariable2" type="Node" parent="ExpressionController/AlgebraicSum/AlgebraicSum"]
 script = ExtResource("3_hamqr")
 variable_name = "c"
-
-[node name="Expression" parent="." node_paths=PackedStringArray("algebraic_expression") instance=ExtResource("4_rqnef")]
-algebraic_expression = NodePath("../AlgebraicSum")

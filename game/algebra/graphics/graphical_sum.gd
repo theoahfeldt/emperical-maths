@@ -2,8 +2,8 @@ class_name GraphicalSum
 extends GraphicalExpression
 
 
-var left_term: GraphicalExpression
-var right_term: GraphicalExpression
+var left_term: Component
+var right_term: Component
 
 
 func _ready() -> void:

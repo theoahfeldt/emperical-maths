@@ -7,4 +7,4 @@ func applicable(expression: AlgebraicExpression) -> bool:
 
 
 func apply(sum: AlgebraicSum) -> AlgebraicExpression:
-	return AlgebraicSum.create(sum.right_term, sum.left_term)
+	return AlgebraicSum.create(sum.right_term.copy(), sum.left_term.copy())
