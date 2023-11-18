@@ -42,4 +42,4 @@ func replace_right_term(new: AlgebraicExpression) -> void:
 
 
 func pretty_string() -> String:
-	return "(%s + %s)" % [str(left_term), str(right_term)]
+	return "(%s + %s)" % [left_term.pretty_string(), right_term.pretty_string()]
