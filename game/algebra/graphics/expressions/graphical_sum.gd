@@ -7,7 +7,7 @@ var right_term: Component
 
 
 func _ready() -> void:
-	set_term_positions()
+	set_components_positions()
 
 
 func get_width() -> int:
@@ -23,7 +23,7 @@ func set_color_by_depth(depth: int) -> void:
 	_get_components().map(func(c): c.set_color_by_depth(depth + 1))
 
 
-func set_term_positions() -> void:
+func set_components_positions() -> void:
 	_get_components().reduce(
 			func(x, c): c.position = Vector2(x, 0); return x + c.get_width(), 0)
 
