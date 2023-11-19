@@ -19,6 +19,13 @@ func initialize(a: AlgebraicExpression, b: AlgebraicExpression) -> void:
 	right_term = b
 
 
+func identical_to(other: AlgebraicExpression) -> bool:
+	if other is AlgebraicSum:
+		return (left_term.identical_to(other.left_term)
+				and right_term.identical_to(other.right_term))
+	return false
+
+
 func copy() -> AlgebraicExpression:
 	var new = AlgebraicSum.new()
 	var a = left_term.copy()

@@ -11,6 +11,12 @@ static func create(name: String) -> AlgebraicVariable:
 	return variable
 
 
+func identical_to(other: AlgebraicExpression) -> bool:
+	if other is AlgebraicVariable:
+		return variable_name == other.variable_name
+	return false
+
+
 func copy() -> AlgebraicExpression:
 	var new = AlgebraicVariable.new()
 	new.variable_name = variable_name

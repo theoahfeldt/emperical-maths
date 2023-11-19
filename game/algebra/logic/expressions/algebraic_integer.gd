@@ -15,6 +15,12 @@ static func zero() -> AlgebraicInteger:
 	return create(0)
 
 
+func identical_to(other: AlgebraicExpression) -> bool:
+	if other is AlgebraicInteger:
+		return value == other.value
+	return false
+
+
 func copy() -> AlgebraicExpression:
 	var new = AlgebraicInteger.new()
 	new.value = value
