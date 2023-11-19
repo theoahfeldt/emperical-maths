@@ -5,9 +5,9 @@ extends AlgebraicExpression
 @export var value: int
 
 
-static func create(value: int) -> AlgebraicInteger:
+static func create(p_value: int) -> AlgebraicInteger:
 	var integer = AlgebraicInteger.new()
-	integer.value = value
+	integer.value = p_value
 	return integer
 
 

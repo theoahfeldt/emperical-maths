@@ -18,8 +18,8 @@ func get_width() -> int:
 	return get_size().x
 
 
-func set_text(text) -> void:
-	$Label.set_text(text)
+func set_text(p_text) -> void:
+	$Label.set_text(p_text)
 
 
 func set_color(color: Color) -> void:

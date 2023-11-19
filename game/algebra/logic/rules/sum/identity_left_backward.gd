@@ -2,7 +2,7 @@ extends AlgebraicRule
 ## a -> 0 + a
 
 
-func applicable(expression: AlgebraicExpression) -> bool:
+func applicable(_expression: AlgebraicExpression) -> bool:
 	return true
 
 

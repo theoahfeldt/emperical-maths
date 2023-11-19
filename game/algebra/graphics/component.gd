@@ -12,7 +12,7 @@ func get_width() -> int:
 	return 0
 
 
-func set_color(color: Color) -> void:
+func set_color(_color: Color) -> void:
 	push_error("Function not implemented")
 	return
 
@@ -22,6 +22,6 @@ func color_by_depth(depth: int) -> Color:
 	return deep_color.lerp(shallow_color, shallowness)
 
 
-func set_color_by_depth(depth: int) -> void:
+func set_color_by_depth(_depth: int) -> void:
 	push_error("Function not implemented")
 	return

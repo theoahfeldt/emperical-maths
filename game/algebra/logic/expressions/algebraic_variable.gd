@@ -5,9 +5,9 @@ extends AlgebraicExpression
 @export var variable_name: String
 
 
-static func create(name: String) -> AlgebraicVariable:
+static func create(p_name: String) -> AlgebraicVariable:
 	var variable = AlgebraicVariable.new()
-	variable.variable_name = name
+	variable.variable_name = p_name
 	return variable
 
 
