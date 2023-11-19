@@ -26,7 +26,7 @@ func _process(_delta: float) -> void:
 
 
 func _set_graphics() -> void:
-	graphical_expression = GraphicalConversion.algebraic_to_graphical_menu(
+	graphical_expression = GraphicalConversion.algebraic_to_graphical(
 			algebraic_expression, rules)
 	graphical_expression.initialize()
 	add_child(graphical_expression)
