@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bijoaftqn2l5o"]
+
+[ext_resource type="Script" path="res://algebra/graphics/expressions/graphical_negation.gd" id="1_kyva7"]
+[ext_resource type="PackedScene" uid="uid://dy34w7fvnx6ba" path="res://algebra/graphics/glyph.tscn" id="2_jxem6"]
+
+[node name="GraphicalNegation" type="Node2D"]
+script = ExtResource("1_kyva7")
+
+[node name="Sign" parent="." instance=ExtResource("2_jxem6")]
+text = "-"

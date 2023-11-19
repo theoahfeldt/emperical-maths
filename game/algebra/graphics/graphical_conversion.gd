@@ -3,6 +3,7 @@ extends Node
 
 const variable_scene := preload("res://algebra/graphics/expressions/graphical_variable.tscn")
 const integer_scene := preload("res://algebra/graphics/expressions/graphical_integer.tscn")
+const negation_scene := preload("res://algebra/graphics/expressions/graphical_negation.tscn")
 const sum_scene := preload("res://algebra/graphics/expressions/graphical_sum.tscn")
 
 
@@ -19,6 +20,8 @@ static func algebraic_to_graphical(
 		return _convert_variable(expression)
 	elif expression is AlgebraicInteger:
 		return _convert_integer(expression)
+	elif expression is AlgebraicNegation:
+		return _convert_negation(expression, menu_rules)
 	elif expression is AlgebraicSum:
 		return _convert_sum(expression, menu_rules)
 	else:
@@ -38,6 +41,13 @@ static func _convert_integer(integer: AlgebraicInteger) -> GraphicalExpression:
 	return new
 
 
+static func _convert_negation(
+		negation: AlgebraicNegation, menu_rules: Array) -> GraphicalExpression:
+	var new: GraphicalNegation = negation_scene.instantiate()
+	var expression := algebraic_to_graphical(negation.expression, menu_rules)
+	new.add_child(expression)
+	new.expression = expression
+	return new
 
 
 static func _convert_sum(sum: AlgebraicSum, menu_rules: Array) -> GraphicalExpression:
