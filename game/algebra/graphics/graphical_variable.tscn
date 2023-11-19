@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://bdg6hiohjx720"]
-
-[ext_resource type="Script" path="res://algebra/graphics/graphical_variable.gd" id="1_fo6av"]
-[ext_resource type="PackedScene" uid="uid://dy34w7fvnx6ba" path="res://algebra/graphics/glyph.tscn" id="2_42im5"]
-
-[node name="GraphicalVariable" type="Node2D"]
-script = ExtResource("1_fo6av")
-
-[node name="Glyph" parent="." instance=ExtResource("2_42im5")]

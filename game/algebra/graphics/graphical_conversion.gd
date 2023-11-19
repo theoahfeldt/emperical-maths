@@ -1,9 +1,9 @@
 extends Node
 
 
-const variable_scene := preload("res://algebra/graphics/graphical_variable.tscn")
-const integer_scene := preload("res://algebra/graphics/graphical_integer.tscn")
-const sum_scene := preload("res://algebra/graphics/graphical_sum.tscn")
+const variable_scene := preload("res://algebra/graphics/expressions/graphical_variable.tscn")
+const integer_scene := preload("res://algebra/graphics/expressions/graphical_integer.tscn")
+const sum_scene := preload("res://algebra/graphics/expressions/graphical_sum.tscn")
 
 
 static func convert_variable(variable: AlgebraicVariable) -> GraphicalExpression:
