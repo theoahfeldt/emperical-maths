@@ -41,9 +41,9 @@ static func _convert_integer(integer: AlgebraicInteger) -> GraphicalExpression:
 
 
 static func _convert_sum(sum: AlgebraicSum, menu_rules: Array) -> GraphicalExpression:
-	var left = algebraic_to_graphical(sum.left_term, menu_rules)
-	var right = algebraic_to_graphical(sum.right_term, menu_rules)
 	var new: GraphicalSum = sum_scene.instantiate()
+	var left := algebraic_to_graphical(sum.left_term, menu_rules)
+	var right := algebraic_to_graphical(sum.right_term, menu_rules)
 	new.add_child(left)
 	new.add_child(right)
 	new.left_term = left
