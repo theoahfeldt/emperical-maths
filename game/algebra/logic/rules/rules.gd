@@ -1,4 +1,6 @@
 const Identity = preload("res://algebra/logic/rules/identity.gd")
+const SumInverseLeftForward = preload("res://algebra/logic/rules/sum/inverse_left_forwards.gd")
+const SumInverseRightForward = preload("res://algebra/logic/rules/sum/inverse_right_forwards.gd")
 const SumAssociativityForward = preload("res://algebra/logic/rules/sum/associaticity_forward.gd")
 const SumAssociativityBackward = preload("res://algebra/logic/rules/sum/associaticity_backward.gd")
 const SumCommutativity = preload("res://algebra/logic/rules/sum/commutativity.gd")
@@ -11,6 +13,8 @@ const SumIdentityRightBackward = preload("res://algebra/logic/rules/sum/identity
 static func rules() -> Array:
 	return [
 		Identity.new(),
+		SumInverseLeftForward.new(),
+		SumInverseRightForward.new(),
 		SumAssociativityForward.new(),
 		SumAssociativityBackward.new(),
 		SumCommutativity.new(),
