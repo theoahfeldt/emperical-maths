@@ -39,21 +39,15 @@ static func algebraic_to_graphical(
 
 static func convert_variable_menu(
 		variable: AlgebraicVariable, rules: Array) -> GraphicalExpression:
-	if variable.is_selected:
-		return ExpressionsMenu.from_expression(variable, rules)
 	return convert_variable(variable)
 
 
 static func convert_integer_menu(
 		integer: AlgebraicInteger, rules: Array) -> GraphicalExpression:
-	if integer.is_selected:
-		return ExpressionsMenu.from_expression(integer, rules)
 	return convert_integer(integer)
 
 
 static func convert_sum_menu(sum: AlgebraicSum, rules: Array) -> GraphicalExpression:
-	if sum.is_selected:
-		return ExpressionsMenu.from_expression(sum, rules)
 	var left = algebraic_to_graphical_menu(sum.left_term, rules)
 	var right = algebraic_to_graphical_menu(sum.right_term, rules)
 	return _create_sum(left, right)
@@ -61,6 +55,8 @@ static func convert_sum_menu(sum: AlgebraicSum, rules: Array) -> GraphicalExpres
 
 static func algebraic_to_graphical_menu(
 		expression: AlgebraicExpression, rules: Array) -> GraphicalExpression:
+	if expression.is_selected:
+		return ExpressionsMenu.from_expression(expression, rules)
 	if expression is AlgebraicVariable:
 		return convert_variable_menu(expression, rules)
 	elif expression is AlgebraicInteger:
