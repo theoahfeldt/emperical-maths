@@ -24,7 +24,8 @@ static func from_expression(
 	var alternative_expressions: Array[AlgebraicExpression]
 	alternative_expressions.assign(
 			applicable.map(func(r): return r.apply(expression)))
-	return ExpressionsMenu.from_expressions(alternative_expressions)
+	var unique := _get_unique(alternative_expressions)
+	return ExpressionsMenu.from_expressions(unique)
 
 
 static func from_expressions(expressions: Array[AlgebraicExpression]) -> ExpressionsMenu:
@@ -43,3 +44,12 @@ static func from_expressions(expressions: Array[AlgebraicExpression]) -> Express
 func set_expression_positions() -> void:
 	graphical_expressions.reduce(
 			func(y, e): e.position = Vector2(0, y); return y + vertical_spacing, 0)
+
+
+static func _get_unique(
+		expressions: Array[AlgebraicExpression]) -> Array[AlgebraicExpression]:
+	var unique: Array[AlgebraicExpression] = []
+	for expression in expressions:
+		if not unique.any(expression.identical_to):
+			unique.append(expression)
+	return unique
