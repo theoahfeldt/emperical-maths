@@ -8,6 +8,8 @@ static func algebraic_subexpression(
 		push_error("Invalid index: ", _i)
 	if _i == index.size():
 		return expression
+	if expression is AlgebraicNegation:
+		return _algebraic_negation_subexpression(expression, index, _i)
 	if expression is AlgebraicSum:
 		return _algebraic_sum_subexpression(expression, index, _i)
 	push_error("%s has no subexpression." % expression)
@@ -19,6 +21,8 @@ static func replace_algebraic_subexpression(
 		) -> void:
 	if _i >= index.size():
 		push_error("Invalid index: ", index)
+	elif expression is AlgebraicNegation:
+		_replace_algebraic_negation_subexpression(expression, new, index, _i)
 	elif expression is AlgebraicSum:
 		_replace_algebraic_sum_subexpression(expression, new, index, _i)
 	else:
@@ -53,6 +57,17 @@ static func move_index_in(base: AlgebraicExpression, index: Array[int]) -> void:
 		index.append(0)
 
 
+static func _algebraic_negation_subexpression(
+		negation: AlgebraicNegation, index: Array[int], i: int
+		) -> AlgebraicExpression:
+	match index[i]:
+		0:
+			return algebraic_subexpression(negation.expression, index, i + 1)
+		var j:
+			push_error("Invalid index for negation: ", j)
+			return negation
+
+
 static func _algebraic_sum_subexpression(
 		sum: AlgebraicSum, index: Array[int], i: int
 		) -> AlgebraicExpression:
@@ -64,6 +79,23 @@ static func _algebraic_sum_subexpression(
 		var j:
 			push_error("Invalid index for sum: ", j)
 			return sum
+
+
+static func _replace_algebraic_negation_subexpression(
+		negation: AlgebraicNegation, new: AlgebraicExpression, index: Array[int], i: int
+		) -> void:
+	if i == index.size() - 1:
+		match index[i]:
+			0:
+				negation.replace_expression(new)
+			var j:
+				push_error("Invalid index for sum: ", j)
+	else:
+		match index[i]:
+			0:
+				replace_algebraic_subexpression(negation.expression, new, index, i + 1)
+			var j:
+				push_error("Invalid index for sum: ", j)
 
 
 static func _replace_algebraic_sum_subexpression(
@@ -112,6 +144,8 @@ static func _num_children(expression: AlgebraicExpression) -> int:
 		return 0
 	if expression is AlgebraicInteger:
 		return 0
+	if expression is AlgebraicNegation:
+		return 1
 	if expression is AlgebraicSum:
 		return 2
 	push_error("Method not implemented for: ", expression.get_class())
