@@ -6,11 +6,11 @@ signal selected(expression, mark)
 
 
 var _menu: ExpressionsMenu
-var _mark: Array
+var _mark: Array[int]
 var _marked_index := 0
 
 
-func initialize(menu: ExpressionsMenu, mark: Array) -> void:
+func initialize(menu: ExpressionsMenu, mark: Array[int]) -> void:
 	_menu = menu
 	_menu.mark()
 	_mark = mark

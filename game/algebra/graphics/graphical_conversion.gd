@@ -13,7 +13,8 @@ const sum_scene := preload("res://algebra/graphics/expressions/graphical_sum.tsc
 ## be replaced by: [code]
 ## [method.ExpressionsMenu.from_expression](e, [param menu_rules]) [/code].
 static func algebraic_to_graphical(
-		expression: AlgebraicExpression, menu_rules := []) -> GraphicalExpression:
+		expression: AlgebraicExpression, menu_rules: Array[AlgebraicRule] = []
+		) -> GraphicalExpression:
 	if not menu_rules.is_empty() and expression.is_selected:
 		return ExpressionsMenu.from_expression(expression, menu_rules)
 	if expression is AlgebraicVariable:
@@ -42,7 +43,8 @@ static func _convert_integer(integer: AlgebraicInteger) -> GraphicalExpression:
 
 
 static func _convert_negation(
-		negation: AlgebraicNegation, menu_rules: Array) -> GraphicalExpression:
+		negation: AlgebraicNegation, menu_rules: Array[AlgebraicRule]
+		) -> GraphicalExpression:
 	var new: GraphicalNegation = negation_scene.instantiate()
 	var expression := algebraic_to_graphical(negation.expression, menu_rules)
 	new.add_child(expression)
@@ -50,7 +52,9 @@ static func _convert_negation(
 	return new
 
 
-static func _convert_sum(sum: AlgebraicSum, menu_rules: Array) -> GraphicalExpression:
+static func _convert_sum(
+		sum: AlgebraicSum, menu_rules: Array[AlgebraicRule]
+		) -> GraphicalExpression:
 	var new: GraphicalSum = sum_scene.instantiate()
 	var left := algebraic_to_graphical(sum.left_term, menu_rules)
 	var right := algebraic_to_graphical(sum.right_term, menu_rules)

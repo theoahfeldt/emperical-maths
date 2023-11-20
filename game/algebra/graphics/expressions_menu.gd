@@ -5,8 +5,8 @@ extends GraphicalExpression
 const GraphicalConversion = preload("res://algebra/graphics/graphical_conversion.gd")
 const vertical_spacing: int = 100
 
-var graphical_expressions: Array
-var algebraic_expressions: Array
+var graphical_expressions: Array[GraphicalExpression]
+var algebraic_expressions: Array[AlgebraicExpression]
 
 
 func get_width() -> int:
@@ -18,21 +18,22 @@ func set_color(color: Color) -> void:
 
 
 static func from_expression(
-		expression: AlgebraicExpression, rules: Array) -> ExpressionsMenu:
-	var applicable: Array = rules.filter(
-			func(r): return r.applicable(expression))
-	var alternative_expressions: Array = applicable.map(
-			func(r): return r.apply(expression))
+		expression: AlgebraicExpression, rules: Array[AlgebraicRule]
+		) -> ExpressionsMenu:
+	var applicable := rules.filter(func(r): return r.applicable(expression))
+	var alternative_expressions: Array[AlgebraicExpression]
+	alternative_expressions.assign(
+			applicable.map(func(r): return r.apply(expression)))
 	return ExpressionsMenu.from_expressions(alternative_expressions)
 
 
-static func from_expressions(expressions: Array) -> ExpressionsMenu:
+static func from_expressions(expressions: Array[AlgebraicExpression]) -> ExpressionsMenu:
 	if expressions.is_empty():
 		push_error("Created empty menu.")
 	var menu = new()
 	menu.algebraic_expressions = expressions
-	menu.graphical_expressions = expressions.map(
-			GraphicalConversion.algebraic_to_graphical)
+	menu.graphical_expressions.assign(expressions.map(
+			GraphicalConversion.algebraic_to_graphical))
 	menu.algebraic_expressions.map(menu.add_child)
 	menu.graphical_expressions.map(menu.add_child)
 	menu.set_expression_positions()

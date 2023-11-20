@@ -32,7 +32,7 @@ func _set_graphics() -> void:
 	add_child(graphical_expression)
 
 
-func _update_mark(mark: Array) -> void:
+func _update_mark(mark: Array[int]) -> void:
 	graphical_expression.initialize()
 	var marked_expression: GraphicalExpression = ExpressionIndexer.graphical_subexpression(
 			graphical_expression, mark)
@@ -44,12 +44,12 @@ func _update_graphics() -> void:
 	_set_graphics()
 
 
-func _select_expression(mark: Array) -> void:
+func _select_expression(mark: Array[int]) -> void:
 	var selected_expression: AlgebraicExpression = ExpressionIndexer.algebraic_subexpression(
 			algebraic_expression, mark)
 	selected_expression.is_selected = true
 	_update_graphics()
-	var menu = ExpressionIndexer.graphical_subexpression(
+	var menu: ExpressionsMenu = ExpressionIndexer.graphical_subexpression(
 			graphical_expression, mark)
 	$ExpressionsMenuSelector.initialize(menu, mark)
 	expression_is_selected = true

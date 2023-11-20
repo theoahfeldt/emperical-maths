@@ -10,7 +10,7 @@ const SumIdentityRightForward = preload("res://algebra/logic/rules/sum/identity_
 const SumIdentityRightBackward = preload("res://algebra/logic/rules/sum/identity_right_backward.gd")
 
 
-static func rules() -> Array:
+static func rules() -> Array[AlgebraicRule]:
 	return [
 		Identity.new(),
 		SumInverseLeftForward.new(),

@@ -8,7 +8,7 @@ signal selected(mark)
 const ExpressionIndexer = preload("res://algebra/expression_indexer.gd")
 
 var base_expression: AlgebraicExpression
-var _mark := []
+var _mark: Array[int] = []
 
 
 func process_input() -> void:

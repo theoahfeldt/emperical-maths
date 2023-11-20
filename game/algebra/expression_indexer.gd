@@ -26,7 +26,7 @@ static func replace_algebraic_subexpression(
 
 
 static func graphical_subexpression(
-		expression: GraphicalExpression, index: Array, _i: int = 0
+		expression: GraphicalExpression, index: Array[int], _i: int = 0
 		) -> GraphicalExpression:
 	if _i > index.size():
 		push_error("Invalid index: ", index)
@@ -38,25 +38,25 @@ static func graphical_subexpression(
 	return expression
 
 
-static func move_index_left(base: AlgebraicExpression, index: Array) -> void:
+static func move_index_left(base: AlgebraicExpression, index: Array[int]) -> void:
 	_move_index_horizontal(base, index, -1)
 
 
-static func move_index_right(base: AlgebraicExpression, index: Array) -> void:
+static func move_index_right(base: AlgebraicExpression, index: Array[int]) -> void:
 	_move_index_horizontal(base, index, 1)
 
 
-static func move_index_out(index: Array) -> void:
+static func move_index_out(index: Array[int]) -> void:
 	index.pop_back()
 
 
-static func move_index_in(base: AlgebraicExpression, index: Array) -> void:
+static func move_index_in(base: AlgebraicExpression, index: Array[int]) -> void:
 	if _num_children(algebraic_subexpression(base, index)) > 0:
 		index.append(0)
 
 
 static func _algebraic_sum_subexpression(
-		sum: AlgebraicSum, index: Array, i: int
+		sum: AlgebraicSum, index: Array[int], i: int
 		) -> AlgebraicExpression:
 	match index[i]:
 		0:
@@ -69,7 +69,7 @@ static func _algebraic_sum_subexpression(
 
 
 static func _replace_algebraic_sum_subexpression(
-		sum: AlgebraicSum, new: AlgebraicExpression, index: Array, i: int
+		sum: AlgebraicSum, new: AlgebraicExpression, index: Array[int], i: int
 		) -> void:
 	if i == index.size() - 1:
 		match index[i]:
@@ -90,7 +90,7 @@ static func _replace_algebraic_sum_subexpression(
 
 
 static func _graphical_sum_subexpression(
-		sum: GraphicalSum, index: Array, i: int
+		sum: GraphicalSum, index: Array[int], i: int
 		) -> GraphicalExpression:
 	match index[i]:
 		0:
@@ -103,7 +103,7 @@ static func _graphical_sum_subexpression(
 
 
 static func _move_index_horizontal(
-	base: AlgebraicExpression, index: Array, movement) -> void:
+	base: AlgebraicExpression, index: Array[int], movement) -> void:
 	if index.is_empty():
 		return
 	var position: int = index.pop_back()
@@ -113,7 +113,7 @@ static func _move_index_horizontal(
 
 
 static func _move_index_in_position(
-	base: AlgebraicExpression, index: Array, position: int) -> void:
+	base: AlgebraicExpression, index: Array[int], position: int) -> void:
 	var expression: AlgebraicExpression = algebraic_subexpression(base, index)
 	if 0 <= position and position < _num_children(expression):
 		index.append(position)
