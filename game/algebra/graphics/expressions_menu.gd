@@ -1,5 +1,5 @@
 class_name ExpressionsMenu
-extends GraphicalExpression
+extends GraphicalExpressionOrMenu
 
 
 const GraphicalConversion = preload("res://algebra/graphics/graphical_conversion.gd")

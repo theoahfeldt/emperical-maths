@@ -7,7 +7,7 @@ const Rules := preload("res://algebra/logic/rules/rules.gd")
 
 @export var algebraic_expression: AlgebraicExpression
 
-var graphical_expression: GraphicalExpression
+var graphical_expression: GraphicalExpressionOrMenu
 var expression_is_selected := false
 var rules = Rules.rules()
 

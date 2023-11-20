@@ -26,16 +26,14 @@ static func replace_algebraic_subexpression(
 
 
 static func graphical_subexpression(
-		expression: GraphicalExpression, index: Array[int], _i: int = 0
-		) -> GraphicalExpression:
+		expression: GraphicalExpressionOrMenu, index: Array[int], _i: int = 0
+		) -> GraphicalExpressionOrMenu:
 	if _i > index.size():
 		push_error("Invalid index: ", index)
 	if _i == index.size():
 		return expression
-	if expression is GraphicalSum:
-		return _graphical_sum_subexpression(expression, index, _i)
-	push_error("%s has no subexpression." % expression)
-	return expression
+	return graphical_subexpression(
+			expression.subexpressions[index[_i]], index, _i + 1)
 
 
 static func move_index_left(base: AlgebraicExpression, index: Array[int]) -> void:
@@ -87,19 +85,6 @@ static func _replace_algebraic_sum_subexpression(
 				replace_algebraic_subexpression(sum.right_term, new, index, i + 1)
 			var j:
 				push_error("Invalid index for sum: ", j)
-
-
-static func _graphical_sum_subexpression(
-		sum: GraphicalSum, index: Array[int], i: int
-		) -> GraphicalExpression:
-	match index[i]:
-		0:
-			return graphical_subexpression(sum.left_term, index, i + 1)
-		1:
-			return graphical_subexpression(sum.right_term, index, i + 1)
-		var j:
-			push_error("Invalid index for sum: ", j)
-			return sum
 
 
 static func _move_index_horizontal(

@@ -1,4 +1,4 @@
-class_name Component
+class_name GraphicalComponent
 extends Node2D
 ## Abstract class
 
@@ -17,11 +17,11 @@ func set_color(_color: Color) -> void:
 	return
 
 
-func color_by_depth(depth: int) -> Color:
-	var shallowness = exp(-(depth - 1)/3.0)
-	return deep_color.lerp(shallow_color, shallowness)
-
-
 func set_color_by_depth(_depth: int) -> void:
 	push_error("Function not implemented")
 	return
+
+
+func color_by_depth(depth: int) -> Color:
+	var shallowness = exp(-(depth - 1)/3.0)
+	return deep_color.lerp(shallow_color, shallowness)

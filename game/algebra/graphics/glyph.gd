@@ -1,34 +1,42 @@
-extends Component
+class_name Glyph
+extends GraphicalComponent
 
 
-@export var text: String
+const glyph_label_scene := preload("res://algebra/graphics/glyph_label.tscn")
 
-
-func get_size() -> Vector2i:
-	var font = $Label.get_theme_font("font")
-	return font.get_string_size(
-		$Label.text,
-		HORIZONTAL_ALIGNMENT_LEFT,
-		-1,
-		$Label.get_theme_font_size("font_size")
-	)
+var _label: Label
 
 
 func get_width() -> int:
 	return get_size().x
 
 
-func set_text(p_text) -> void:
-	$Label.set_text(p_text)
-
-
 func set_color(color: Color) -> void:
-	$Label.add_theme_color_override("font_color", color)
+	_label.add_theme_color_override("font_color", color)
 
 
 func set_color_by_depth(depth: int) -> void:
 	set_color(color_by_depth(depth))
 
 
-func _ready() -> void:
-	set_text(text)
+static func create(text: String) -> Glyph:
+	var glyph := Glyph.new()
+	var label := glyph_label_scene.instantiate()
+	label.set_text(text)
+	glyph.add_child(label)
+	glyph._label = label
+	return glyph
+
+
+func get_size() -> Vector2i:
+	var font = _label.get_theme_font("")
+	return font.get_string_size(
+		_label.text,
+		HORIZONTAL_ALIGNMENT_LEFT,
+		-1,
+		_label.get_theme_font_size("")
+	)
+
+
+func set_text(text) -> void:
+	_label.set_text(text)
