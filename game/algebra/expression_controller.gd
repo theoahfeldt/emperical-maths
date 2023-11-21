@@ -48,6 +48,7 @@ func _replace_subexpression(mark: Array, new: AlgebraicExpression) -> void:
 	var graphical := GraphicalConversion.algebraic_to_graphical(new)
 	ExpressionIndexer.replace_graphical_subexpression(
 			$GraphicalBase, graphical, mark)
+	$GraphicalBase.center_smooth()
 
 
 func _on_expression_selector_mark_updated(mark) -> void:
