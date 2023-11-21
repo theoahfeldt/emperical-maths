@@ -3,29 +3,21 @@ extends GraphicalExpressionOrMenu
 
 
 const GraphicalConversion = preload("res://algebra/graphics/graphical_conversion.gd")
-const vertical_spacing: int = 100
-const movement_duration: float = 0.05
 
-var graphical_expressions: Array[GraphicalExpression]
+var selection_menu: SelectionMenu
 var algebraic_expressions: Array[AlgebraicExpression]
-var _movement: Movement
-
-
-func _process(delta: float) -> void:
-	if _movement != null and _movement.has_update(delta):
-		position = _movement.current_position()
 
 
 func get_width() -> int:
-	return graphical_expressions.map(func(e): return e.get_width()).max()
+	return selection_menu.get_width()
 
 
 func get_height() -> int:
-	return graphical_expressions[0].get_height()
+	return selection_menu.get_height()
 
 
 func set_color(color: Color) -> void:
-	graphical_expressions.map(func(e): e.set_color(color))
+	selection_menu.set_color(color)
 
 
 static func from_expression(
@@ -45,22 +37,22 @@ static func from_expressions(expressions: Array[AlgebraicExpression]) -> Express
 		push_error("Created empty menu.")
 	var menu = new()
 	menu.algebraic_expressions = expressions
-	menu.graphical_expressions.assign(expressions.map(
-			GraphicalConversion.algebraic_to_graphical))
 	menu.algebraic_expressions.map(menu.add_child)
-	menu.graphical_expressions.map(menu.add_child)
-	menu._set_expression_positions()
+	@warning_ignore("unassigned_variable")
+	var graphical_expressions: Array[GraphicalExpression]
+	graphical_expressions.assign(expressions.map(
+			GraphicalConversion.algebraic_to_graphical))
+	menu.selection_menu = SelectionMenu.create(graphical_expressions)
+	menu.add_child(menu.selection_menu)
 	return menu
 
 
-func _set_expression_positions() -> void:
-	graphical_expressions.reduce(
-			func(y, e): e.position = Vector2(0, y); return y + vertical_spacing, 0)
+func num_options() -> int:
+	return selection_menu.num_options()
 
 
-func set_position_by_marked(marked_index: int = 0) -> void:
-	var new_position := Vector2(position.x, -vertical_spacing * marked_index)
-	_movement = Movement.create(position, new_position, movement_duration)
+func update_marked(marked_index: int) -> void:
+	selection_menu.update_marked(marked_index)
 
 
 static func _get_unique(

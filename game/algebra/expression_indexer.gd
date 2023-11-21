@@ -27,6 +27,7 @@ static func replace_graphical_subexpression(
 		base.replace_expression(new)
 	else:
 		_replace_graphical_subexpression(base.expression, new, index, 0)
+	base.center_smooth()
 
 
 static func move_index_left(base: AlgebraicBase, index: Array[int]) -> void:
@@ -159,7 +160,7 @@ static func _replace_graphical_subexpression(
 		expression.replace_subexpression(new, index[i])
 	else:
 		_replace_graphical_subexpression(expression.subexpressions[index[i]], new, index, i + 1)
-		expression.set_component_positions()
+		expression.set_component_positions_smooth()
 
 
 static func _move_index_horizontal(

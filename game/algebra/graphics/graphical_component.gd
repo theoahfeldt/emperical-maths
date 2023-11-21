@@ -2,9 +2,16 @@ class_name GraphicalComponent
 extends Node2D
 ## Abstract class
 
-
 @export var deep_color: Color = Color.INDIGO
 @export var shallow_color: Color = Color.AQUA
+
+var movement_duration: float = 0.05
+var _movement: Movement
+
+
+func _process(delta: float) -> void:
+	if _movement != null and _movement.has_update(delta):
+		position = _movement.current_position()
 
 
 func get_size() -> Vector2i:
@@ -30,3 +37,7 @@ func set_color_by_depth(_depth: int) -> void:
 func color_by_depth(depth: int) -> Color:
 	var shallowness = exp(-(depth - 1)/3.0)
 	return deep_color.lerp(shallow_color, shallowness)
+
+
+func move_smooth_to(new_position: Vector2) -> void:
+	_movement = Movement.create(position, new_position, movement_duration)

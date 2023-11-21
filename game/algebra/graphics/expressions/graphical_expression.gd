@@ -30,12 +30,13 @@ func _get_components() -> Array[GraphicalComponent]:
 
 
 func replace_subexpression(new: GraphicalExpressionOrMenu, index: int) -> void:
+	add_child(new)
 	var old := subexpressions[index]
+	new.position = old.position
+	subexpressions[index] = new
+	set_component_positions_smooth()
 	remove_child(old)
 	old.queue_free()
-	add_child(new)
-	subexpressions[index] = new
-	set_component_positions()
 
 
 func mark() -> void:
@@ -45,6 +46,11 @@ func mark() -> void:
 func set_component_positions() -> void:
 	_get_components().reduce(
 			func(x, c): c.position = Vector2(x, 0); return x + c.get_width(), 0)
+
+
+func set_component_positions_smooth() -> void:
+	_get_components().reduce(
+			func(x, c): c.move_smooth_to(Vector2(x, 0)); return x + c.get_width(), 0)
 
 
 func _add_components_as_children() -> void:

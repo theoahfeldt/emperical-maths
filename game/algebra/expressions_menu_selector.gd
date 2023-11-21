@@ -12,7 +12,6 @@ var _marked_index := 0
 
 func initialize(menu: ExpressionMenu, mark: Array[int]) -> void:
 	_menu = menu
-	_menu.graphical_expressions[0].mark()
 	_mark = mark
 	_marked_index = 0
 	_update_marked()
@@ -28,9 +27,7 @@ func process_input() -> void:
 
 
 func _update_marked() -> void:
-	_menu.initialize()
-	_menu.set_position_by_marked(_marked_index)
-	_menu.graphical_expressions[_marked_index].mark()
+	_menu.update_marked(_marked_index)
 
 
 func _select_expression() -> void:
@@ -46,5 +43,5 @@ func _move_up() -> void:
 
 
 func _move_down() -> void:
-	_marked_index = min(_marked_index + 1, _menu.graphical_expressions.size() - 1)
+	_marked_index = min(_marked_index + 1, _menu.num_options() - 1)
 	_update_marked()
