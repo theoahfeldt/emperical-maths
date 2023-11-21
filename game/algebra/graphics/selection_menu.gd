@@ -41,5 +41,6 @@ func update_marked(marked_index: int) -> void:
 
 
 func _set_option_positions() -> void:
+	var width := get_width()
 	options.reduce(
-			func(y, e): e.position = Vector2(0, y); return y + vertical_spacing, 0)
+			func(y, e): e.position = Vector2((width - e.get_width()) / 2.0, y); return y + vertical_spacing, 0)

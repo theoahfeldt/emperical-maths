@@ -32,7 +32,7 @@ func _get_components() -> Array[GraphicalComponent]:
 func replace_subexpression(new: GraphicalExpressionOrMenu, index: int) -> void:
 	add_child(new)
 	var old := subexpressions[index]
-	new.position = old.position
+	new.position = Vector2(old.position.x + (old.get_width() - new.get_width()) / 2.0, 0)
 	subexpressions[index] = new
 	set_component_positions_smooth()
 	remove_child(old)

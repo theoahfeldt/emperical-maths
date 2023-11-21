@@ -2,7 +2,7 @@ class_name ExpressionsMenuSelector
 extends Node
 
 
-signal selected(expression, mark)
+signal selected(algebraic, graphical, mark)
 
 
 var _menu: ExpressionMenu
@@ -31,10 +31,13 @@ func _update_marked() -> void:
 
 
 func _select_expression() -> void:
-	var selected_expression: AlgebraicExpression = _menu.algebraic_expressions[
+	var selected_algebraic: AlgebraicExpression = _menu.algebraic_expressions[
 			_marked_index]
-	_menu.remove_child(selected_expression)
-	selected.emit(selected_expression, _mark)
+	_menu.remove_child(selected_algebraic)
+	var selected_graphical: GraphicalExpression = _menu.selection_menu.options[
+			_marked_index]
+	_menu.selection_menu.remove_child(selected_graphical)
+	selected.emit(selected_algebraic, selected_graphical, _mark)
 
 
 func _move_up() -> void:

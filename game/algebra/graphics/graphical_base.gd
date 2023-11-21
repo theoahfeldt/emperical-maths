@@ -2,7 +2,7 @@ class_name GraphicalBase
 extends Node2D
 
 
-const movement_duration: float = 0.1
+const movement_duration: float = 0.05
 
 var expression: GraphicalExpressionOrMenu
 var _movement: Movement
@@ -22,8 +22,10 @@ func initialize(p_expression: GraphicalExpressionOrMenu) -> void:
 func replace_expression(new: GraphicalExpressionOrMenu) -> void:
 	remove_child(expression)
 	expression.queue_free()
+	new.position = Vector2.ZERO
 	add_child(new)
 	expression = new
+	center()
 
 
 func reset() -> void:

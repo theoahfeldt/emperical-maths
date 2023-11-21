@@ -43,9 +43,11 @@ func _select_expression(mark: Array[int]) -> void:
 	expression_is_selected = true
 
 
-func _replace_subexpression(mark: Array, new: AlgebraicExpression) -> void:
-	ExpressionIndexer.replace_algebraic_subexpression(algebraic_base, new, mark)
-	var graphical := GraphicalConversion.algebraic_to_graphical(new)
+func _replace_subexpression(
+		algebraic: AlgebraicExpression, graphical: GraphicalExpression, mark
+		) -> void:
+	ExpressionIndexer.replace_algebraic_subexpression(
+			algebraic_base, algebraic, mark)
 	ExpressionIndexer.replace_graphical_subexpression(
 			$GraphicalBase, graphical, mark)
 
@@ -58,7 +60,7 @@ func _on_expression_selector_selected(mark) -> void:
 	_select_expression(mark)
 
 
-func _on_expressions_menu_selector_selected(expression, mark) -> void:
-	_replace_subexpression(mark, expression)
+func _on_expressions_menu_selector_selected(algebraic, graphical, mark) -> void:
+	_replace_subexpression(algebraic, graphical, mark)
 	_update_mark(mark)
 	expression_is_selected = false
