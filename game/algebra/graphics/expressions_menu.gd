@@ -45,9 +45,10 @@ static func from_expressions(expressions: Array[AlgebraicExpression]) -> Express
 	return menu
 
 
-func set_expression_positions() -> void:
+func set_expression_positions(marked_index: int = 0) -> void:
+	var start: int = -vertical_spacing * marked_index
 	graphical_expressions.reduce(
-			func(y, e): e.position = Vector2(0, y); return y + vertical_spacing, 0)
+			func(y, e): e.position = Vector2(0, y); return y + vertical_spacing, start)
 
 
 static func _get_unique(

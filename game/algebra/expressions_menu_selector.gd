@@ -34,6 +34,7 @@ func process_input() -> void:
 
 func _update_marked() -> void:
 	_menu.initialize()
+	_menu.set_expression_positions(_marked_index)
 	_menu.graphical_expressions[_marked_index].mark()
 
 
