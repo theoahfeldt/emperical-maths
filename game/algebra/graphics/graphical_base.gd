@@ -1,16 +1,12 @@
 class_name GraphicalBase
-extends Node2D
+extends GraphicalComponent
 
-
-const movement_duration: float = 0.05
 
 var expression: GraphicalExpressionOrMenu
-var _movement: Movement
 
 
 func _process(delta: float) -> void:
-	if _movement != null and _movement.has_update(delta):
-		position = _movement.current_position()
+	update_position(delta)
 
 
 func initialize(p_expression: GraphicalExpressionOrMenu) -> void:
