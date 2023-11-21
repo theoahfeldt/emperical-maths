@@ -21,10 +21,6 @@ func set_color(color: Color) -> void:
 	_label.add_theme_color_override("font_color", color)
 
 
-func set_color_by_depth(depth: int) -> void:
-	set_color(color_by_depth(depth))
-
-
 static func create(text: String) -> Glyph:
 	var glyph := Glyph.new()
 	var label := glyph_label_scene.instantiate()
