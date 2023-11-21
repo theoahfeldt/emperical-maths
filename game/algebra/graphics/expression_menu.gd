@@ -4,9 +4,16 @@ extends GraphicalExpressionOrMenu
 
 const GraphicalConversion = preload("res://algebra/graphics/graphical_conversion.gd")
 const vertical_spacing: int = 100
+const movement_duration: float = 0.05
 
 var graphical_expressions: Array[GraphicalExpression]
 var algebraic_expressions: Array[AlgebraicExpression]
+var _movement: Movement
+
+
+func _process(delta: float) -> void:
+	if _movement != null and _movement.has_update(delta):
+		position = _movement.current_position()
 
 
 func get_width() -> int:
@@ -47,11 +54,12 @@ static func from_expressions(expressions: Array[AlgebraicExpression]) -> Express
 
 func _set_expression_positions() -> void:
 	graphical_expressions.reduce(
-			func(y, e): e.position = Vector2(0, y); print(e.position); return y + vertical_spacing, 0)
+			func(y, e): e.position = Vector2(0, y); return y + vertical_spacing, 0)
 
 
 func set_position_by_marked(marked_index: int = 0) -> void:
-	position.y = -vertical_spacing * marked_index
+	var new_position := Vector2(position.x, -vertical_spacing * marked_index)
+	_movement = Movement.create(position, new_position, movement_duration)
 
 
 static func _get_unique(
