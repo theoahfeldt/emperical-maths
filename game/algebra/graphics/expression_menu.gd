@@ -32,6 +32,7 @@ static func from_expression(
 		expression: AlgebraicExpression, rules: Array[AlgebraicRule]
 		) -> ExpressionMenu:
 	var applicable := rules.filter(func(r): return r.applicable(expression))
+	@warning_ignore("unassigned_variable")
 	var alternative_expressions: Array[AlgebraicExpression]
 	alternative_expressions.assign(
 			applicable.map(func(r): return r.apply(expression)))
