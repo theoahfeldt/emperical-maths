@@ -5,16 +5,17 @@ const ExpressionIndexer := preload("res://algebra/expression_indexer.gd")
 const GraphicalConversion := preload("res://algebra/graphics/graphical_conversion.gd")
 const Rules := preload("res://algebra/logic/rules/rules.gd")
 
-@export var algebraic_expression: AlgebraicExpression
+@export var algebraic_base: AlgebraicBase
 
-var graphical_expression: GraphicalExpressionOrMenu
 var expression_is_selected := false
 var rules = Rules.rules()
 
 
 func _ready() -> void:
-	$ExpressionSelector.base_expression = algebraic_expression
-	_set_graphics()
+	$ExpressionSelector.base = algebraic_base
+	var expression := GraphicalConversion.algebraic_to_graphical(
+			algebraic_base.expression, rules)
+	$GraphicalBase.initialize(expression)
 	_update_mark([])
 
 
@@ -25,50 +26,32 @@ func _process(_delta: float) -> void:
 		$ExpressionSelector.process_input()
 
 
-func _set_graphics() -> void:
-	graphical_expression = GraphicalConversion.algebraic_to_graphical(
-			algebraic_expression, rules)
-	add_child(graphical_expression)
-	graphical_expression.initialize()
-	graphical_expression.center()
-
-
 func _update_mark(mark: Array[int]) -> void:
-	graphical_expression.initialize()
+	$GraphicalBase.reset()
 	var marked_expression: GraphicalExpression = ExpressionIndexer.graphical_subexpression(
-			graphical_expression, mark)
+			$GraphicalBase, mark)
 	marked_expression.mark()
 
 
 func _update_graphics() -> void:
-	graphical_expression.queue_free()
-	_set_graphics()
+	var new := GraphicalConversion.algebraic_to_graphical(
+			algebraic_base.expression, rules)
+	$GraphicalBase.replace_expression(new)
 
 
 func _select_expression(mark: Array[int]) -> void:
 	var selected_expression: AlgebraicExpression = ExpressionIndexer.algebraic_subexpression(
-			algebraic_expression, mark)
+			algebraic_base, mark)
 	selected_expression.is_selected = true
 	_update_graphics()
-	var menu: ExpressionsMenu = ExpressionIndexer.graphical_subexpression(
-			graphical_expression, mark)
+	var menu: ExpressionMenu = ExpressionIndexer.graphical_subexpression(
+			$GraphicalBase, mark)
 	$ExpressionsMenuSelector.initialize(menu, mark)
 	expression_is_selected = true
 
 
-func _replace_base_expression(new: AlgebraicExpression) -> void:
-	remove_child(algebraic_expression)
-	algebraic_expression.queue_free()
-	add_child(new)
-	algebraic_expression = new
-	$ExpressionSelector.base_expression = algebraic_expression
-
-
 func _replace_subexpression(mark: Array, new: AlgebraicExpression) -> void:
-	if mark.is_empty():
-		_replace_base_expression(new)
-	else:
-		ExpressionIndexer.replace_algebraic_subexpression(algebraic_expression, new, mark)
+	ExpressionIndexer.replace_algebraic_subexpression(algebraic_base, new, mark)
 
 
 func _on_expression_selector_mark_updated(mark) -> void:

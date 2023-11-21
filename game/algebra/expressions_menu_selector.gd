@@ -5,22 +5,17 @@ extends Node
 signal selected(expression, mark)
 
 
-var _menu: ExpressionsMenu
+var _menu: ExpressionMenu
 var _mark: Array[int]
 var _marked_index := 0
 
 
-func initialize(menu: ExpressionsMenu, mark: Array[int]) -> void:
+func initialize(menu: ExpressionMenu, mark: Array[int]) -> void:
 	_menu = menu
 	_menu.graphical_expressions[0].mark()
 	_mark = mark
 	_marked_index = 0
 	_update_marked()
-
-
-func _queue_free_menu() -> void:
-	_menu.get_parent().remove_child(_menu)
-	_menu.queue_free()
 
 
 func process_input() -> void:
@@ -34,7 +29,7 @@ func process_input() -> void:
 
 func _update_marked() -> void:
 	_menu.initialize()
-	_menu.set_expression_positions(_marked_index)
+	_menu.set_position_by_marked(_marked_index)
 	_menu.graphical_expressions[_marked_index].mark()
 
 
@@ -43,7 +38,6 @@ func _select_expression() -> void:
 			_marked_index]
 	_menu.remove_child(selected_expression)
 	selected.emit(selected_expression, _mark)
-	_queue_free_menu()
 
 
 func _move_up() -> void:

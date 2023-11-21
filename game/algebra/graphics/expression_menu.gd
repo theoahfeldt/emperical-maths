@@ -1,4 +1,4 @@
-class_name ExpressionsMenu
+class_name ExpressionMenu
 extends GraphicalExpressionOrMenu
 
 
@@ -23,16 +23,16 @@ func set_color(color: Color) -> void:
 
 static func from_expression(
 		expression: AlgebraicExpression, rules: Array[AlgebraicRule]
-		) -> ExpressionsMenu:
+		) -> ExpressionMenu:
 	var applicable := rules.filter(func(r): return r.applicable(expression))
 	var alternative_expressions: Array[AlgebraicExpression]
 	alternative_expressions.assign(
 			applicable.map(func(r): return r.apply(expression)))
 	var unique := _get_unique(alternative_expressions)
-	return ExpressionsMenu.from_expressions(unique)
+	return ExpressionMenu.from_expressions(unique)
 
 
-static func from_expressions(expressions: Array[AlgebraicExpression]) -> ExpressionsMenu:
+static func from_expressions(expressions: Array[AlgebraicExpression]) -> ExpressionMenu:
 	if expressions.is_empty():
 		push_error("Created empty menu.")
 	var menu = new()
@@ -41,14 +41,17 @@ static func from_expressions(expressions: Array[AlgebraicExpression]) -> Express
 			GraphicalConversion.algebraic_to_graphical))
 	menu.algebraic_expressions.map(menu.add_child)
 	menu.graphical_expressions.map(menu.add_child)
-	menu.set_expression_positions()
+	menu._set_expression_positions()
 	return menu
 
 
-func set_expression_positions(marked_index: int = 0) -> void:
-	var start: int = -vertical_spacing * marked_index
+func _set_expression_positions() -> void:
 	graphical_expressions.reduce(
-			func(y, e): e.position = Vector2(0, y); return y + vertical_spacing, start)
+			func(y, e): e.position = Vector2(0, y); print(e.position); return y + vertical_spacing, 0)
+
+
+func set_position_by_marked(marked_index: int = 0) -> void:
+	position.y = -vertical_spacing * marked_index
 
 
 static func _get_unique(

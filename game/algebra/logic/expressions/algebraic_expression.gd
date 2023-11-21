@@ -1,5 +1,5 @@
-extends Node
 class_name AlgebraicExpression
+extends Node
 
 
 var is_selected := false

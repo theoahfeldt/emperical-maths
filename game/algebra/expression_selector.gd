@@ -7,7 +7,7 @@ signal selected(mark)
 
 const ExpressionIndexer = preload("res://algebra/expression_indexer.gd")
 
-var base_expression: AlgebraicExpression
+var base: AlgebraicBase
 var _mark: Array[int] = []
 
 
@@ -29,12 +29,11 @@ func select_expression():
 
 
 func marked_expression() -> AlgebraicExpression:
-	return ExpressionIndexer.algebraic_subexpression(
-			base_expression, _mark)
+	return ExpressionIndexer.algebraic_subexpression(base, _mark)
 
 
 func mark_inner() -> void:
-	ExpressionIndexer.move_index_in(base_expression, _mark)
+	ExpressionIndexer.move_index_in(base, _mark)
 	mark_updated.emit(_mark)
 
 
@@ -44,12 +43,10 @@ func mark_outer() -> void:
 
 
 func mark_left() -> void:
-	ExpressionIndexer.move_index_left(
-			base_expression, _mark)
+	ExpressionIndexer.move_index_left(base, _mark)
 	mark_updated.emit(_mark)
 
 
 func mark_right() -> void:
-	ExpressionIndexer.move_index_right(
-			base_expression, _mark)
+	ExpressionIndexer.move_index_right(base, _mark)
 	mark_updated.emit(_mark)

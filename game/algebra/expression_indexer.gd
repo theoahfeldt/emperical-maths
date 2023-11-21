@@ -1,50 +1,41 @@
 extends Node
 
 
-static func algebraic_subexpression(
-		expression: AlgebraicExpression, index: Array, _i: int = 0
+static func algebraic_subexpression(base: AlgebraicBase, index: Array[int]
 		) -> AlgebraicExpression:
-	if _i > index.size():
-		push_error("Invalid index: ", _i)
-	if _i == index.size():
-		return expression
-	if expression is AlgebraicNegation:
-		return _algebraic_negation_subexpression(expression, index, _i)
-	if expression is AlgebraicSum:
-		return _algebraic_sum_subexpression(expression, index, _i)
-	push_error("%s has no subexpression." % expression)
-	return expression
+	return _algebraic_subexpression(base.expression, index, 0)
 
 
 static func replace_algebraic_subexpression(
-		expression: AlgebraicExpression, new: AlgebraicExpression, index: Array, _i: int = 0
+		base: AlgebraicBase, new: AlgebraicExpression, index: Array[int]
 		) -> void:
-	if _i >= index.size():
-		push_error("Invalid index: ", index)
-	elif expression is AlgebraicNegation:
-		_replace_algebraic_negation_subexpression(expression, new, index, _i)
-	elif expression is AlgebraicSum:
-		_replace_algebraic_sum_subexpression(expression, new, index, _i)
+	if index.is_empty():
+		base.replace_expression(new)
 	else:
-		push_error("%s has no subexpression." % expression)
+		_replace_algebraic_subexpression(base.expression, new, index, 0)
 
 
-static func graphical_subexpression(
-		expression: GraphicalExpressionOrMenu, index: Array[int], _i: int = 0
+static func graphical_subexpression(base: GraphicalBase, index: Array[int]
 		) -> GraphicalExpressionOrMenu:
-	if _i > index.size():
+	return _graphical_subexpression(base.expression, index, 0)
+
+
+static func _graphical_subexpression(
+		expression: GraphicalExpressionOrMenu, index: Array[int], i: int
+		) -> GraphicalExpressionOrMenu:
+	if i > index.size():
 		push_error("Invalid index: ", index)
-	if _i == index.size():
+	if i == index.size():
 		return expression
-	return graphical_subexpression(
-			expression.subexpressions[index[_i]], index, _i + 1)
+	return _graphical_subexpression(
+			expression.subexpressions[index[i]], index, i + 1)
 
 
-static func move_index_left(base: AlgebraicExpression, index: Array[int]) -> void:
+static func move_index_left(base: AlgebraicBase, index: Array[int]) -> void:
 	_move_index_horizontal(base, index, -1)
 
 
-static func move_index_right(base: AlgebraicExpression, index: Array[int]) -> void:
+static func move_index_right(base: AlgebraicBase, index: Array[int]) -> void:
 	_move_index_horizontal(base, index, 1)
 
 
@@ -52,9 +43,24 @@ static func move_index_out(index: Array[int]) -> void:
 	index.pop_back()
 
 
-static func move_index_in(base: AlgebraicExpression, index: Array[int]) -> void:
+static func move_index_in(base: AlgebraicBase, index: Array[int]) -> void:
 	if _num_children(algebraic_subexpression(base, index)) > 0:
 		index.append(0)
+
+
+static func _algebraic_subexpression(
+		expression: AlgebraicExpression, index: Array[int], i: int
+		) -> AlgebraicExpression:
+	if i > index.size():
+		push_error("Invalid index: ", i)
+	if i == index.size():
+		return expression
+	if expression is AlgebraicNegation:
+		return _algebraic_negation_subexpression(expression, index, i)
+	if expression is AlgebraicSum:
+		return _algebraic_sum_subexpression(expression, index, i)
+	push_error("%s has no subexpression." % expression)
+	return expression
 
 
 static func _algebraic_negation_subexpression(
@@ -62,7 +68,7 @@ static func _algebraic_negation_subexpression(
 		) -> AlgebraicExpression:
 	match index[i]:
 		0:
-			return algebraic_subexpression(negation.expression, index, i + 1)
+			return _algebraic_subexpression(negation.expression, index, i + 1)
 		var j:
 			push_error("Invalid index for negation: ", j)
 			return negation
@@ -73,12 +79,25 @@ static func _algebraic_sum_subexpression(
 		) -> AlgebraicExpression:
 	match index[i]:
 		0:
-			return algebraic_subexpression(sum.left_term, index, i + 1)
+			return _algebraic_subexpression(sum.left_term, index, i + 1)
 		1:
-			return algebraic_subexpression(sum.right_term, index, i + 1)
+			return _algebraic_subexpression(sum.right_term, index, i + 1)
 		var j:
 			push_error("Invalid index for sum: ", j)
 			return sum
+
+
+static func _replace_algebraic_subexpression(
+		expression: AlgebraicExpression, new: AlgebraicExpression, index: Array[int], i: int
+		) -> void:
+	if i >= index.size():
+		push_error("Invalid index: ", index)
+	elif expression is AlgebraicNegation:
+		_replace_algebraic_negation_subexpression(expression, new, index, i)
+	elif expression is AlgebraicSum:
+		_replace_algebraic_sum_subexpression(expression, new, index, i)
+	else:
+		push_error("%s has no subexpression." % expression)
 
 
 static func _replace_algebraic_negation_subexpression(
@@ -93,7 +112,7 @@ static func _replace_algebraic_negation_subexpression(
 	else:
 		match index[i]:
 			0:
-				replace_algebraic_subexpression(negation.expression, new, index, i + 1)
+				_replace_algebraic_subexpression(negation.expression, new, index, i + 1)
 			var j:
 				push_error("Invalid index for sum: ", j)
 
@@ -112,15 +131,15 @@ static func _replace_algebraic_sum_subexpression(
 	else:
 		match index[i]:
 			0:
-				replace_algebraic_subexpression(sum.left_term, new, index, i + 1)
+				_replace_algebraic_subexpression(sum.left_term, new, index, i + 1)
 			1:
-				replace_algebraic_subexpression(sum.right_term, new, index, i + 1)
+				_replace_algebraic_subexpression(sum.right_term, new, index, i + 1)
 			var j:
 				push_error("Invalid index for sum: ", j)
 
 
 static func _move_index_horizontal(
-	base: AlgebraicExpression, index: Array[int], movement) -> void:
+	base: AlgebraicBase, index: Array[int], movement) -> void:
 	if index.is_empty():
 		return
 	var position: int = index.pop_back()
@@ -130,7 +149,7 @@ static func _move_index_horizontal(
 
 
 static func _move_index_in_position(
-	base: AlgebraicExpression, index: Array[int], position: int) -> void:
+	base: AlgebraicBase, index: Array[int], position: int) -> void:
 	var expression: AlgebraicExpression = algebraic_subexpression(base, index)
 	if 0 <= position and position < _num_children(expression):
 		index.append(position)

@@ -5,12 +5,12 @@ extends Node
 ## the optional parameter [param menu_rules] is set, the subexpression [code] e
 ## [\code] of [param expression] with [code] e.is_selected = true [/code] will
 ## be replaced by: [code]
-## [method.ExpressionsMenu.from_expression](e, [param menu_rules]) [/code].
+## [method.ExpressionMenu.from_expression](e, [param menu_rules]) [/code].
 static func algebraic_to_graphical(
 		expression: AlgebraicExpression, menu_rules: Array[AlgebraicRule] = []
 		) -> GraphicalExpressionOrMenu:
 	if not menu_rules.is_empty() and expression.is_selected:
-		return ExpressionsMenu.from_expression(expression, menu_rules)
+		return ExpressionMenu.from_expression(expression, menu_rules)
 	if expression is AlgebraicVariable:
 		return _convert_variable(expression)
 	elif expression is AlgebraicInteger:
