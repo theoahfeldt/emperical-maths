@@ -20,15 +20,14 @@ static func graphical_subexpression(base: GraphicalBase, index: Array[int]
 	return _graphical_subexpression(base.expression, index, 0)
 
 
-static func _graphical_subexpression(
-		expression: GraphicalExpressionOrMenu, index: Array[int], i: int
-		) -> GraphicalExpressionOrMenu:
-	if i > index.size():
-		push_error("Invalid index: ", index)
-	if i == index.size():
-		return expression
-	return _graphical_subexpression(
-			expression.subexpressions[index[i]], index, i + 1)
+static func replace_graphical_subexpression(
+		base: GraphicalBase, new: GraphicalExpressionOrMenu, index: Array[int]
+		) -> void:
+	if index.is_empty():
+		base.replace_expression(new)
+	else:
+		_replace_graphical_subexpression(base.expression, new, index, 0)
+	base.center()
 
 
 static func move_index_left(base: AlgebraicBase, index: Array[int]) -> void:
@@ -136,6 +135,32 @@ static func _replace_algebraic_sum_subexpression(
 				_replace_algebraic_subexpression(sum.right_term, new, index, i + 1)
 			var j:
 				push_error("Invalid index for sum: ", j)
+
+
+static func _graphical_subexpression(
+		expression: GraphicalExpressionOrMenu, index: Array[int], i: int
+		) -> GraphicalExpressionOrMenu:
+	if i > index.size():
+		push_error("Invalid index: ", index)
+	if i == index.size():
+		return expression
+	return _graphical_subexpression(
+			expression.subexpressions[index[i]], index, i + 1)
+
+
+static func _replace_graphical_subexpression(
+		expression: GraphicalExpression,
+		new: GraphicalExpressionOrMenu,
+		index: Array[int],
+		i: int
+		) -> void:
+	if i >= index.size():
+		push_error("Invalid index: ", index)
+	elif i == index.size() - 1:
+		expression.replace_subexpression(new, index[i])
+	else:
+		_replace_graphical_subexpression(expression.subexpressions[index[i]], new, index, i + 1)
+		expression.set_component_positions()
 
 
 static func _move_index_horizontal(

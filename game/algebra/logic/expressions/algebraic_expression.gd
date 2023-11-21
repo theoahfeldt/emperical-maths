@@ -2,9 +2,6 @@ class_name AlgebraicExpression
 extends Node
 
 
-var is_selected := false
-
-
 func identical_to(_other: AlgebraicExpression) -> bool:
 	push_error("Method not implemented.")
 	return false

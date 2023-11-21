@@ -8,7 +8,7 @@ var expression: GraphicalExpressionOrMenu
 func initialize(p_expression: GraphicalExpressionOrMenu) -> void:
 	add_child(p_expression)
 	expression = p_expression
-	_center()
+	center()
 
 
 func replace_expression(new: GraphicalExpressionOrMenu) -> void:
@@ -16,12 +16,12 @@ func replace_expression(new: GraphicalExpressionOrMenu) -> void:
 	expression.queue_free()
 	add_child(new)
 	expression = new
-	_center()
+	center()
 
 
 func reset() -> void:
 	expression.initialize()
 
 
-func _center() -> void:
+func center() -> void:
 	position = (get_viewport_rect().size - Vector2(expression.get_size())) / 2.0
