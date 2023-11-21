@@ -20,10 +20,6 @@ func set_color(color: Color) -> void:
 	_get_components().map(func(c): c.set_color(color))
 
 
-func set_color_by_depth(depth: int) -> void:
-	_get_components().map(func(c): c.set_color_by_depth(depth + 1))
-
-
 func _get_components() -> Array[GraphicalComponent]:
 	push_error("Method not implemented.")
 	return []
