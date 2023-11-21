@@ -11,6 +11,10 @@ func get_width() -> int:
 			func(w, c): return w + c.get_width(), 0)
 
 
+func get_height() -> int:
+	return _components[0].get_height()
+
+
 func set_color(color: Color) -> void:
 	_components.map(func(c): c.set_color(color))
 

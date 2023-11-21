@@ -28,8 +28,9 @@ func _process(_delta: float) -> void:
 func _set_graphics() -> void:
 	graphical_expression = GraphicalConversion.algebraic_to_graphical(
 			algebraic_expression, rules)
-	graphical_expression.initialize()
 	add_child(graphical_expression)
+	graphical_expression.initialize()
+	graphical_expression.center()
 
 
 func _update_mark(mark: Array[int]) -> void:

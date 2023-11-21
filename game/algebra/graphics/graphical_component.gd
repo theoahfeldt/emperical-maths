@@ -7,19 +7,24 @@ extends Node2D
 @export var shallow_color: Color = Color.AQUA
 
 
+func get_size() -> Vector2i:
+	return Vector2i(get_width(), get_height())
+
+
 func get_width() -> int:
-	push_error("Function not implemented")
-	return 0
+	return get_size().x
+
+
+func get_height() -> int:
+	return get_size().y
 
 
 func set_color(_color: Color) -> void:
 	push_error("Function not implemented")
-	return
 
 
 func set_color_by_depth(_depth: int) -> void:
 	push_error("Function not implemented")
-	return
 
 
 func color_by_depth(depth: int) -> Color:

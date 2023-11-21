@@ -13,6 +13,10 @@ func get_width() -> int:
 	return graphical_expressions.map(func(e): return e.get_width()).max()
 
 
+func get_height() -> int:
+	return graphical_expressions[0].get_height()
+
+
 func set_color(color: Color) -> void:
 	graphical_expressions.map(func(e): e.set_color(color))
 
