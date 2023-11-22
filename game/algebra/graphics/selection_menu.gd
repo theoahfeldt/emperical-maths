@@ -39,7 +39,7 @@ func update_marked(marked_index: int) -> void:
 
 func _set_opacities() -> void:
 	for i in range(options.size()):
-		var alpha: float = 0.5 ** (abs(_marked_index - i) - 0.5)
+		var alpha: float = 0.5 ** abs(_marked_index - i)
 		options[i].set_opacity(alpha)
 
 
