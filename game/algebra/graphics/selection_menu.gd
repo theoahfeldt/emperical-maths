@@ -5,6 +5,7 @@ extends Selectable
 const vertical_spacing: int = 100
 
 var options: Array[GraphicalExpression]
+var _marked_index: int = 0
 
 
 func get_width() -> int:
@@ -16,7 +17,9 @@ func get_height() -> int:
 
 
 func set_color(color: Color) -> void:
-	options.map(func(e): e.set_color(color))
+	for i in range(options.size()):
+		var alpha: float = 0.5 ** (abs(_marked_index - i) - 1)
+		options[i].set_color(Color(color, alpha))
 
 
 static func create(p_options: Array[GraphicalExpression]) -> SelectionMenu:
@@ -34,9 +37,10 @@ func num_options() -> int:
 
 
 func update_marked(marked_index: int) -> void:
+	_marked_index = marked_index
 	initialize()
-	options[marked_index].mark()
-	var new_position := Vector2(position.x, -vertical_spacing * marked_index)
+	options[_marked_index].mark()
+	var new_position := Vector2(position.x, -vertical_spacing * _marked_index)
 	move_smooth_to(new_position)
 
 

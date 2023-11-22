@@ -18,7 +18,7 @@ func get_size() -> Vector2i:
 
 
 func set_color(color: Color) -> void:
-	_label.add_theme_color_override("font_color", color)
+	_label.modulate = color
 
 
 static func create(text: String) -> Glyph:
