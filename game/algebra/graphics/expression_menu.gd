@@ -61,4 +61,6 @@ static func _get_unique(
 	for expression in expressions:
 		if not unique.any(expression.identical_to):
 			unique.append(expression)
+		else:
+			expression.queue_free()
 	return unique
