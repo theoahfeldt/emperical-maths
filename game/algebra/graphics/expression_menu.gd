@@ -16,10 +16,6 @@ func get_height() -> int:
 	return selection_menu.get_height()
 
 
-func set_color(color: Color) -> void:
-	selection_menu.set_color(color)
-
-
 static func from_expression(
 		expression: AlgebraicExpression, rules: Array[AlgebraicRule]
 		) -> ExpressionMenu:
@@ -38,10 +34,11 @@ static func from_expressions(expressions: Array[AlgebraicExpression]) -> Express
 	var menu = new()
 	menu.algebraic_expressions = expressions
 	menu.algebraic_expressions.map(menu.add_child)
-	@warning_ignore("unassigned_variable")
-	var graphical_expressions: Array[GraphicalExpression]
-	graphical_expressions.assign(expressions.map(
-			GraphicalConversion.algebraic_to_graphical))
+	var graphical_expressions: Array[GraphicalExpression] = []
+	for algebraic in expressions:
+		var graphical := GraphicalConversion.algebraic_to_graphical(algebraic)
+		graphical.set_color_from_algebraic(algebraic)
+		graphical_expressions.append(graphical)
 	menu.selection_menu = SelectionMenu.create(graphical_expressions)
 	menu.add_child(menu.selection_menu)
 	return menu

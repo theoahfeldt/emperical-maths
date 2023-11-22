@@ -34,19 +34,25 @@ func marked_expression() -> AlgebraicExpression:
 
 func mark_inner() -> void:
 	ExpressionIndexer.move_index_in(base, _mark)
-	mark_updated.emit(_mark)
+	update_marked()
 
 
 func mark_outer() -> void:
 	ExpressionIndexer.move_index_out(_mark)
-	mark_updated.emit(_mark)
+	update_marked()
 
 
 func mark_left() -> void:
 	ExpressionIndexer.move_index_left(base, _mark)
-	mark_updated.emit(_mark)
+	update_marked()
 
 
 func mark_right() -> void:
 	ExpressionIndexer.move_index_right(base, _mark)
-	mark_updated.emit(_mark)
+	update_marked()
+
+
+func update_marked() -> void:
+	var marked := marked_expression()
+	marked.mark()
+	mark_updated.emit(marked, _mark)

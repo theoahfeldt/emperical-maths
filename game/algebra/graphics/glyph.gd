@@ -21,6 +21,10 @@ func set_color(color: Color) -> void:
 	_label.modulate = color
 
 
+func set_opacity(alpha: float) -> void:
+	_label.modulate.a = alpha
+
+
 static func create(text: String) -> Glyph:
 	var glyph := Glyph.new()
 	var label := glyph_label_scene.instantiate()

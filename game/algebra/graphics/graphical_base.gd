@@ -24,8 +24,8 @@ func replace_expression(new: GraphicalExpressionOrMenu) -> void:
 	center()
 
 
-func reset() -> void:
-	expression.initialize()
+func clear_color() -> void:
+	expression.clear_color()
 
 
 func center() -> void:

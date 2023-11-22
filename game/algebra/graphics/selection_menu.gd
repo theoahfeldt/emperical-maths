@@ -1,5 +1,5 @@
 class_name SelectionMenu
-extends Selectable
+extends GraphicalComponent
 
 
 const vertical_spacing: int = 100
@@ -14,12 +14,6 @@ func get_width() -> int:
 
 func get_height() -> int:
 	return options[0].get_height()
-
-
-func set_color(color: Color) -> void:
-	for i in range(options.size()):
-		var alpha: float = 0.5 ** (abs(_marked_index - i) - 1)
-		options[i].set_color(Color(color, alpha))
 
 
 static func create(p_options: Array[GraphicalExpression]) -> SelectionMenu:
@@ -38,10 +32,15 @@ func num_options() -> int:
 
 func update_marked(marked_index: int) -> void:
 	_marked_index = marked_index
-	initialize()
-	options[_marked_index].mark()
+	_set_opacities()
 	var new_position := Vector2(position.x, -vertical_spacing * _marked_index)
 	move_smooth_to(new_position)
+
+
+func _set_opacities() -> void:
+	for i in range(options.size()):
+		var alpha: float = 0.5 ** (abs(_marked_index - i) - 0.5)
+		options[i].set_opacity(alpha)
 
 
 func _set_option_positions() -> void:

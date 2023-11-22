@@ -20,9 +20,17 @@ func set_color(color: Color) -> void:
 	_get_components().map(func(c): c.set_color(color))
 
 
+func set_opacity(alpha: float) -> void:
+	_get_components().map(func(c): c.set_opacity(alpha))
+
+
 func _get_components() -> Array[GraphicalComponent]:
-	push_error("Method not implemented.")
+	push_error("Function not implemented")
 	return []
+
+
+func set_color_from_algebraic(expression: AlgebraicExpression) -> void:
+	set_color(expression.color)
 
 
 func replace_subexpression(new: GraphicalExpressionOrMenu, index: int) -> void:
@@ -33,10 +41,6 @@ func replace_subexpression(new: GraphicalExpressionOrMenu, index: int) -> void:
 	set_component_positions_smooth()
 	remove_child(old)
 	old.queue_free()
-
-
-func mark() -> void:
-	set_color(marked_color)
 
 
 func set_component_positions() -> void:

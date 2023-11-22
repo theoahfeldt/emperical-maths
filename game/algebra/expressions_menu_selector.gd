@@ -37,6 +37,8 @@ func _select_expression() -> void:
 	var selected_graphical: GraphicalExpression = _menu.selection_menu.options[
 			_marked_index]
 	_menu.selection_menu.remove_child(selected_graphical)
+	selected_algebraic.mark()
+	selected_graphical.set_color_from_algebraic(selected_algebraic)
 	selected.emit(selected_algebraic, selected_graphical, _mark)
 
 

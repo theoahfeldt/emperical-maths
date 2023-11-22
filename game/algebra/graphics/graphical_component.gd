@@ -23,6 +23,10 @@ func set_color(_color: Color) -> void:
 	push_error("Function not implemented")
 
 
+func set_opacity(_alpha: float) -> void:
+	push_error("Function not implemented")
+
+
 func update_position(delta: float) -> void:
 	if _movement != null and _movement.has_update(delta):
 		position = _movement.current_position()

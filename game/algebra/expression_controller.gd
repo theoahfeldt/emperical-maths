@@ -16,7 +16,7 @@ func _ready() -> void:
 	var expression := GraphicalConversion.algebraic_to_graphical(
 			algebraic_base.expression)
 	$GraphicalBase.initialize(expression)
-	_update_mark([])
+	$ExpressionSelector.update_marked()
 
 
 func _process(_delta: float) -> void:
@@ -26,11 +26,11 @@ func _process(_delta: float) -> void:
 		$ExpressionSelector.process_input()
 
 
-func _update_mark(mark: Array[int]) -> void:
-	$GraphicalBase.reset()
-	var marked_expression: GraphicalExpression = ExpressionIndexer.graphical_subexpression(
+func _update_mark(marked: AlgebraicExpression, mark: Array[int]) -> void:
+	$GraphicalBase.clear_color()
+	var graphical: GraphicalExpression = ExpressionIndexer.graphical_subexpression(
 			$GraphicalBase, mark)
-	marked_expression.mark()
+	graphical.set_color_from_algebraic(marked)
 
 
 func _select_expression(mark: Array[int]) -> void:
@@ -52,8 +52,8 @@ func _replace_subexpression(
 			$GraphicalBase, graphical, mark)
 
 
-func _on_expression_selector_mark_updated(mark) -> void:
-	_update_mark(mark)
+func _on_expression_selector_mark_updated(marked, mark) -> void:
+	_update_mark(marked, mark)
 
 
 func _on_expression_selector_selected(mark) -> void:
@@ -62,5 +62,5 @@ func _on_expression_selector_selected(mark) -> void:
 
 func _on_expressions_menu_selector_selected(algebraic, graphical, mark) -> void:
 	_replace_subexpression(algebraic, graphical, mark)
-	_update_mark(mark)
+	_update_mark(algebraic, mark)
 	expression_is_selected = false

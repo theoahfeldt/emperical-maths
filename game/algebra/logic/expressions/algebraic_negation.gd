@@ -5,15 +5,14 @@ extends AlgebraicExpression
 @export var expression: AlgebraicExpression
 
 
-static func create(a: AlgebraicExpression) -> AlgebraicNegation:
+static func create(
+		a: AlgebraicExpression, p_color: Color = default_color
+		) -> AlgebraicNegation:
 	var negation = AlgebraicNegation.new()
-	negation.initialize(a)
+	negation.add_child(a)
+	negation.expression = a
+	negation.color = p_color
 	return negation
-
-
-func initialize(a: AlgebraicExpression) -> void:
-	add_child(a)
-	expression = a
 
 
 func identical_to(other: AlgebraicExpression) -> bool:
@@ -23,7 +22,7 @@ func identical_to(other: AlgebraicExpression) -> bool:
 
 
 func copy() -> AlgebraicExpression:
-	return AlgebraicNegation.create(expression.copy())
+	return AlgebraicNegation.create(expression.copy(), color)
 
 
 func replace_expression(new: AlgebraicExpression) -> void:
@@ -35,3 +34,7 @@ func replace_expression(new: AlgebraicExpression) -> void:
 
 func pretty_string() -> String:
 	return "-%s" % expression.pretty_string()
+
+
+func mark() -> void:
+	color = _sub_colors[0]

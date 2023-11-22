@@ -5,9 +5,11 @@ extends AlgebraicExpression
 @export var value: int
 
 
-static func create(p_value: int) -> AlgebraicInteger:
+static func create(
+		p_value: int, p_color: Color = default_color) -> AlgebraicInteger:
 	var integer = AlgebraicInteger.new()
 	integer.value = p_value
+	integer.color = p_color
 	return integer
 
 
@@ -22,13 +24,15 @@ func identical_to(other: AlgebraicExpression) -> bool:
 
 
 func copy() -> AlgebraicExpression:
-	var new = AlgebraicInteger.new()
-	new.value = value
-	return new
+	return AlgebraicInteger.create(value, color)
 
 
 func pretty_string() -> String:
 	return str(value)
+
+
+func mark() -> void:
+	color = _sub_colors[0]
 
 
 func is_zero() -> bool:
