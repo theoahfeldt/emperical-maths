@@ -1,14 +1,16 @@
 extends Node2D
 
 
-const ExpressionIndexer := preload("res://algebra/expression_indexer.gd")
-const GraphicalConversion := preload("res://algebra/graphics/graphical_conversion.gd")
-const Rules := preload("res://algebra/logic/rules/rules.gd")
+enum Actions {SELECT_EXPRESSION, SELECT_ALTERNATIVE, SELECT_SUBSTITUTION}
+
+const AlgebraicRules := preload("res://algebra/logic/rules/algebraic_rules.gd")
+const SubstitutionRules := preload("res://algebra/logic/rules/substitution_rules.gd")
 
 @export var algebraic_base: AlgebraicBase
 
-var expression_is_selected := false
-var rules = Rules.rules()
+var algebraic_rules := AlgebraicRules.rules()
+var substitution_rules := SubstitutionRules.rules()
+var current_action := Actions.SELECT_EXPRESSION
 
 
 func _ready() -> void:
@@ -16,31 +18,35 @@ func _ready() -> void:
 	var expression := GraphicalConversion.algebraic_to_graphical(
 			algebraic_base.expression)
 	$GraphicalBase.initialize(expression)
+	$GraphicalBase.center()
 	$ExpressionSelector.update_marked()
 
 
 func _process(_delta: float) -> void:
-	if expression_is_selected:
-		$ExpressionsMenuSelector.process_input()
-	else:
-		$ExpressionSelector.process_input()
+	match current_action:
+		Actions.SELECT_EXPRESSION:
+			$ExpressionSelector.process_input()
+		Actions.SELECT_ALTERNATIVE:
+			$ExpressionsMenuSelector.process_input()
+		Actions.SELECT_SUBSTITUTION:
+			$SubstitutionSelector.process_input()
 
 
 func _update_mark(marked: AlgebraicExpression, mark: Array[int]) -> void:
 	$GraphicalBase.clear_color()
 	var graphical: GraphicalExpression = ExpressionIndexer.graphical_subexpression(
 			$GraphicalBase, mark)
+	marked.mark()
 	graphical.set_color_from_algebraic(marked)
 
 
-func _select_expression(mark: Array[int]) -> void:
-	var selected := ExpressionIndexer.algebraic_subexpression(
-			algebraic_base, mark)
-	var menu := ExpressionMenu.from_expression(selected, rules)
+func _select_expression(selected: AlgebraicExpression, mark: Array[int]) -> void:
+	var menu := ExpressionMenu.from_expression(
+			selected, algebraic_rules, substitution_rules)
 	ExpressionIndexer.replace_graphical_subexpression(
 			$GraphicalBase, menu, mark)
 	$ExpressionsMenuSelector.initialize(menu, mark)
-	expression_is_selected = true
+	current_action = Actions.SELECT_ALTERNATIVE
 
 
 func _replace_subexpression(
@@ -52,15 +58,35 @@ func _replace_subexpression(
 			$GraphicalBase, graphical, mark)
 
 
-func _on_expression_selector_mark_updated(marked, mark) -> void:
-	_update_mark(marked, mark)
+func _on_expression_selector_mark_updated(marked_expression, mark) -> void:
+	_update_mark(marked_expression, mark)
 
 
-func _on_expression_selector_selected(mark) -> void:
-	_select_expression(mark)
+func _on_expression_selector_selected(selected_expression, mark) -> void:
+	_select_expression(selected_expression, mark)
 
 
-func _on_expressions_menu_selector_selected(algebraic, graphical, mark) -> void:
+func _on_expressions_menu_selector_selected_expression(
+		algebraic, graphical, mark) -> void:
 	_replace_subexpression(algebraic, graphical, mark)
 	_update_mark(algebraic, mark)
-	expression_is_selected = false
+	current_action = Actions.SELECT_EXPRESSION
+
+
+func _on_expressions_menu_selector_selected_substitution(
+		substitution, graphical, mark) -> void:
+	ExpressionIndexer.replace_graphical_subexpression(
+			$GraphicalBase, graphical, mark)
+	$SubstitutionSelector.initialize(algebraic_base.copy(), substitution, mark)
+	current_action = Actions.SELECT_SUBSTITUTION
+
+
+func _on_substitution_selector_substituted(new_expression, mark) -> void:
+	ExpressionIndexer.replace_algebraic_subexpression(
+			algebraic_base, new_expression, mark)
+	var graphical := GraphicalConversion.algebraic_to_graphical(new_expression)
+	ExpressionIndexer.replace_graphical_subexpression(
+			$GraphicalBase, graphical, mark)
+	_update_mark(new_expression, mark)
+	$SubstitutionSelector.deinitialize()
+	current_action = Actions.SELECT_EXPRESSION

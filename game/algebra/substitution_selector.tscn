@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dck4xdcnsjlfs"]
+
+[ext_resource type="Script" path="res://algebra/substitution_selector.gd" id="1_r36ju"]
+[ext_resource type="Script" path="res://algebra/expression_selector.gd" id="2_d0hid"]
+
+[node name="SubstitutionSelector" type="Node"]
+script = ExtResource("1_r36ju")
+
+[node name="ExpressionSelector" type="Node" parent="."]
+script = ExtResource("2_d0hid")
+
+[connection signal="mark_updated" from="ExpressionSelector" to="." method="_on_expression_selector_mark_updated"]
+[connection signal="selected" from="ExpressionSelector" to="." method="_on_expression_selector_selected"]

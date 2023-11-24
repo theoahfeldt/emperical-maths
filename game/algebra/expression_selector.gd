@@ -2,8 +2,8 @@ class_name ExpressionSelector
 extends Node
 
 
-signal mark_updated(mark)
-signal selected(mark)
+signal mark_updated(marked_expression, mark)
+signal selected(selected_expression, mark)
 
 const ExpressionIndexer = preload("res://algebra/expression_indexer.gd")
 
@@ -25,7 +25,7 @@ func process_input() -> void:
 
 
 func select_expression():
-	selected.emit(_mark)
+	selected.emit(marked_expression(), _mark)
 
 
 func marked_expression() -> AlgebraicExpression:
@@ -53,6 +53,4 @@ func mark_right() -> void:
 
 
 func update_marked() -> void:
-	var marked := marked_expression()
-	marked.mark()
-	mark_updated.emit(marked, _mark)
+	mark_updated.emit(marked_expression(), _mark)

@@ -2,7 +2,8 @@ class_name ExpressionsMenuSelector
 extends Node
 
 
-signal selected(algebraic, graphical, mark)
+signal selected_expression(algebraic, graphical, mark)
+signal selected_substitution(substitution, graphical, mark)
 
 
 var _menu: ExpressionMenu
@@ -23,23 +24,34 @@ func process_input() -> void:
 	if Input.is_action_just_pressed("expression_down"):
 		_move_down()
 	if Input.is_action_just_pressed("expression_select"):
-		_select_expression()
+		_select_option()
 
 
 func _update_marked() -> void:
 	_menu.update_marked(_marked_index)
 
 
-func _select_expression() -> void:
-	var selected_algebraic: AlgebraicExpression = _menu.algebraic_expressions[
-			_marked_index]
-	_menu.remove_child(selected_algebraic)
-	var selected_graphical: GraphicalExpression = _menu.selection_menu.options[
-			_marked_index]
-	_menu.selection_menu.remove_child(selected_graphical)
-	selected_algebraic.mark()
-	selected_graphical.set_color_from_algebraic(selected_algebraic)
-	selected.emit(selected_algebraic, selected_graphical, _mark)
+func _select_option() -> void:
+	var selected = _menu.get_option(_marked_index)
+	if selected is AlgebraicExpression:
+		_select_expression(selected)
+	else:
+		_select_substitution(selected)
+
+
+func _select_expression(selected: AlgebraicExpression) -> void:
+	_menu.remove_child(selected)
+	var graphical: GraphicalExpression = _menu.selection_menu.options[_marked_index]
+	_menu.selection_menu.remove_child(graphical)
+	selected.mark()
+	graphical.set_color_from_algebraic(selected)
+	selected_expression.emit(selected, graphical, _mark)
+
+
+func _select_substitution(selected: Substitution) -> void:
+	var graphical: GraphicalExpression = _menu.selection_menu.options[_marked_index]
+	_menu.selection_menu.remove_child(graphical)
+	selected_substitution.emit(selected, graphical, _mark)
 
 
 func _move_up() -> void:

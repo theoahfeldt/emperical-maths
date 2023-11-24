@@ -9,10 +9,15 @@ func _process(delta: float) -> void:
 	update_position(delta)
 
 
+static func create(p_expression: GraphicalExpressionOrMenu) -> GraphicalBase:
+	var new := GraphicalBase.new()
+	new.initialize(p_expression)
+	return new
+
+
 func initialize(p_expression: GraphicalExpressionOrMenu) -> void:
 	add_child(p_expression)
 	expression = p_expression
-	center()
 
 
 func replace_expression(new: GraphicalExpressionOrMenu) -> void:
