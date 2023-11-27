@@ -2,13 +2,16 @@ class_name ExpressionSelector
 extends Node
 
 
-signal mark_updated(marked_expression, mark)
 signal selected(selected_expression, mark)
 
-const ExpressionIndexer = preload("res://algebra/expression_indexer.gd")
-
-var base: AlgebraicBase
+var _algebraic_base: AlgebraicBase
+var _graphical_base: GraphicalBase
 var _mark: Array[int] = []
+
+
+func initialize(algebraic_base, graphical_base) -> void:
+	_algebraic_base = algebraic_base
+	_graphical_base = graphical_base
 
 
 func process_input() -> void:
@@ -29,11 +32,11 @@ func select_expression():
 
 
 func marked_expression() -> AlgebraicExpression:
-	return ExpressionIndexer.algebraic_subexpression(base, _mark)
+	return ExpressionIndexer.algebraic_subexpression(_algebraic_base, _mark)
 
 
 func mark_inner() -> void:
-	ExpressionIndexer.move_index_in(base, _mark)
+	ExpressionIndexer.move_index_in(_algebraic_base, _mark)
 	update_marked()
 
 
@@ -43,14 +46,19 @@ func mark_outer() -> void:
 
 
 func mark_left() -> void:
-	ExpressionIndexer.move_index_left(base, _mark)
+	ExpressionIndexer.move_index_left(_algebraic_base, _mark)
 	update_marked()
 
 
 func mark_right() -> void:
-	ExpressionIndexer.move_index_right(base, _mark)
+	ExpressionIndexer.move_index_right(_algebraic_base, _mark)
 	update_marked()
 
 
 func update_marked() -> void:
-	mark_updated.emit(marked_expression(), _mark)
+	_graphical_base.clear_color()
+	var marked_graphical: GraphicalExpression = ExpressionIndexer.graphical_subexpression(
+			_graphical_base, _mark)
+	var marked_algebraic: AlgebraicExpression = marked_expression()
+	marked_algebraic.mark()
+	marked_graphical.set_color_from_algebraic(marked_algebraic)

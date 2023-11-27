@@ -17,13 +17,13 @@ func initialize(
 	_mark = mark
 	add_child(base)
 	_algebraic_base = base
-	$ExpressionSelector.base = base
 	var graphical_expression := GraphicalConversion.algebraic_to_graphical(
 			base.expression)
 	_graphical_base = GraphicalBase.create(graphical_expression)
 	add_child(_graphical_base)
 	_graphical_base.center_in_viewport()
 	_graphical_base.position.y += 100
+	$ExpressionSelector.initialize(_algebraic_base, _graphical_base)
 
 
 func deinitialize() -> void:

@@ -9,5 +9,4 @@ script = ExtResource("1_r36ju")
 [node name="ExpressionSelector" type="Node" parent="."]
 script = ExtResource("2_d0hid")
 
-[connection signal="mark_updated" from="ExpressionSelector" to="." method="_on_expression_selector_mark_updated"]
 [connection signal="selected" from="ExpressionSelector" to="." method="_on_expression_selector_selected"]

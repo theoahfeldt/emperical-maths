@@ -20,7 +20,6 @@ script = ExtResource("4_78jbo")
 
 [node name="SubstitutionSelector" parent="." instance=ExtResource("5_lk2h1")]
 
-[connection signal="mark_updated" from="ExpressionSelector" to="." method="_on_expression_selector_mark_updated"]
 [connection signal="selected" from="ExpressionSelector" to="." method="_on_expression_selector_selected"]
 [connection signal="selected_expression" from="ExpressionsMenuSelector" to="." method="_on_expressions_menu_selector_selected_expression"]
 [connection signal="selected_substitution" from="ExpressionsMenuSelector" to="." method="_on_expressions_menu_selector_selected_substitution"]
