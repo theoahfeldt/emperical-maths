@@ -18,7 +18,7 @@ func _ready() -> void:
 	var expression := GraphicalConversion.algebraic_to_graphical(
 			algebraic_base.expression)
 	$GraphicalBase.initialize(expression)
-	$GraphicalBase.center()
+	$GraphicalBase.center_in_viewport()
 	$ExpressionSelector.update_marked()
 
 

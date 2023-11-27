@@ -9,6 +9,10 @@ func _process(delta: float) -> void:
 	update_position(delta)
 
 
+func get_size() -> Vector2i:
+	return expression.get_size()
+
+
 static func create(p_expression: GraphicalExpressionOrMenu) -> GraphicalBase:
 	var new := GraphicalBase.new()
 	new.initialize(p_expression)
@@ -26,20 +30,8 @@ func replace_expression(new: GraphicalExpressionOrMenu) -> void:
 	new.position = Vector2.ZERO
 	add_child(new)
 	expression = new
-	center()
+	center_in_viewport()
 
 
 func clear_color() -> void:
 	expression.clear_color()
-
-
-func center() -> void:
-	position = _get_center()
-
-
-func center_smooth() -> void:
-	_movement = Movement.create(position, _get_center(), movement_duration)
-
-
-func _get_center() -> Vector2:
-	return (get_viewport_rect().size - Vector2(expression.get_size())) / 2.0

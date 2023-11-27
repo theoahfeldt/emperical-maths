@@ -22,7 +22,7 @@ func initialize(
 			base.expression)
 	_graphical_base = GraphicalBase.create(graphical_expression)
 	add_child(_graphical_base)
-	_graphical_base.center()
+	_graphical_base.center_in_viewport()
 	_graphical_base.position.y += 100
 
 

@@ -27,6 +27,23 @@ func set_opacity(_alpha: float) -> void:
 	push_error("Function not implemented")
 
 
+func center_at(p_position: Vector2) -> void:
+	position = p_position - get_size() / 2.0
+
+
+func center_at_smooth(target: Vector2) -> void:
+	var compensated: Vector2 = target - get_size() / 2.0
+	_movement = Movement.create(position, compensated, movement_duration)
+
+
+func center_in_viewport() -> void:
+	center_at(get_viewport_rect().size / 2.0)
+
+
+func center_in_viewport_smooth() -> void:
+	center_at_smooth(get_viewport_rect().size / 2.0)
+
+
 func update_position(delta: float) -> void:
 	if _movement != null and _movement.has_update(delta):
 		position = _movement.current_position()
@@ -35,5 +52,5 @@ func update_position(delta: float) -> void:
 			child.update_position(delta)
 
 
-func move_smooth_to(new_position: Vector2) -> void:
-	_movement = Movement.create(position, new_position, movement_duration)
+func move_smooth_to(target: Vector2) -> void:
+	_movement = Movement.create(position, target, movement_duration)
