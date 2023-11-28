@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://algebra/expression_controller.gd" id="1_rqufd"]
 [ext_resource type="Script" path="res://algebra/expression_selector.gd" id="2_m3xpi"]
-[ext_resource type="Script" path="res://algebra/expressions_menu_selector.gd" id="3_deu35"]
+[ext_resource type="Script" path="res://algebra/expression_menu_selector.gd" id="3_kg7ly"]
 [ext_resource type="Script" path="res://algebra/graphics/graphical_base.gd" id="4_78jbo"]
 [ext_resource type="PackedScene" uid="uid://dck4xdcnsjlfs" path="res://algebra/substitution_selector.tscn" id="5_lk2h1"]
 
@@ -12,8 +12,8 @@ script = ExtResource("1_rqufd")
 [node name="ExpressionSelector" type="Node" parent="."]
 script = ExtResource("2_m3xpi")
 
-[node name="ExpressionsMenuSelector" type="Node" parent="."]
-script = ExtResource("3_deu35")
+[node name="ExpressionMenuSelector" type="Node" parent="."]
+script = ExtResource("3_kg7ly")
 
 [node name="GraphicalBase" type="Node2D" parent="."]
 script = ExtResource("4_78jbo")
@@ -21,6 +21,6 @@ script = ExtResource("4_78jbo")
 [node name="SubstitutionSelector" parent="." instance=ExtResource("5_lk2h1")]
 
 [connection signal="selected" from="ExpressionSelector" to="." method="_on_expression_selector_selected"]
-[connection signal="selected_expression" from="ExpressionsMenuSelector" to="." method="_on_expressions_menu_selector_selected_expression"]
-[connection signal="selected_substitution" from="ExpressionsMenuSelector" to="." method="_on_expressions_menu_selector_selected_substitution"]
+[connection signal="selected_expression" from="ExpressionMenuSelector" to="." method="_on_expression_menu_selector_selected_expression"]
+[connection signal="selected_substitution" from="ExpressionMenuSelector" to="." method="_on_expression_menu_selector_selected_substitution"]
 [connection signal="substituted" from="SubstitutionSelector" to="." method="_on_substitution_selector_substituted"]

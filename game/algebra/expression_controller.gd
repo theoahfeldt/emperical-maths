@@ -27,7 +27,7 @@ func _process(_delta: float) -> void:
 		Actions.SELECT_EXPRESSION:
 			$ExpressionSelector.process_input()
 		Actions.SELECT_ALTERNATIVE:
-			$ExpressionsMenuSelector.process_input()
+			$ExpressionMenuSelector.process_input()
 		Actions.SELECT_SUBSTITUTION:
 			$SubstitutionSelector.process_input()
 
@@ -37,7 +37,7 @@ func _select_expression(selected: AlgebraicExpression, mark: Array[int]) -> void
 			selected, algebraic_rules, substitution_rules)
 	ExpressionIndexer.replace_graphical_subexpression(
 			$GraphicalBase, menu, mark)
-	$ExpressionsMenuSelector.initialize(menu, mark)
+	$ExpressionMenuSelector.initialize(menu, mark)
 	current_action = Actions.SELECT_ALTERNATIVE
 
 
@@ -54,13 +54,13 @@ func _on_expression_selector_selected(selected_expression, mark) -> void:
 	_select_expression(selected_expression, mark)
 
 
-func _on_expressions_menu_selector_selected_expression(
+func _on_expression_menu_selector_selected_expression(
 		algebraic, graphical, mark) -> void:
 	_replace_subexpression(algebraic, graphical, mark)
 	current_action = Actions.SELECT_EXPRESSION
 
 
-func _on_expressions_menu_selector_selected_substitution(
+func _on_expression_menu_selector_selected_substitution(
 		substitution, graphical, mark) -> void:
 	ExpressionIndexer.replace_graphical_subexpression(
 			$GraphicalBase, graphical, mark)
