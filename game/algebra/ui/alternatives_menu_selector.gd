@@ -1,4 +1,4 @@
-class_name ExpressionMenuSelector
+class_name AlternativesMenuSelector
 extends Node
 
 
