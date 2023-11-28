@@ -2,8 +2,6 @@ class_name ExpressionMenu
 extends GraphicalExpressionOrMenu
 
 
-const GraphicalConversion = preload("res://algebra/graphics/graphical_conversion.gd")
-
 var selection_menu: SelectionMenu
 var algebraic_expressions: Array[AlgebraicExpression]
 var substitutions: Array[Substitution]
@@ -40,7 +38,7 @@ static func from_expression(
 
 static func from_expressions(
 		expressions: Array[AlgebraicExpression],
-		p_substitutions: Array[Substitution],
+		p_substitutions: Array[Substitution] = [],
 		) -> ExpressionMenu:
 	if expressions.is_empty():
 		push_error("Created empty menu.")
