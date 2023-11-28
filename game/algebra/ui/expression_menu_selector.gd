@@ -6,59 +6,95 @@ signal selected_expression(algebraic, graphical, mark)
 signal selected_substitution(substitution, graphical, mark)
 
 
-var _menu: ExpressionMenu
+var _algebraic_expressions: Array[AlgebraicExpression]
+var _substitutions: Array[Substitution]
+var _menu: SelectionMenu
 var _mark: Array[int]
-var _marked_index := 0
 
 
-func initialize(menu: ExpressionMenu, mark: Array[int]) -> void:
-	_menu = menu
+func initialize_from_expression(
+		expression: AlgebraicExpression,
+		algebraic_rules: Array[AlgebraicRule],
+		substitution_rules: Array[SubstitutionRule],
+		mark: Array[int],
+		) -> SelectionMenu:
+	var applicable_algebraic := algebraic_rules.filter(
+			func(r): return r.applicable(expression))
+	@warning_ignore("unassigned_variable")
+	var alternative_expressions: Array[AlgebraicExpression]
+	alternative_expressions.assign(
+			applicable_algebraic.map(func(r): return r.apply(expression)))
+	var unique := _get_unique(alternative_expressions)
+	var applicable_substitutions := substitution_rules.filter(
+			func(r): return r.applicable(expression))
+	@warning_ignore("unassigned_variable")
+	var subs: Array[Substitution]
+	subs.assign(
+			applicable_substitutions.map(func(r): return r.apply(expression)))
+	return initialize_from_expressions(unique, subs, mark)
+
+
+func initialize_from_expressions(
+		expressions: Array[AlgebraicExpression],
+		p_substitutions: Array[Substitution],
+		mark: Array[int],
+		) -> SelectionMenu:
+	if expressions.is_empty():
+		push_error("Created empty menu.")
 	_mark = mark
-	_marked_index = 0
-	_update_marked()
+	expressions.map(add_child)
+	_algebraic_expressions = expressions
+	_substitutions = p_substitutions
+	var graphical_expressions: Array[GraphicalExpression] = []
+	for algebraic in expressions:
+		var graphical := GraphicalConversion.algebraic_to_graphical(algebraic)
+		graphical.set_color_from_algebraic(algebraic)
+		graphical_expressions.append(graphical)
+	for substitution in p_substitutions:
+		graphical_expressions.append(substitution.graphical_expression())
+	_menu = SelectionMenu.create(graphical_expressions)
+	return _menu
 
 
 func process_input() -> void:
 	if Input.is_action_just_pressed("expression_up"):
-		_move_up()
+		_menu.move_up()
 	if Input.is_action_just_pressed("expression_down"):
-		_move_down()
+		_menu.move_down()
 	if Input.is_action_just_pressed("expression_select"):
 		_select_option()
 
 
-func _update_marked() -> void:
-	_menu.update_marked(_marked_index)
-
-
 func _select_option() -> void:
-	var selected = _menu.get_option(_marked_index)
-	if selected is AlgebraicExpression:
-		_select_expression(selected)
+	var num_expressions: int = _algebraic_expressions.size()
+	var i: int = _menu.marked_index
+	if i < num_expressions:
+		_select_expression(_algebraic_expressions[i])
 	else:
-		_select_substitution(selected)
+		_select_substitution(_substitutions[i - num_expressions])
 
 
 func _select_expression(selected: AlgebraicExpression) -> void:
-	_menu.remove_child(selected)
-	var graphical: GraphicalExpression = _menu.selection_menu.options[_marked_index]
-	_menu.selection_menu.remove_child(graphical)
+	remove_child(selected)
+	var graphical: GraphicalExpression = _menu.marked_option()
+	_menu.remove_child(graphical)
 	selected.mark()
 	graphical.set_color_from_algebraic(selected)
 	selected_expression.emit(selected, graphical, _mark)
 
 
 func _select_substitution(selected: Substitution) -> void:
-	var graphical: GraphicalExpression = _menu.selection_menu.options[_marked_index]
-	_menu.selection_menu.remove_child(graphical)
+	var graphical: GraphicalExpression = _menu.marked_option()
+	_menu.remove_child(graphical)
 	selected_substitution.emit(selected, graphical, _mark)
 
 
-func _move_up() -> void:
-	_marked_index = max(0, _marked_index - 1)
-	_update_marked()
-
-
-func _move_down() -> void:
-	_marked_index = min(_marked_index + 1, _menu.num_options() - 1)
-	_update_marked()
+func _get_unique(
+		expressions: Array[AlgebraicExpression]) -> Array[AlgebraicExpression]:
+	var unique: Array[AlgebraicExpression] = []
+	for expression in expressions:
+		if not unique.any(expression.identical_to):
+			unique.append(expression)
+		else:
+			expression.queue_free()
+	return unique

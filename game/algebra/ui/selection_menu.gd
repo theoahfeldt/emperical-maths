@@ -1,11 +1,11 @@
 class_name SelectionMenu
-extends GraphicalComponent
+extends GraphicalExpressionOrMenu
 
 
 const vertical_spacing: int = 100
 
 var options: Array[GraphicalExpression]
-var _marked_index: int = 0
+var marked_index: int = 0
 
 
 func get_width() -> int:
@@ -30,16 +30,29 @@ func num_options() -> int:
 	return options.size()
 
 
-func update_marked(marked_index: int) -> void:
-	_marked_index = marked_index
+func marked_option() -> GraphicalExpression:
+	return options[marked_index]
+
+
+func move_up() -> void:
+	marked_index = max(0, marked_index - 1)
+	_update_marked()
+
+
+func move_down() -> void:
+	marked_index = min(marked_index + 1, num_options() - 1)
+	_update_marked()
+
+
+func _update_marked() -> void:
 	_set_opacities()
-	var new_position := Vector2(position.x, -vertical_spacing * _marked_index)
+	var new_position := Vector2(position.x, -vertical_spacing * marked_index)
 	move_smooth_to(new_position)
 
 
 func _set_opacities() -> void:
 	for i in range(options.size()):
-		var alpha: float = 0.5 ** abs(_marked_index - i)
+		var alpha: float = 0.5 ** abs(marked_index - i)
 		options[i].set_opacity(alpha)
 
 

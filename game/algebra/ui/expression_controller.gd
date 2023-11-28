@@ -33,11 +33,10 @@ func _process(_delta: float) -> void:
 
 
 func _select_expression(selected: AlgebraicExpression, mark: Array[int]) -> void:
-	var menu := ExpressionMenu.from_expression(
-			selected, algebraic_rules, substitution_rules)
+	var menu: SelectionMenu = $ExpressionMenuSelector.initialize_from_expression(
+			selected, algebraic_rules, substitution_rules, mark)
 	ExpressionIndexer.replace_graphical_subexpression(
 			$GraphicalBase, menu, mark)
-	$ExpressionMenuSelector.initialize(menu, mark)
 	current_action = Actions.SELECT_ALTERNATIVE
 
 
