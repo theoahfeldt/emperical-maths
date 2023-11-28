@@ -3,6 +3,7 @@ extends GraphicalComponent
 
 
 var expression: GraphicalExpressionOrMenu
+var center_position: Vector2
 
 
 func _process(delta: float) -> void:
@@ -13,15 +14,22 @@ func get_size() -> Vector2i:
 	return expression.get_size()
 
 
-static func create(p_expression: GraphicalExpressionOrMenu) -> GraphicalBase:
+static func create(
+		p_expression: GraphicalExpressionOrMenu,
+		p_center_position := Vector2.ZERO,
+		) -> GraphicalBase:
 	var new := GraphicalBase.new()
-	new.initialize(p_expression)
+	new.initialize(p_expression, p_center_position)
 	return new
 
 
-func initialize(p_expression: GraphicalExpressionOrMenu) -> void:
+func initialize(
+		p_expression: GraphicalExpressionOrMenu,
+		p_center_position := Vector2.ZERO,
+		) -> void:
 	add_child(p_expression)
 	expression = p_expression
+	center_position = p_center_position
 
 
 func replace_expression(new: GraphicalExpressionOrMenu) -> void:
@@ -30,7 +38,15 @@ func replace_expression(new: GraphicalExpressionOrMenu) -> void:
 	new.position = Vector2.ZERO
 	add_child(new)
 	expression = new
-	center_in_viewport()
+	center()
+
+
+func center() -> void:
+	center_at(center_position)
+
+
+func center_smooth() -> void:
+	center_at_smooth(center_position)
 
 
 func clear_color() -> void:

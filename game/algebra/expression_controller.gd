@@ -16,7 +16,7 @@ var current_action := Actions.SELECT_EXPRESSION
 func _ready() -> void:
 	var expression := GraphicalConversion.algebraic_to_graphical(
 			algebraic_base.expression)
-	$GraphicalBase.initialize(expression)
+	$GraphicalBase.initialize(expression, get_viewport_rect().size / 2.0)
 	$GraphicalBase.center_in_viewport()
 	$ExpressionSelector.initialize(algebraic_base, $GraphicalBase)
 	$ExpressionSelector.update_marked()
