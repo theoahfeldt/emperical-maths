@@ -7,6 +7,7 @@ signal selected(selected_expression, mark)
 var _algebraic_base: AlgebraicBase
 var _graphical_base: GraphicalBase
 var _mark: Array[int] = []
+var _mark_stack := []
 
 
 func initialize(algebraic_base, graphical_base) -> void:
@@ -53,6 +54,36 @@ func mark_left() -> void:
 func mark_right() -> void:
 	ExpressionIndexer.move_index_right(_algebraic_base, _mark)
 	update_marked()
+
+
+func push_mark_inner() -> void:
+	var new_mark := _mark.duplicate()
+	ExpressionIndexer.move_index_in(_algebraic_base, new_mark)
+	_mark_stack.append(new_mark)
+
+
+func push_mark_outer() -> void:
+	var new_mark := _mark.duplicate()
+	ExpressionIndexer.move_index_out(new_mark)
+	_mark_stack.append(new_mark)
+
+
+func push_mark_left() -> void:
+	var new_mark := _mark.duplicate()
+	ExpressionIndexer.move_index_left(_algebraic_base, new_mark)
+	_mark_stack.append(new_mark)
+
+
+func push_mark_right() -> void:
+	var new_mark := _mark.duplicate()
+	ExpressionIndexer.move_index_right(_algebraic_base, new_mark)
+	_mark_stack.append(new_mark)
+
+
+func pop_mark() -> void:
+	if not _mark_stack.is_empty():
+		_mark = _mark_stack.pop_back()
+		update_marked()
 
 
 func update_marked() -> void:

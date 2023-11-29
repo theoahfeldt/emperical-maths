@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://xxstk8xrwcv3"]
+
+[ext_resource type="Script" path="res://algebra/ui/expression_creation/expression_creator.gd" id="1_0a12c"]
+[ext_resource type="Script" path="res://algebra/ui/expression_selector.gd" id="2_k3isp"]
+[ext_resource type="Script" path="res://algebra/ui/expression_creation/creation_menu_selector.gd" id="3_dij33"]
+[ext_resource type="Script" path="res://algebra/ui/alternatives_menu_selector.gd" id="4_fdg3v"]
+
+[node name="ExpressionCreator" type="Node2D"]
+script = ExtResource("1_0a12c")
+
+[node name="ExpressionSelector" type="Node" parent="."]
+script = ExtResource("2_k3isp")
+
+[node name="CreationMenuSelector" type="Node" parent="."]
+script = ExtResource("3_dij33")
+
+[node name="AlternativesMenuSelector" type="Node" parent="."]
+script = ExtResource("4_fdg3v")
+
+[connection signal="selected" from="ExpressionSelector" to="." method="_on_expression_selector_selected"]
+[connection signal="selected_new" from="CreationMenuSelector" to="." method="_on_creation_menu_selector_selected_new"]
+[connection signal="selected_original" from="CreationMenuSelector" to="." method="_on_creation_menu_selector_selected_original"]
+[connection signal="selected_expression" from="AlternativesMenuSelector" to="." method="_on_alternatives_menu_selector_selected_expression"]
