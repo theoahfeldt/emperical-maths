@@ -26,7 +26,7 @@ static func create(
 		push_error("Must have the same number of options as graphical_options")
 	var menu = SelectionMenu.new()
 	menu._options = options
-	options.map(func(o): if o is Object: menu.add_child(o))
+	options.map(func(o): if o is Node: menu.add_child(o))
 	menu._graphical_options = graphical_options
 	graphical_options.map(menu.add_child)
 	menu._set_option_positions()
@@ -43,7 +43,7 @@ func marked_option():
 
 func adopt_marked_option():
 	var option = marked_option()
-	if option is Object:
+	if option is Node:
 		remove_child(option)
 	return option
 
