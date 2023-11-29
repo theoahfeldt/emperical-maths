@@ -1,22 +1,30 @@
 class_name AlternativesMenuSelector
-extends Node
+extends MenuSelector
 
 
 signal selected_expression(algebraic, graphical, mark)
 signal selected_substitution(substitution, graphical, mark)
 
 
-var _algebraic_expressions: Array[AlgebraicExpression]
-var _substitutions: Array[Substitution]
-var _menu: SelectionMenu
 var _mark: Array[int]
 
 
+func _select() -> void:
+	var option = _menu.adopt_marked_option()
+	var graphical: GraphicalExpression = _menu.adopt_marked_graphical_option()
+	if option is AlgebraicExpression:
+		_select_expression(option, graphical)
+	elif option is Substitution:
+		_select_substitution(option, graphical)
+	else:
+		push_error("Unexpected type of menu option")
+
+
 func initialize_from_expression(
+		mark: Array[int],
 		expression: AlgebraicExpression,
 		algebraic_rules: Array[AlgebraicRule],
 		substitution_rules: Array[SubstitutionRule],
-		mark: Array[int],
 		) -> SelectionMenu:
 	var applicable_algebraic := algebraic_rules.filter(
 			func(r): return r.applicable(expression))
@@ -31,61 +39,38 @@ func initialize_from_expression(
 	var subs: Array[Substitution]
 	subs.assign(
 			applicable_substitutions.map(func(r): return r.apply(expression)))
-	return initialize_from_expressions(unique, subs, mark)
+	return initialize_from_expressions(mark, unique, subs)
 
 
 func initialize_from_expressions(
-		expressions: Array[AlgebraicExpression],
-		p_substitutions: Array[Substitution],
 		mark: Array[int],
+		expressions: Array[AlgebraicExpression],
+		substitutions: Array[Substitution] = [],
 		) -> SelectionMenu:
 	if expressions.is_empty():
 		push_error("Created empty menu.")
 	_mark = mark
-	expressions.map(add_child)
-	_algebraic_expressions = expressions
-	_substitutions = p_substitutions
-	var graphical_expressions: Array[GraphicalExpression] = []
+	var options: Array = expressions + substitutions
+	var graphical_options: Array[GraphicalExpression] = []
 	for algebraic in expressions:
 		var graphical := GraphicalConversion.algebraic_to_graphical(algebraic)
 		graphical.set_color_from_algebraic(algebraic)
-		graphical_expressions.append(graphical)
-	for substitution in p_substitutions:
-		graphical_expressions.append(substitution.graphical_expression())
-	_menu = SelectionMenu.create(graphical_expressions)
+		graphical_options.append(graphical)
+	for substitution in substitutions:
+		graphical_options.append(substitution.graphical_expression())
+	_menu = SelectionMenu.create(options, graphical_options)
 	return _menu
 
 
-func process_input() -> void:
-	if Input.is_action_just_pressed("expression_up"):
-		_menu.move_up()
-	if Input.is_action_just_pressed("expression_down"):
-		_menu.move_down()
-	if Input.is_action_just_pressed("expression_select"):
-		_select_option()
-
-
-func _select_option() -> void:
-	var num_expressions: int = _algebraic_expressions.size()
-	var i: int = _menu.marked_index
-	if i < num_expressions:
-		_select_expression(_algebraic_expressions[i])
-	else:
-		_select_substitution(_substitutions[i - num_expressions])
-
-
-func _select_expression(selected: AlgebraicExpression) -> void:
-	remove_child(selected)
-	var graphical: GraphicalExpression = _menu.marked_option()
-	_menu.remove_child(graphical)
+func _select_expression(
+		selected: AlgebraicExpression, graphical: GraphicalExpression) -> void:
 	selected.mark()
 	graphical.set_color_from_algebraic(selected)
 	selected_expression.emit(selected, graphical, _mark)
 
 
-func _select_substitution(selected: Substitution) -> void:
-	var graphical: GraphicalExpression = _menu.marked_option()
-	_menu.remove_child(graphical)
+func _select_substitution(
+		selected: Substitution, graphical: GraphicalExpression) -> void:
 	selected_substitution.emit(selected, graphical, _mark)
 
 

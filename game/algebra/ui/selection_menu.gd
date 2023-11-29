@@ -4,59 +4,82 @@ extends GraphicalExpressionOrMenu
 
 const vertical_spacing: int = 100
 
-var options: Array[GraphicalExpression]
-var marked_index: int = 0
+var _options: Array
+var _graphical_options: Array[GraphicalExpression]
+var _marked_index: int = 0
 
 
 func get_width() -> int:
-	return options.map(func(e): return e.get_width()).max()
+	return _graphical_options.map(func(e): return e.get_width()).max()
 
 
 func get_height() -> int:
-	return options[0].get_height()
+	return _graphical_options[0].get_height()
 
 
-static func create(p_options: Array[GraphicalExpression]) -> SelectionMenu:
-	if p_options.is_empty():
-		push_error("Created empty menu.")
+static func create(
+		options: Array, graphical_options: Array[GraphicalExpression]
+		) -> SelectionMenu:
+	if options.is_empty():
+		push_error("Created empty menu")
+	if options.size() != graphical_options.size():
+		push_error("Must have the same number of options as graphical_options")
 	var menu = SelectionMenu.new()
-	menu.options = p_options
-	menu.options.map(menu.add_child)
+	menu._options = options
+	options.map(menu.add_child)
+	menu._graphical_options = graphical_options
+	graphical_options.map(menu.add_child)
 	menu._set_option_positions()
 	return menu
 
 
 func num_options() -> int:
-	return options.size()
+	return _options.size()
 
 
-func marked_option() -> GraphicalExpression:
-	return options[marked_index]
+func marked_option():
+	return _options[_marked_index]
+
+
+func adopt_marked_option():
+	var option = marked_option()
+	remove_child(option)
+	return option
+
+
+func marked_graphical_option() -> GraphicalExpression:
+	return _graphical_options[_marked_index]
+
+
+func adopt_marked_graphical_option() -> GraphicalExpression:
+	var option = marked_graphical_option()
+	remove_child(option)
+	return option
 
 
 func move_up() -> void:
-	marked_index = max(0, marked_index - 1)
+	_marked_index = max(0, _marked_index - 1)
 	_update_marked()
 
 
 func move_down() -> void:
-	marked_index = min(marked_index + 1, num_options() - 1)
+	_marked_index = min(_marked_index + 1, num_options() - 1)
 	_update_marked()
 
 
 func _update_marked() -> void:
 	_set_opacities()
-	var new_position := Vector2(position.x, -vertical_spacing * marked_index)
+	var new_position := Vector2(position.x, -vertical_spacing * _marked_index)
 	move_smooth_to(new_position)
 
 
 func _set_opacities() -> void:
-	for i in range(options.size()):
-		var alpha: float = 0.5 ** abs(marked_index - i)
-		options[i].set_opacity(alpha)
+	for i in range(_graphical_options.size()):
+		var alpha: float = 0.5 ** abs(_marked_index - i)
+		_graphical_options[i].set_opacity(alpha)
 
 
 func _set_option_positions() -> void:
 	var width := get_width()
-	options.reduce(
+	_graphical_options.reduce(
 			func(y, e): e.position = Vector2((width - e.get_width()) / 2.0, y); return y + vertical_spacing, 0)
