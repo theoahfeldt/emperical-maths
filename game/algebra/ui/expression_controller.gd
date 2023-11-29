@@ -37,15 +37,6 @@ func _select_expression(selected: AlgebraicExpression, mark: Array[int]) -> void
 			selected, algebraic_rules, substitution_rules, mark)
 	ExpressionIndexer.replace_graphical_subexpression(
 			$GraphicalBase, menu, mark)
-
-
-func _replace_subexpression(
-		algebraic: AlgebraicExpression, graphical: GraphicalExpression, mark
-		) -> void:
-	ExpressionIndexer.replace_algebraic_subexpression(
-			algebraic_base, algebraic, mark)
-	ExpressionIndexer.replace_graphical_subexpression(
-			$GraphicalBase, graphical, mark)
 	current_action = Action.SELECT_ALTERNATIVE
 
 
@@ -55,7 +46,10 @@ func _on_expression_selector_selected(selected_expression, mark) -> void:
 
 func _on_alternatives_menu_selector_selected_expression(
 		algebraic, graphical, mark) -> void:
-	_replace_subexpression(algebraic, graphical, mark)
+	ExpressionIndexer.replace_algebraic_subexpression(
+			algebraic_base, algebraic, mark)
+	ExpressionIndexer.replace_graphical_subexpression(
+			$GraphicalBase, graphical, mark)
 	current_action = Action.SELECT_EXPRESSION
 
 
