@@ -1,7 +1,7 @@
 extends Node2D
 
 
-enum Actions {SELECT_EXPRESSION, SELECT_ALTERNATIVE, SELECT_SUBSTITUTION}
+enum Action {SELECT_EXPRESSION, SELECT_ALTERNATIVE, SELECT_SUBSTITUTION}
 
 const AlgebraicRules := preload("res://algebra/logic/rules/algebraic_rules.gd")
 const SubstitutionRules := preload("res://algebra/logic/rules/substitution_rules.gd")
@@ -10,7 +10,7 @@ const SubstitutionRules := preload("res://algebra/logic/rules/substitution_rules
 
 var algebraic_rules := AlgebraicRules.rules()
 var substitution_rules := SubstitutionRules.rules()
-var current_action := Actions.SELECT_EXPRESSION
+var current_action := Action.SELECT_EXPRESSION
 
 
 func _ready() -> void:
@@ -24,11 +24,11 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	match current_action:
-		Actions.SELECT_EXPRESSION:
+		Action.SELECT_EXPRESSION:
 			$ExpressionSelector.process_input()
-		Actions.SELECT_ALTERNATIVE:
+		Action.SELECT_ALTERNATIVE:
 			$AlternativesMenuSelector.process_input()
-		Actions.SELECT_SUBSTITUTION:
+		Action.SELECT_SUBSTITUTION:
 			$SubstitutionSelector.process_input()
 
 
@@ -37,7 +37,6 @@ func _select_expression(selected: AlgebraicExpression, mark: Array[int]) -> void
 			selected, algebraic_rules, substitution_rules, mark)
 	ExpressionIndexer.replace_graphical_subexpression(
 			$GraphicalBase, menu, mark)
-	current_action = Actions.SELECT_ALTERNATIVE
 
 
 func _replace_subexpression(
@@ -47,6 +46,7 @@ func _replace_subexpression(
 			algebraic_base, algebraic, mark)
 	ExpressionIndexer.replace_graphical_subexpression(
 			$GraphicalBase, graphical, mark)
+	current_action = Action.SELECT_ALTERNATIVE
 
 
 func _on_expression_selector_selected(selected_expression, mark) -> void:
@@ -56,7 +56,7 @@ func _on_expression_selector_selected(selected_expression, mark) -> void:
 func _on_alternatives_menu_selector_selected_expression(
 		algebraic, graphical, mark) -> void:
 	_replace_subexpression(algebraic, graphical, mark)
-	current_action = Actions.SELECT_EXPRESSION
+	current_action = Action.SELECT_EXPRESSION
 
 
 func _on_alternatives_menu_selector_selected_substitution(
@@ -64,7 +64,7 @@ func _on_alternatives_menu_selector_selected_substitution(
 	ExpressionIndexer.replace_graphical_subexpression(
 			$GraphicalBase, graphical, mark)
 	$SubstitutionSelector.initialize(algebraic_base.copy(), substitution, mark)
-	current_action = Actions.SELECT_SUBSTITUTION
+	current_action = Action.SELECT_SUBSTITUTION
 
 
 func _on_substitution_selector_substituted(new_expression, mark) -> void:
@@ -75,4 +75,4 @@ func _on_substitution_selector_substituted(new_expression, mark) -> void:
 			$GraphicalBase, graphical, mark)
 	$ExpressionSelector.update_marked()
 	$SubstitutionSelector.deinitialize()
-	current_action = Actions.SELECT_EXPRESSION
+	current_action = Action.SELECT_EXPRESSION
