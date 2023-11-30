@@ -57,7 +57,9 @@ func _on_alternatives_menu_selector_selected_substitution(
 		substitution, graphical, mark) -> void:
 	ExpressionIndexer.replace_graphical_subexpression(
 			$GraphicalBase, graphical, mark)
-	$SubstitutionSelector.initialize(algebraic_base.copy(), substitution, mark)
+	var center_position: Vector2 = get_viewport_rect().size / 2.0
+	center_position.y += 100
+	$SubstitutionSelector.initialize(substitution, center_position, mark)
 	current_action = Action.SELECT_SUBSTITUTION
 
 
@@ -65,8 +67,8 @@ func _on_substitution_selector_substituted(new_expression, mark) -> void:
 	ExpressionIndexer.replace_algebraic_subexpression(
 			algebraic_base, new_expression, mark)
 	var graphical := GraphicalConversion.algebraic_to_graphical(new_expression)
+	print(graphical.subexpressions)
 	ExpressionIndexer.replace_graphical_subexpression(
 			$GraphicalBase, graphical, mark)
 	$ExpressionSelector.update_marked()
-	$SubstitutionSelector.deinitialize()
 	current_action = Action.SELECT_EXPRESSION

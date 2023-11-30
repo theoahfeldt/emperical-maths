@@ -4,18 +4,11 @@ extends GraphicalComponent
 
 enum Action {SELECT_EXPRESSION, CREATE_EXPRESSION, SELECT_ALTERNATIVE}
 
+signal created_expression(algebraic, graphical)
+
 var _algebraic_base: AlgebraicBase
 var _graphical_base: GraphicalBase
-var _mark: Array[int]
 var _current_action := Action.SELECT_EXPRESSION
-
-
-func _ready() -> void:
-	initialize(get_viewport_rect().size / 2.0)
-
-
-func _process(_delta: float) -> void:
-	process_input()
 
 
 func get_size() -> Vector2i:
@@ -23,7 +16,6 @@ func get_size() -> Vector2i:
 
 
 func initialize(center_position: Vector2) -> void:
-	_mark = []
 	_algebraic_base = AlgebraicBase.create(AlgebraicVariable.create("_"))
 	add_child(_algebraic_base)
 	var graphical_expression := GraphicalConversion.algebraic_to_graphical(
@@ -39,11 +31,24 @@ func initialize(center_position: Vector2) -> void:
 func process_input() -> void:
 	match _current_action:
 		Action.SELECT_EXPRESSION:
+			if Input.is_action_just_pressed("expression_confirm"):
+				_create_expression()
 			$ExpressionSelector.process_input()
 		Action.CREATE_EXPRESSION:
 			$CreationMenuSelector.process_input()
 		Action.SELECT_ALTERNATIVE:
 			$AlternativesMenuSelector.process_input()
+
+
+func _create_expression() -> void:
+#	TODO: Check that expression does not contain _
+	var algebraic := _algebraic_base.expression
+	_algebraic_base.remove_child(algebraic)
+	_algebraic_base.queue_free()
+	var graphical := _graphical_base.expression
+	_graphical_base.remove_child(graphical)
+	_graphical_base.queue_free()
+	created_expression.emit(algebraic, graphical)
 
 
 func _new_variable_menu(mark: Array[int]) -> SelectionMenu:

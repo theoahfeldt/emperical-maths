@@ -4,7 +4,7 @@ extends Substitution
 
 func substitute(expression: AlgebraicExpression) -> AlgebraicExpression:
 	return AlgebraicSum.create(
-			expression.copy(), AlgebraicNegation.create(expression.copy()))
+			expression, AlgebraicNegation.create(expression.copy()))
 
 
 func graphical_expression() -> GraphicalExpression:
