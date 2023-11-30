@@ -11,6 +11,8 @@ var _mark_stack := []
 
 
 func initialize(algebraic_base, graphical_base) -> void:
+	_mark = []
+	_mark_stack = []
 	_algebraic_base = algebraic_base
 	_graphical_base = graphical_base
 
