@@ -19,7 +19,7 @@ func identical_to(other: AlgebraicExpression) -> bool:
 	return false
 
 
-func copy() -> AlgebraicExpression:
+func copy() -> AlgebraicVariable:
 	return AlgebraicVariable.create(variable_name, color)
 
 

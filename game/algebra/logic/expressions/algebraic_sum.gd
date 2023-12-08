@@ -27,7 +27,7 @@ func identical_to(other: AlgebraicExpression) -> bool:
 	return false
 
 
-func copy() -> AlgebraicExpression:
+func copy() -> AlgebraicSum:
 	return AlgebraicSum.create(left_term.copy(), right_term.copy(), color)
 
 

@@ -21,7 +21,7 @@ func identical_to(other: AlgebraicExpression) -> bool:
 	return false
 
 
-func copy() -> AlgebraicExpression:
+func copy() -> AlgebraicNegation:
 	return AlgebraicNegation.create(expression.copy(), color)
 
 
