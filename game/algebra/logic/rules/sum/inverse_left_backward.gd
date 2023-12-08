@@ -8,5 +8,5 @@ func applicable(expression: AlgebraicExpression) -> bool:
 	return false
 
 
-func apply(_expression) -> Substitution:
+func apply(_expression) -> SubstitutionSumLeft:
 	return SubstitutionSumLeft.new()

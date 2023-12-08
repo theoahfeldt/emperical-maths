@@ -9,5 +9,5 @@ func applicable(expression: AlgebraicExpression) -> bool:
 	return false
 
 
-func apply(_expression: AlgebraicExpression) -> AlgebraicExpression:
+func apply(_expression: AlgebraicExpression) -> AlgebraicInteger:
 	return AlgebraicInteger.zero()

@@ -7,7 +7,7 @@ func applicable(expression: AlgebraicExpression) -> bool:
 	return false
 
 
-func apply(sum: AlgebraicSum) -> AlgebraicExpression:
+func apply(sum: AlgebraicSum) -> AlgebraicSum:
 	var a = sum.left_term.left_term.copy()
 	var b = sum.left_term.right_term.copy()
 	var c = sum.right_term.copy()
