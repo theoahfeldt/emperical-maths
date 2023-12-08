@@ -8,11 +8,11 @@ extends AlgebraicExpression
 static func create(
 		a: AlgebraicExpression, p_color: Color = default_color
 		) -> AlgebraicNegation:
-	var negation = AlgebraicNegation.new()
-	negation.add_child(a)
-	negation.expression = a
-	negation.color = p_color
-	return negation
+	var new = AlgebraicNegation.new()
+	new.add_child(a)
+	new.expression = a
+	new.color = p_color
+	return new
 
 
 func identical_to(other: AlgebraicExpression) -> bool:

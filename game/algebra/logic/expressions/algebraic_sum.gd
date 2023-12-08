@@ -11,13 +11,13 @@ static func create(
 		b: AlgebraicExpression,
 		p_color: Color = default_color,
 		) -> AlgebraicSum:
-	var sum = AlgebraicSum.new()
-	sum.add_child(a)
-	sum.add_child(b)
-	sum.left_term = a
-	sum.right_term = b
-	sum.color = p_color
-	return sum
+	var new = AlgebraicSum.new()
+	new.add_child(a)
+	new.add_child(b)
+	new.left_term = a
+	new.right_term = b
+	new.color = p_color
+	return new
 
 
 func identical_to(other: AlgebraicExpression) -> bool:

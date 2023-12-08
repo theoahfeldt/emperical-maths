@@ -7,10 +7,10 @@ extends AlgebraicExpression
 
 static func create(
 		p_name: String, p_color: Color = default_color) -> AlgebraicVariable:
-	var variable = AlgebraicVariable.new()
-	variable.variable_name = p_name
-	variable.color = p_color
-	return variable
+	var new = AlgebraicVariable.new()
+	new.variable_name = p_name
+	new.color = p_color
+	return new
 
 
 func identical_to(other: AlgebraicExpression) -> bool:

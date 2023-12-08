@@ -7,10 +7,10 @@ extends AlgebraicExpression
 
 static func create(
 		p_value: int, p_color: Color = default_color) -> AlgebraicInteger:
-	var integer = AlgebraicInteger.new()
-	integer.value = p_value
-	integer.color = p_color
-	return integer
+	var new = AlgebraicInteger.new()
+	new.value = p_value
+	new.color = p_color
+	return new
 
 
 static func zero() -> AlgebraicInteger:
