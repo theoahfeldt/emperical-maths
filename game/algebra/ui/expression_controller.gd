@@ -67,7 +67,6 @@ func _on_substitution_selector_substituted(new_expression, mark) -> void:
 	ExpressionIndexer.replace_algebraic_subexpression(
 			algebraic_base, new_expression, mark)
 	var graphical := GraphicalConversion.algebraic_to_graphical(new_expression)
-	print(graphical.subexpressions)
 	ExpressionIndexer.replace_graphical_subexpression(
 			$GraphicalBase, graphical, mark)
 	$ExpressionSelector.update_marked()
