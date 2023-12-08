@@ -31,18 +31,18 @@ func copy() -> AlgebraicSum:
 	return AlgebraicSum.create(left_term.copy(), right_term.copy(), color)
 
 
-func replace_left_term(new: AlgebraicExpression) -> void:
-	remove_child(left_term)
-	left_term.queue_free()
-	add_child(new)
-	left_term = new
+func subexpressions() -> Array[AlgebraicExpression]:
+	return [left_term, right_term]
 
 
-func replace_right_term(new: AlgebraicExpression) -> void:
-	remove_child(right_term)
-	right_term.queue_free()
-	add_child(new)
-	right_term = new
+func replace_subexpression(new: AlgebraicExpression, index: int) -> void:
+	match index:
+		0:
+			replace_left_term(new)
+		1:
+			replace_right_term(new)
+		var n:
+			push_error("Index %d out of range" % n)
 
 
 func pretty_string() -> String:
@@ -59,3 +59,17 @@ func mark() -> void:
 	color = marked_color
 	left_term.set_color(_sub_colors[0])
 	right_term.set_color(_sub_colors[1])
+
+
+func replace_left_term(new: AlgebraicExpression) -> void:
+	remove_child(left_term)
+	left_term.queue_free()
+	add_child(new)
+	left_term = new
+
+
+func replace_right_term(new: AlgebraicExpression) -> void:
+	remove_child(right_term)
+	right_term.queue_free()
+	add_child(new)
+	right_term = new

@@ -23,6 +23,10 @@ func copy() -> AlgebraicVariable:
 	return AlgebraicVariable.create(variable_name, color)
 
 
+func subexpressions() -> Array[AlgebraicExpression]:
+	return []
+
+
 func pretty_string() -> String:
 	return variable_name
 

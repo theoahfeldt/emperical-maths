@@ -25,11 +25,15 @@ func copy() -> AlgebraicNegation:
 	return AlgebraicNegation.create(expression.copy(), color)
 
 
-func replace_expression(new: AlgebraicExpression) -> void:
-	remove_child(expression)
-	expression.queue_free()
-	add_child(new)
-	expression = new
+func subexpressions() -> Array[AlgebraicExpression]:
+	return [expression]
+
+
+func replace_subexpression(new: AlgebraicExpression, index: int) -> void:
+	if index == 0:
+		replace_expression(new)
+	else:
+		push_error("Index %d out of range" % index)
 
 
 func pretty_string() -> String:
@@ -38,3 +42,10 @@ func pretty_string() -> String:
 
 func mark() -> void:
 	color = _sub_colors[0]
+
+
+func replace_expression(new: AlgebraicExpression) -> void:
+	remove_child(expression)
+	expression.queue_free()
+	add_child(new)
+	expression = new

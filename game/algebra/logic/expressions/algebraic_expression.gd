@@ -24,6 +24,19 @@ func copy() -> AlgebraicExpression:
 	return AlgebraicExpression.new()
 
 
+func subexpressions() -> Array[AlgebraicExpression]:
+	push_error("Function not implemented")
+	return []
+
+
+func num_subexpressions() -> int:
+	return subexpressions().size()
+
+
+func replace_subexpression(_new: AlgebraicExpression, _index: int) -> void:
+	push_error("Function not implemented")
+
+
 func pretty_string() -> String:
 	push_error("Function not implemented")
 	return ""

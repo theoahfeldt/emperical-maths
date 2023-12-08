@@ -27,6 +27,10 @@ func copy() -> AlgebraicInteger:
 	return AlgebraicInteger.create(value, color)
 
 
+func subexpressions() -> Array[AlgebraicExpression]:
+	return []
+
+
 func pretty_string() -> String:
 	return str(value)
 
