@@ -107,14 +107,14 @@ func _on_creation_menu_selector_selected_new(option, mark) -> void:
 			_enter_menu(_new_integer_menu(mark), mark)
 		CreationMenuSelector.Option.NEGATION:
 			var algebraic := AlgebraicNegation.create(AlgebraicVariable.create("_"))
-			var graphical := GraphicalConversion.algebraic_to_graphical(algebraic)
+			var graphical := algebraic.to_graphical()
 			graphical.set_color_from_algebraic(algebraic)
 			_replace_subexpression(algebraic, graphical, mark)
 			$ExpressionSelector.mark_inner()
 		CreationMenuSelector.Option.SUM:
 			var algebraic := AlgebraicSum.create(
 					AlgebraicVariable.create("_"), AlgebraicVariable.create("_"))
-			var graphical := GraphicalConversion.algebraic_to_graphical(algebraic)
+			var graphical := algebraic.to_graphical()
 			graphical.set_color_from_algebraic(algebraic)
 			_replace_subexpression(algebraic, graphical, mark)
 			$ExpressionSelector.mark_inner()

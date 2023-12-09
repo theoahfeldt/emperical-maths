@@ -49,6 +49,11 @@ func pretty_string() -> String:
 	return "(%s + %s)" % [left_term.pretty_string(), right_term.pretty_string()]
 
 
+func to_graphical() -> GraphicalSum:
+	return GraphicalSum.create(
+			left_term.to_graphical(), right_term.to_graphical())
+
+
 func set_color(p_color: Color) -> void:
 	color = p_color
 	left_term.set_color(p_color)

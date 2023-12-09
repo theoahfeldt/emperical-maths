@@ -63,7 +63,7 @@ func _on_alternatives_menu_selector_selected_substitution(
 
 func _on_substitution_selector_substituted(
 		new_expression: AlgebraicExpression, mark) -> void:
-	var graphical := GraphicalConversion.algebraic_to_graphical(new_expression)
+	var graphical := new_expression.to_graphical()
 	algebraic_base.replace_subexpression(new_expression, mark)
 	ExpressionIndexer.replace_graphical_subexpression(
 			$GraphicalBase, graphical, mark)

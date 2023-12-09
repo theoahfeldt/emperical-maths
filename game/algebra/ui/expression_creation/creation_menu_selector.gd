@@ -29,7 +29,7 @@ func initialize(original: AlgebraicExpression, mark: Array[int]) -> SelectionMen
 		Option.NEGATION,
 		Option.SUM,
 	]
-	var graphical := GraphicalConversion.algebraic_to_graphical(original)
+	var graphical := original.to_graphical()
 	graphical.set_color_from_algebraic(original)
 	_mark = mark
 	var graphical_options: Array[GraphicalExpression] = [

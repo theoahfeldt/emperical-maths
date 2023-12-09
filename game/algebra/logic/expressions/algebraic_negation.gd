@@ -40,6 +40,10 @@ func pretty_string() -> String:
 	return "-%s" % expression.pretty_string()
 
 
+func to_graphical() -> GraphicalNegation:
+	return GraphicalNegation.create(expression.to_graphical())
+
+
 func set_color(p_color: Color) -> void:
 	color = p_color
 	expression.set_color(p_color)

@@ -35,6 +35,10 @@ func pretty_string() -> String:
 	return str(value)
 
 
+func to_graphical() -> GraphicalInteger:
+	return GraphicalInteger.create(value)
+
+
 func mark() -> void:
 	color = _sub_colors[0]
 

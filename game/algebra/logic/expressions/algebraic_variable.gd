@@ -31,5 +31,9 @@ func pretty_string() -> String:
 	return variable_name
 
 
+func to_graphical() -> GraphicalVariable:
+	return GraphicalVariable.create(variable_name)
+
+
 func mark() -> void:
 	color = _sub_colors[0]

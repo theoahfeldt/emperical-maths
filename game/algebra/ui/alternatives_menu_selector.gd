@@ -53,7 +53,7 @@ func initialize_from_expressions(
 	var options: Array = expressions + substitutions
 	var graphical_options: Array[GraphicalExpression] = []
 	for algebraic in expressions:
-		var graphical := GraphicalConversion.algebraic_to_graphical(algebraic)
+		var graphical := algebraic.to_graphical()
 		graphical.set_color_from_algebraic(algebraic)
 		graphical_options.append(graphical)
 	for substitution in substitutions:
