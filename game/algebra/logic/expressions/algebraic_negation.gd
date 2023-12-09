@@ -40,8 +40,14 @@ func pretty_string() -> String:
 	return "-%s" % expression.pretty_string()
 
 
+func set_color(p_color: Color) -> void:
+	color = p_color
+	expression.set_color(p_color)
+
+
 func mark() -> void:
 	color = _sub_colors[0]
+	expression.set_color(_sub_colors[0])
 
 
 func replace_expression(new: AlgebraicExpression) -> void:

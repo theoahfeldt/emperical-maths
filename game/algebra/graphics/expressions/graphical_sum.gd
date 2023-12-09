@@ -12,13 +12,6 @@ func _get_components() -> Array[GraphicalComponent]:
 	]
 
 
-func set_color_from_algebraic(expression: AlgebraicExpression) -> void:
-	var sum := expression as AlgebraicSum
-	set_color(sum.color)
-	subexpressions[0].set_color_from_algebraic(sum.left_term)
-	subexpressions[1].set_color_from_algebraic(sum.right_term)
-
-
 static func create(
 		left_term: GraphicalExpressionOrMenu,
 		right_term: GraphicalExpressionOrMenu,

@@ -14,9 +14,8 @@ var current_action := Action.SELECT_EXPRESSION
 
 
 func _ready() -> void:
-	var expression := GraphicalConversion.algebraic_to_graphical(
-			algebraic_base.expression)
-	$GraphicalBase.initialize(expression, get_viewport_rect().size / 2.0)
+	var graphical := algebraic_base.to_graphical()
+	$GraphicalBase.initialize(graphical, get_viewport_rect().size / 2.0)
 	$GraphicalBase.center_in_viewport()
 	$ExpressionSelector.initialize(algebraic_base, $GraphicalBase)
 	$ExpressionSelector.update_marked()
@@ -46,8 +45,7 @@ func _on_expression_selector_selected(selected_expression, mark) -> void:
 
 func _on_alternatives_menu_selector_selected_expression(
 		algebraic, graphical, mark) -> void:
-	ExpressionIndexer.replace_algebraic_subexpression(
-			algebraic_base, algebraic, mark)
+	algebraic_base.replace_subexpression(algebraic, mark)
 	ExpressionIndexer.replace_graphical_subexpression(
 			$GraphicalBase, graphical, mark)
 	current_action = Action.SELECT_EXPRESSION
@@ -63,10 +61,10 @@ func _on_alternatives_menu_selector_selected_substitution(
 	current_action = Action.SELECT_SUBSTITUTION
 
 
-func _on_substitution_selector_substituted(new_expression, mark) -> void:
-	ExpressionIndexer.replace_algebraic_subexpression(
-			algebraic_base, new_expression, mark)
+func _on_substitution_selector_substituted(
+		new_expression: AlgebraicExpression, mark) -> void:
 	var graphical := GraphicalConversion.algebraic_to_graphical(new_expression)
+	algebraic_base.replace_subexpression(new_expression, mark)
 	ExpressionIndexer.replace_graphical_subexpression(
 			$GraphicalBase, graphical, mark)
 	$ExpressionSelector.update_marked()

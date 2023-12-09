@@ -29,8 +29,13 @@ func _get_components() -> Array[GraphicalComponent]:
 	return []
 
 
-func set_color_from_algebraic(expression: AlgebraicExpression) -> void:
-	set_color(expression.color)
+func set_color_from_algebraic(object: AlgebraicObject) -> void:
+	set_color(object.color)
+	var algebraic: Array[AlgebraicExpression] = object.subexpressions()
+	if algebraic.size() != subexpressions.size():
+		push_error("Algebraic object has different structure")
+	for i in range(subexpressions.size()):
+		subexpressions[i].set_color_from_algebraic(algebraic[i])
 
 
 func replace_subexpression(new: GraphicalExpressionOrMenu, index: int) -> void:

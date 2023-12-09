@@ -18,8 +18,7 @@ func get_size() -> Vector2i:
 func initialize(center_position: Vector2) -> void:
 	_algebraic_base = AlgebraicBase.create(AlgebraicVariable.create("_"))
 	add_child(_algebraic_base)
-	var graphical_expression := GraphicalConversion.algebraic_to_graphical(
-			_algebraic_base.expression)
+	var graphical_expression := _algebraic_base.to_graphical()
 	_graphical_base = GraphicalBase.create(
 			graphical_expression, center_position)
 	add_child(_graphical_base)
@@ -42,7 +41,7 @@ func process_input() -> void:
 
 func _create_expression() -> void:
 #	TODO: Check that expression does not contain _
-	var algebraic := _algebraic_base.expression
+	var algebraic := _algebraic_base.object
 	_algebraic_base.remove_child(algebraic)
 	_algebraic_base.queue_free()
 	var graphical := _graphical_base.expression
@@ -82,8 +81,7 @@ func _replace_subexpression(
 		graphical: GraphicalExpression,
 		mark: Array[int],
 		) -> void:
-	ExpressionIndexer.replace_algebraic_subexpression(
-			_algebraic_base, algebraic, mark)
+	_algebraic_base.replace_subexpression(algebraic, mark)
 	ExpressionIndexer.replace_graphical_subexpression(
 			_graphical_base, graphical, mark)
 	_current_action = Action.SELECT_EXPRESSION

@@ -31,15 +31,16 @@ func process_input() -> void:
 
 
 func select_expression():
-	selected.emit(marked_expression(), _mark)
+	if not marked_expression() is AlgebraicEquality:
+		selected.emit(marked_expression(), _mark)
 
 
-func marked_expression() -> AlgebraicExpression:
-	return ExpressionIndexer.algebraic_subexpression(_algebraic_base, _mark)
+func marked_expression() -> AlgebraicObject:
+	return _algebraic_base.subexpression(_mark)
 
 
 func mark_inner() -> void:
-	ExpressionIndexer.move_index_in(_algebraic_base, _mark)
+	ExpressionIndexer.move_index_in(_algebraic_base.object, _mark)
 	update_marked()
 
 
@@ -49,18 +50,18 @@ func mark_outer() -> void:
 
 
 func mark_left() -> void:
-	ExpressionIndexer.move_index_left(_algebraic_base, _mark)
+	ExpressionIndexer.move_index_left(_algebraic_base.object, _mark)
 	update_marked()
 
 
 func mark_right() -> void:
-	ExpressionIndexer.move_index_right(_algebraic_base, _mark)
+	ExpressionIndexer.move_index_right(_algebraic_base.object, _mark)
 	update_marked()
 
 
 func push_mark_inner() -> void:
 	var new_mark := _mark.duplicate()
-	ExpressionIndexer.move_index_in(_algebraic_base, new_mark)
+	ExpressionIndexer.move_index_in(_algebraic_base.object, new_mark)
 	_mark_stack.append(new_mark)
 
 
@@ -72,13 +73,13 @@ func push_mark_outer() -> void:
 
 func push_mark_left() -> void:
 	var new_mark := _mark.duplicate()
-	ExpressionIndexer.move_index_left(_algebraic_base, new_mark)
+	ExpressionIndexer.move_index_left(_algebraic_base.object, new_mark)
 	_mark_stack.append(new_mark)
 
 
 func push_mark_right() -> void:
 	var new_mark := _mark.duplicate()
-	ExpressionIndexer.move_index_right(_algebraic_base, new_mark)
+	ExpressionIndexer.move_index_right(_algebraic_base.object, new_mark)
 	_mark_stack.append(new_mark)
 
 
@@ -92,6 +93,6 @@ func update_marked() -> void:
 	_graphical_base.clear_color()
 	var marked_graphical: GraphicalExpression = ExpressionIndexer.graphical_subexpression(
 			_graphical_base, _mark)
-	var marked_algebraic: AlgebraicExpression = marked_expression()
+	var marked_algebraic: AlgebraicObject = marked_expression()
 	marked_algebraic.mark()
 	marked_graphical.set_color_from_algebraic(marked_algebraic)
