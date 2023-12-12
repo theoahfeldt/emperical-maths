@@ -1,71 +1,101 @@
+class_name ExpressionController
 extends Node2D
 
-
-enum Action {SELECT_EXPRESSION, SELECT_ALTERNATIVE, SELECT_SUBSTITUTION}
 
 const AlgebraicRules := preload("res://algebra/logic/rules/algebraic_rules.gd")
 const SubstitutionRules := preload("res://algebra/logic/rules/substitution_rules.gd")
 
-@export var algebraic_base: AlgebraicBase
-
 var algebraic_rules := AlgebraicRules.rules()
 var substitution_rules := SubstitutionRules.rules()
-var current_action := Action.SELECT_EXPRESSION
+var _algebraic_base: AlgebraicBase
+var _graphical_base: GraphicalBase
+
+# The following will be null when not in use:
+var _expression_selector: ExpressionSelector
+var _substitution_selector: SubstitutionSelector
+var _menu: SelectionMenu
+var _menu_selector: MenuSelector
+var _current_index: Array[int] = []
 
 
 func _ready() -> void:
-	var graphical := algebraic_base.to_graphical()
-	$GraphicalBase.initialize(graphical, get_viewport_rect().size / 2.0)
-	$GraphicalBase.center_in_viewport()
-	$ExpressionSelector.initialize(algebraic_base, $GraphicalBase)
-	$ExpressionSelector.update_marked()
+	_graphical_base.center()
+	_start_expression_selector()
 
 
-func _process(_delta: float) -> void:
-	match current_action:
-		Action.SELECT_EXPRESSION:
-			$ExpressionSelector.process_input()
-		Action.SELECT_ALTERNATIVE:
-			$AlternativesMenuSelector.process_input()
-		Action.SELECT_SUBSTITUTION:
-			$SubstitutionSelector.process_input()
+static func create(
+		base: AlgebraicBase, center_pos: Vector2
+		) -> ExpressionController:
+	var new := ExpressionController.new()
+	new._algebraic_base = base
+	var graphical_base := GraphicalBase.create(base.to_graphical(), center_pos)
+	new._graphical_base = graphical_base
+	new.add_child(graphical_base)
+	return new
 
 
-func _select_expression(selected: AlgebraicExpression, mark: Array[int]) -> void:
-	var menu: SelectionMenu = $AlternativesMenuSelector.initialize_from_expression(
-			mark, selected, algebraic_rules, substitution_rules)
+func _start_expression_selector() -> void:
+	_expression_selector = ExpressionSelector.create(
+			_algebraic_base, _graphical_base, _current_index)
+	add_child(_expression_selector)
+	_expression_selector.update_marked()
+	_expression_selector.selected.connect(_on_expression_selector_selected)
+
+
+func _start_alternative_expressions_menu(
+		menu: SelectionMenu, index: Array[int]) -> void:
+	_menu = menu
+	_menu_selector = MenuSelector.create(_menu)
+	add_child(_menu_selector)
+	_menu_selector.selected.connect(_on_alternative_expressions_menu_selected)
 	ExpressionIndexer.replace_graphical_subexpression(
-			$GraphicalBase, menu, mark)
-	current_action = Action.SELECT_ALTERNATIVE
+			_graphical_base, _menu, index)
 
 
-func _on_expression_selector_selected(selected_expression, mark) -> void:
-	_select_expression(selected_expression, mark)
+func _start_substitution_selector(substitution: Substitution) -> void:
+	var center: Vector2 = get_viewport_rect().size / 2.0
+	center.y += 100
+	_substitution_selector = SubstitutionSelector.create(substitution, center)
+	add_child(_substitution_selector)
+	_substitution_selector.substituted.connect(
+			_on_substitution_selector_substituted)
 
 
-func _on_alternatives_menu_selector_selected_expression(
-		algebraic, graphical, mark) -> void:
-	algebraic_base.replace_subexpression(algebraic, mark)
+func _replace_subexpression(
+		algebraic: AlgebraicExpression, graphical: GraphicalExpression) -> void:
+	_algebraic_base.replace_subexpression(algebraic, _current_index)
 	ExpressionIndexer.replace_graphical_subexpression(
-			$GraphicalBase, graphical, mark)
-	current_action = Action.SELECT_EXPRESSION
+			_graphical_base, graphical, _current_index)
+	_start_expression_selector()
 
 
-func _on_alternatives_menu_selector_selected_substitution(
-		substitution, graphical, mark) -> void:
-	ExpressionIndexer.replace_graphical_subexpression(
-			$GraphicalBase, graphical, mark)
-	var center_position: Vector2 = get_viewport_rect().size / 2.0
-	center_position.y += 100
-	$SubstitutionSelector.initialize(substitution, center_position, mark)
-	current_action = Action.SELECT_SUBSTITUTION
+func _on_expression_selector_selected(
+		selected: AlgebraicExpression, index: Array[int]) -> void:
+	_current_index = index
+	remove_child(_expression_selector)
+	_expression_selector.queue_free()
+	var menu: SelectionMenu = AlternativeExpressionsMenu.create_from_expression(
+			selected, algebraic_rules, substitution_rules)
+	_start_alternative_expressions_menu(menu, index)
+
+
+func _on_alternative_expressions_menu_selected(
+		option, graphical: GraphicalExpression) -> void:
+	remove_child(_menu_selector)
+	_menu_selector.queue_free()
+	if option is AlgebraicExpression:
+		_replace_subexpression(option, graphical)
+	elif option is Substitution:
+		ExpressionIndexer.replace_graphical_subexpression(
+				_graphical_base, graphical, _current_index)
+		_start_substitution_selector(option)
+	else:
+		push_error("Invalid option: ", option)
 
 
 func _on_substitution_selector_substituted(
-		new_expression: AlgebraicExpression, mark) -> void:
+		new_expression: AlgebraicExpression) -> void:
+	remove_child(_substitution_selector)
+	_substitution_selector.queue_free()
 	var graphical := new_expression.to_graphical()
-	algebraic_base.replace_subexpression(new_expression, mark)
-	ExpressionIndexer.replace_graphical_subexpression(
-			$GraphicalBase, graphical, mark)
-	$ExpressionSelector.update_marked()
-	current_action = Action.SELECT_EXPRESSION
+	_replace_subexpression(new_expression, graphical)

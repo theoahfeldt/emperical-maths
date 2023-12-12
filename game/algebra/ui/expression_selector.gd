@@ -2,7 +2,7 @@ class_name ExpressionSelector
 extends Node
 
 
-signal selected(selected_expression: AlgebraicExpression, index: Array[int])
+signal selected(expression: AlgebraicExpression, index: Array[int])
 
 var _algebraic_base: AlgebraicBase
 var _graphical_base: GraphicalBase

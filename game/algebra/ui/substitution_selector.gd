@@ -2,25 +2,30 @@ class_name SubstitutionSelector
 extends Node
 
 
-signal substituted(new_expression, mark)
+signal substituted(new_expression: AlgebraicExpression)
 
 var _substitution: Substitution
-var _mark: Array[int]
+var _expression_creator: ExpressionCreator
 
 
-func initialize(
-		substitution: Substitution, center_position: Vector2, mark: Array[int]
-		) -> void:
-	_substitution = substitution
-	_mark = mark
-	$ExpressionCreator.initialize(center_position)
+func _ready() -> void:
+	_expression_creator.created_expression.connect(
+			_on_expression_creator_created_expression)
 
 
-func process_input() -> void:
-	$ExpressionCreator.process_input()
+static func create(
+		substitution: Substitution, center_position: Vector2
+		) -> SubstitutionSelector:
+	var new := SubstitutionSelector.new()
+	new._substitution = substitution
+	var expression_creator := ExpressionCreator.create(center_position)
+	new.add_child(expression_creator)
+	new._expression_creator = expression_creator
+	return new
 
 
-func _on_expression_creator_created_expression(algebraic, graphical) -> void:
+func _on_expression_creator_created_expression(
+		algebraic: AlgebraicExpression, graphical: GraphicalExpression) -> void:
 	graphical.queue_free()
 	var new_expression := _substitution.substitute(algebraic)
-	substituted.emit(new_expression, _mark)
+	substituted.emit(new_expression)

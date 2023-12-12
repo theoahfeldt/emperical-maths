@@ -15,8 +15,10 @@ static func create_from_expression(
 	var unique := _get_unique(alternative_expressions)
 	var applicable_substitutions := substitution_rules.filter(
 			func(r): return r.applicable(expression))
-	var subs: Array[Substitution] = applicable_substitutions.map(
-			func(r): return r.apply(expression))
+	@warning_ignore("unassigned_variable")
+	var subs: Array[Substitution]
+	subs.assign(applicable_substitutions.map(
+			func(r): return r.apply(expression)))
 	return AlternativeExpressionsMenu.create(unique, subs)
 
 
