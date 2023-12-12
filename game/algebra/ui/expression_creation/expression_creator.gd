@@ -2,125 +2,152 @@ class_name ExpressionCreator
 extends GraphicalComponent
 
 
-enum Action {SELECT_EXPRESSION, CREATE_EXPRESSION, SELECT_ALTERNATIVE}
-
-signal created_expression(algebraic, graphical)
+signal created_expression(
+		algebraic: AlgebraicExpression, graphical: GraphicalExpression)
 
 var _algebraic_base: AlgebraicBase
 var _graphical_base: GraphicalBase
-var _current_action := Action.SELECT_EXPRESSION
+var _index_stack = []
+
+# The following will be null when not in use:
+var _expression_selector: ExpressionSelector
+var _menu: SelectionMenu
+var _menu_selector: MenuSelector
+var _current_index: Array[int] = []
+
+
+func _ready() -> void:
+	_start_expression_selector()
+
+
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("expression_confirm"):
+		_create_expression()
 
 
 func get_size() -> Vector2i:
 	return _graphical_base.get_size()
 
 
-func initialize(center_position: Vector2) -> void:
-	_algebraic_base = AlgebraicBase.create(AlgebraicVariable.create("_"))
-	add_child(_algebraic_base)
-	var graphical_expression := _algebraic_base.to_graphical()
-	_graphical_base = GraphicalBase.create(
+static func create(center_position: Vector2) -> ExpressionCreator:
+	var new := ExpressionCreator.new()
+	new._algebraic_base = AlgebraicBase.create(AlgebraicVariable.create("_"))
+	var graphical_expression := new._algebraic_base.to_graphical()
+	new._graphical_base = GraphicalBase.create(
 			graphical_expression, center_position)
-	add_child(_graphical_base)
-	_graphical_base.center()
-	$ExpressionSelector.initialize(_algebraic_base, _graphical_base)
-	$ExpressionSelector.update_marked()
+	new.add_child(new._graphical_base)
+	new._graphical_base.center()
+	return new
 
 
-func process_input() -> void:
-	match _current_action:
-		Action.SELECT_EXPRESSION:
-			if Input.is_action_just_pressed("expression_confirm"):
-				_create_expression()
-			$ExpressionSelector.process_input()
-		Action.CREATE_EXPRESSION:
-			$CreationMenuSelector.process_input()
-		Action.SELECT_ALTERNATIVE:
-			$AlternativesMenuSelector.process_input()
+func _start_expression_selector() -> void:
+	_expression_selector = ExpressionSelector.create(
+			_algebraic_base, _graphical_base, _current_index)
+	add_child(_expression_selector)
+	_expression_selector.update_marked()
+	_expression_selector.selected.connect(_on_expression_selector_selected)
 
 
 func _create_expression() -> void:
 #	TODO: Check that expression does not contain _
 	var algebraic := _algebraic_base.object
-	_algebraic_base.remove_child(algebraic)
-	_algebraic_base.queue_free()
 	var graphical := _graphical_base.expression
 	_graphical_base.remove_child(graphical)
 	_graphical_base.queue_free()
 	created_expression.emit(algebraic, graphical)
 
 
-func _new_variable_menu(mark: Array[int]) -> SelectionMenu:
+func _variable_menu() -> SelectionMenu:
 	var expressions: Array[AlgebraicExpression] = [
 		AlgebraicVariable.create("a"),
 		AlgebraicVariable.create("b"),
 		AlgebraicVariable.create("c"),
 		AlgebraicVariable.create("d"),
 	]
-	return $AlternativesMenuSelector.initialize_from_expressions(mark, expressions)
+	return AlternativeExpressionsMenu.create(expressions)
 
 
-func _new_integer_menu(mark: Array[int]) -> SelectionMenu:
+func _integer_menu() -> SelectionMenu:
 	var expressions: Array[AlgebraicExpression] = [
 		AlgebraicInteger.create(0),
 		AlgebraicInteger.create(1),
 		AlgebraicInteger.create(2),
 		AlgebraicInteger.create(3),
 	]
-	return $AlternativesMenuSelector.initialize_from_expressions(mark, expressions)
+	return AlternativeExpressionsMenu.create(expressions)
 
 
-func _enter_menu(menu: SelectionMenu, mark: Array[int]) -> void:
+func _enter_creation_menu(menu: SelectionMenu, index: Array[int]) -> void:
+	_enter_menu(menu, _on_creation_menu_selected, index)
+
+
+func _enter_alternative_expressions_menu(
+		menu: SelectionMenu, index: Array[int]) -> void:
+	_enter_menu(menu, _on_alternative_expressions_menu_selected, index)
+
+
+func _enter_menu(
+		menu: SelectionMenu, on_selected: Callable, index: Array[int]) -> void:
+	_menu = menu
+	_menu_selector = MenuSelector.create(_menu)
+	add_child(_menu_selector)
+	_menu_selector.selected.connect(on_selected)
 	ExpressionIndexer.replace_graphical_subexpression(
-			_graphical_base, menu, mark)
-	_current_action = Action.SELECT_ALTERNATIVE
+			_graphical_base, _menu, index)
 
 
 func _replace_subexpression(
-		algebraic: AlgebraicExpression,
-		graphical: GraphicalExpression,
-		mark: Array[int],
+		algebraic: AlgebraicExpression, graphical: GraphicalExpression) -> void:
+	_algebraic_base.replace_subexpression(algebraic, _current_index)
+	ExpressionIndexer.replace_graphical_subexpression(
+			_graphical_base, graphical, _current_index)
+	_start_expression_selector()
+
+
+func _on_expression_selector_selected(
+		selected_expression: AlgebraicExpression, index: Array[int]
 		) -> void:
-	_algebraic_base.replace_subexpression(algebraic, mark)
-	ExpressionIndexer.replace_graphical_subexpression(
-			_graphical_base, graphical, mark)
-	_current_action = Action.SELECT_EXPRESSION
+	_current_index = index
+	remove_child(_expression_selector)
+	_expression_selector.queue_free()
+	var menu: SelectionMenu = CreationMenu.create(selected_expression)
+	_enter_creation_menu(menu, index)
 
 
-func _on_expression_selector_selected(selected_expression, mark) -> void:
-	var menu: SelectionMenu = $CreationMenuSelector.initialize(
-			selected_expression, mark)
-	ExpressionIndexer.replace_graphical_subexpression(
-			_graphical_base, menu, mark)
-	_current_action = Action.CREATE_EXPRESSION
-
-
-func _on_creation_menu_selector_selected_original(algebraic, graphical, mark) -> void:
-	_replace_subexpression(algebraic, graphical, mark)
-
-
-func _on_creation_menu_selector_selected_new(option, mark) -> void:
+func _on_creation_menu_selected(
+		option, graphical: GraphicalExpression) -> void:
+	remove_child(_menu_selector)
+	_menu_selector.queue_free()
+	if option is AlgebraicExpression:
+		_replace_subexpression(option, graphical)
+		return
 	match option:
-		CreationMenuSelector.Option.VARIABLE:
-			_enter_menu(_new_variable_menu(mark), mark)
-		CreationMenuSelector.Option.INTEGER:
-			_enter_menu(_new_integer_menu(mark), mark)
-		CreationMenuSelector.Option.NEGATION:
+		CreationMenu.Option.VARIABLE:
+			graphical.queue_free()
+			_enter_alternative_expressions_menu(
+					_variable_menu(), _current_index)
+		CreationMenu.Option.INTEGER:
+			graphical.queue_free()
+			_enter_alternative_expressions_menu(
+					_integer_menu(), _current_index)
+		CreationMenu.Option.NEGATION:
 			var algebraic := AlgebraicNegation.create(AlgebraicVariable.create("_"))
-			var graphical := algebraic.to_graphical()
 			graphical.set_color_from_algebraic(algebraic)
-			_replace_subexpression(algebraic, graphical, mark)
-			$ExpressionSelector.mark_inner()
-		CreationMenuSelector.Option.SUM:
+			_replace_subexpression(algebraic, graphical)
+			_expression_selector.mark_inner()
+		CreationMenu.Option.SUM:
 			var algebraic := AlgebraicSum.create(
 					AlgebraicVariable.create("_"), AlgebraicVariable.create("_"))
-			var graphical := algebraic.to_graphical()
 			graphical.set_color_from_algebraic(algebraic)
-			_replace_subexpression(algebraic, graphical, mark)
-			$ExpressionSelector.mark_inner()
-			$ExpressionSelector.push_mark_right()
+			_replace_subexpression(algebraic, graphical)
+			_expression_selector.mark_inner()
+			_index_stack.append(_expression_selector.get_mark_right())
 
 
-func _on_alternatives_menu_selector_selected_expression(algebraic, graphical, mark) -> void:
-	_replace_subexpression(algebraic, graphical, mark)
-	$ExpressionSelector.pop_mark()
+func _on_alternative_expressions_menu_selected(
+		option, graphical: GraphicalExpression) -> void:
+	remove_child(_menu_selector)
+	_menu_selector.queue_free()
+	_replace_subexpression(option, graphical)
+	if _index_stack:
+		_expression_selector.set_mark(_index_stack.pop_back())

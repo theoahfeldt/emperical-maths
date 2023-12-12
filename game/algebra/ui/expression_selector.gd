@@ -2,22 +2,14 @@ class_name ExpressionSelector
 extends Node
 
 
-signal selected(selected_expression, mark)
+signal selected(selected_expression: AlgebraicExpression, index: Array[int])
 
 var _algebraic_base: AlgebraicBase
 var _graphical_base: GraphicalBase
 var _mark: Array[int] = []
-var _mark_stack := []
 
 
-func initialize(algebraic_base, graphical_base) -> void:
-	_mark = []
-	_mark_stack = []
-	_algebraic_base = algebraic_base
-	_graphical_base = graphical_base
-
-
-func process_input() -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("expression_down"):
 		mark_inner()
 	if Input.is_action_just_pressed("expression_up"):
@@ -30,6 +22,18 @@ func process_input() -> void:
 		select_expression()
 
 
+static func create(
+		algebraic_base: AlgebraicBase,
+		graphical_base: GraphicalBase,
+		mark: Array[int] = [],
+		) -> ExpressionSelector:
+	var new := ExpressionSelector.new()
+	new._algebraic_base = algebraic_base
+	new._graphical_base = graphical_base
+	new._mark = mark
+	return new
+
+
 func select_expression():
 	if not marked_expression() is AlgebraicEquality:
 		selected.emit(marked_expression(), _mark)
@@ -37,6 +41,11 @@ func select_expression():
 
 func marked_expression() -> AlgebraicObject:
 	return _algebraic_base.subexpression(_mark)
+
+
+func set_mark(mark: Array[int]) -> void:
+	_mark = mark
+	update_marked()
 
 
 func mark_inner() -> void:
@@ -59,34 +68,28 @@ func mark_right() -> void:
 	update_marked()
 
 
-func push_mark_inner() -> void:
+func get_mark_inner() -> Array[int]:
 	var new_mark := _mark.duplicate()
 	ExpressionIndexer.move_index_in(_algebraic_base.object, new_mark)
-	_mark_stack.append(new_mark)
+	return new_mark
 
 
-func push_mark_outer() -> void:
+func get_mark_outer() -> Array[int]:
 	var new_mark := _mark.duplicate()
 	ExpressionIndexer.move_index_out(new_mark)
-	_mark_stack.append(new_mark)
+	return new_mark
 
 
-func push_mark_left() -> void:
+func get_mark_left() -> Array[int]:
 	var new_mark := _mark.duplicate()
 	ExpressionIndexer.move_index_left(_algebraic_base.object, new_mark)
-	_mark_stack.append(new_mark)
+	return new_mark
 
 
-func push_mark_right() -> void:
+func get_mark_right() -> Array[int]:
 	var new_mark := _mark.duplicate()
 	ExpressionIndexer.move_index_right(_algebraic_base.object, new_mark)
-	_mark_stack.append(new_mark)
-
-
-func pop_mark() -> void:
-	if not _mark_stack.is_empty():
-		_mark = _mark_stack.pop_back()
-		update_marked()
+	return new_mark
 
 
 func update_marked() -> void:
