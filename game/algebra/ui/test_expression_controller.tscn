@@ -1,54 +1,52 @@
-[gd_scene load_steps=8 format=3 uid="uid://c5nv2jrhdp0yc"]
+[gd_scene load_steps=7 format=3 uid="uid://c5nv2jrhdp0yc"]
 
-[ext_resource type="Script" path="res://test.gd" id="1_kljmg"]
-[ext_resource type="Script" path="res://algebra/logic/expressions/algebraic_sum.gd" id="2_v0oty"]
-[ext_resource type="Script" path="res://algebra/logic/expressions/algebraic_variable.gd" id="3_hamqr"]
-[ext_resource type="Script" path="res://algebra/logic/expressions/algebraic_equality.gd" id="3_rowwf"]
-[ext_resource type="Script" path="res://algebra/logic/expressions/algebraic_base.gd" id="3_x010c"]
-[ext_resource type="PackedScene" uid="uid://bt45ap1aaxjfr" path="res://algebra/ui/expression_controller.tscn" id="4_rqnef"]
-[ext_resource type="Script" path="res://algebra/logic/expressions/algebraic_negation.gd" id="5_ofjmm"]
+[ext_resource type="PackedScene" uid="uid://bt45ap1aaxjfr" path="res://algebra/ui/expression_controller.tscn" id="1_tkrm1"]
+[ext_resource type="Script" path="res://algebra/logic/expressions/algebraic_base.gd" id="2_olbug"]
+[ext_resource type="Script" path="res://algebra/logic/expressions/algebraic_equality.gd" id="3_37i4f"]
+[ext_resource type="Script" path="res://algebra/logic/expressions/algebraic_sum.gd" id="4_fc4i6"]
+[ext_resource type="Script" path="res://algebra/logic/expressions/algebraic_variable.gd" id="5_6rrnn"]
+[ext_resource type="Script" path="res://algebra/logic/expressions/algebraic_negation.gd" id="6_3g6xr"]
 
-[node name="Test" type="Node2D"]
-script = ExtResource("1_kljmg")
+[node name="TestExpressionController" type="Node2D"]
 
-[node name="ExpressionController" parent="." node_paths=PackedStringArray("algebraic_base") instance=ExtResource("4_rqnef")]
+[node name="ExpressionController" parent="." node_paths=PackedStringArray("algebraic_base") instance=ExtResource("1_tkrm1")]
 algebraic_base = NodePath("AlgebraicBase")
 
 [node name="AlgebraicBase" type="Node" parent="ExpressionController" node_paths=PackedStringArray("object")]
-script = ExtResource("3_x010c")
+script = ExtResource("2_olbug")
 object = NodePath("AlgebraicEquality")
 
 [node name="AlgebraicEquality" type="Node" parent="ExpressionController/AlgebraicBase" node_paths=PackedStringArray("left_expression", "right_expression")]
-script = ExtResource("3_rowwf")
+script = ExtResource("3_37i4f")
 left_expression = NodePath("AlgebraicSum")
 right_expression = NodePath("AlgebraicVariable")
 
 [node name="AlgebraicSum" type="Node" parent="ExpressionController/AlgebraicBase/AlgebraicEquality" node_paths=PackedStringArray("left_term", "right_term")]
-script = ExtResource("2_v0oty")
+script = ExtResource("4_fc4i6")
 left_term = NodePath("AlgebraicVariable")
 right_term = NodePath("AlgebraicSum")
 
 [node name="AlgebraicVariable" type="Node" parent="ExpressionController/AlgebraicBase/AlgebraicEquality/AlgebraicSum"]
-script = ExtResource("3_hamqr")
+script = ExtResource("5_6rrnn")
 variable_name = "a"
 
 [node name="AlgebraicSum" type="Node" parent="ExpressionController/AlgebraicBase/AlgebraicEquality/AlgebraicSum" node_paths=PackedStringArray("left_term", "right_term")]
-script = ExtResource("2_v0oty")
+script = ExtResource("4_fc4i6")
 left_term = NodePath("AlgebraicVariable")
 right_term = NodePath("AlgebraicNegation")
 
 [node name="AlgebraicVariable" type="Node" parent="ExpressionController/AlgebraicBase/AlgebraicEquality/AlgebraicSum/AlgebraicSum"]
-script = ExtResource("3_hamqr")
+script = ExtResource("5_6rrnn")
 variable_name = "b"
 
 [node name="AlgebraicNegation" type="Node" parent="ExpressionController/AlgebraicBase/AlgebraicEquality/AlgebraicSum/AlgebraicSum" node_paths=PackedStringArray("expression")]
-script = ExtResource("5_ofjmm")
+script = ExtResource("6_3g6xr")
 expression = NodePath("AlgebraicVariable")
 
 [node name="AlgebraicVariable" type="Node" parent="ExpressionController/AlgebraicBase/AlgebraicEquality/AlgebraicSum/AlgebraicSum/AlgebraicNegation"]
-script = ExtResource("3_hamqr")
+script = ExtResource("5_6rrnn")
 variable_name = "b"
 
 [node name="AlgebraicVariable" type="Node" parent="ExpressionController/AlgebraicBase/AlgebraicEquality"]
-script = ExtResource("3_hamqr")
+script = ExtResource("5_6rrnn")
 variable_name = "a"

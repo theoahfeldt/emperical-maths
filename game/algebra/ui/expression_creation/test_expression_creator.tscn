@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://xxstk8xrwcv3" path="res://algebra/ui/expression_creation/expression_creator.tscn" id="1_3wwag"]
 [ext_resource type="Script" path="res://algebra/ui/expression_creation/test_expression_creator.gd" id="1_ukykp"]
 
-[node name="test_expression_creator" type="Node2D"]
+[node name="TestExpressionCreator" type="Node2D"]
 script = ExtResource("1_ukykp")
 
 [node name="ExpressionCreator" parent="." instance=ExtResource("1_3wwag")]
