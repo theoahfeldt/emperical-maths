@@ -77,16 +77,16 @@ func _integer_menu() -> SelectionMenu:
 	return AlternativeExpressionsMenu.create(expressions)
 
 
-func _enter_creation_menu(menu: SelectionMenu, index: Array[int]) -> void:
-	_enter_menu(menu, _on_creation_menu_selected, index)
+func _start_creation_menu(menu: SelectionMenu, index: Array[int]) -> void:
+	_start_menu(menu, _on_creation_menu_selected, index)
 
 
-func _enter_alternative_expressions_menu(
+func _start_alternative_expressions_menu(
 		menu: SelectionMenu, index: Array[int]) -> void:
-	_enter_menu(menu, _on_alternative_expressions_menu_selected, index)
+	_start_menu(menu, _on_alternative_expressions_menu_selected, index)
 
 
-func _enter_menu(
+func _start_menu(
 		menu: SelectionMenu, on_selected: Callable, index: Array[int]) -> void:
 	_menu = menu
 	_menu_selector = MenuSelector.create(_menu)
@@ -111,7 +111,7 @@ func _on_expression_selector_selected(
 	remove_child(_expression_selector)
 	_expression_selector.queue_free()
 	var menu: SelectionMenu = CreationMenu.create(selected_expression)
-	_enter_creation_menu(menu, index)
+	_start_creation_menu(menu, index)
 
 
 func _on_creation_menu_selected(
@@ -124,11 +124,11 @@ func _on_creation_menu_selected(
 	match option:
 		CreationMenu.Option.VARIABLE:
 			graphical.queue_free()
-			_enter_alternative_expressions_menu(
+			_start_alternative_expressions_menu(
 					_variable_menu(), _current_index)
 		CreationMenu.Option.INTEGER:
 			graphical.queue_free()
-			_enter_alternative_expressions_menu(
+			_start_alternative_expressions_menu(
 					_integer_menu(), _current_index)
 		CreationMenu.Option.NEGATION:
 			var algebraic := AlgebraicNegation.create(AlgebraicVariable.create("_"))
