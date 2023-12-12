@@ -1,5 +1,4 @@
 class_name AlgebraicObject
-extends Node
 
 
 const default_color := Color.AQUA

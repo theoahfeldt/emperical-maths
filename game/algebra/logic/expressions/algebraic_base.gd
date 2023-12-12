@@ -1,13 +1,11 @@
 class_name AlgebraicBase
-extends Node
 
 
-@export var object: AlgebraicObject
+var object: AlgebraicObject
 
 
 static func create(p_object: AlgebraicObject) -> AlgebraicBase:
 	var new := AlgebraicBase.new()
-	new.add_child(p_object)
 	new.object = p_object
 	return new
 
@@ -23,16 +21,9 @@ func subexpression(index: Array[int]) -> AlgebraicObject:
 func replace_subexpression(
 		new: AlgebraicObject, index: Array[int]) -> void:
 	if index.is_empty():
-		replace_object(new)
+		object = new
 	else:
 		ExpressionIndexer.replace_algebraic_subexpression(object, new, index)
-
-
-func replace_object(new: AlgebraicObject) -> void:
-	remove_child(object)
-	object.queue_free()
-	add_child(new)
-	object = new
 
 
 func pretty_string() -> String:

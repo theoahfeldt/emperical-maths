@@ -2,14 +2,13 @@ class_name AlgebraicNegation
 extends AlgebraicExpression
 
 
-@export var expression: AlgebraicExpression
+var expression: AlgebraicExpression
 
 
 static func create(
 		a: AlgebraicExpression, p_color: Color = default_color
 		) -> AlgebraicNegation:
 	var new = AlgebraicNegation.new()
-	new.add_child(a)
 	new.expression = a
 	new.color = p_color
 	return new
@@ -31,7 +30,7 @@ func subexpressions() -> Array[AlgebraicExpression]:
 
 func replace_subexpression(new: AlgebraicExpression, index: int) -> void:
 	if index == 0:
-		replace_expression(new)
+		expression = new
 	else:
 		push_error("Index %d out of range" % index)
 
@@ -52,10 +51,3 @@ func set_color(p_color: Color) -> void:
 func mark() -> void:
 	color = _sub_colors[0]
 	expression.set_color(_sub_colors[0])
-
-
-func replace_expression(new: AlgebraicExpression) -> void:
-	remove_child(expression)
-	expression.queue_free()
-	add_child(new)
-	expression = new

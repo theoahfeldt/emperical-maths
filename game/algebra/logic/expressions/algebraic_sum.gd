@@ -2,20 +2,18 @@ class_name AlgebraicSum
 extends AlgebraicExpression
 
 
-@export var left_term: AlgebraicExpression
-@export var right_term: AlgebraicExpression
+var left_term: AlgebraicExpression
+var right_term: AlgebraicExpression
 
 
 static func create(
-		a: AlgebraicExpression,
-		b: AlgebraicExpression,
+		left: AlgebraicExpression,
+		right: AlgebraicExpression,
 		p_color: Color = default_color,
 		) -> AlgebraicSum:
 	var new = AlgebraicSum.new()
-	new.add_child(a)
-	new.add_child(b)
-	new.left_term = a
-	new.right_term = b
+	new.left_term = left
+	new.right_term = right
 	new.color = p_color
 	return new
 
@@ -38,9 +36,9 @@ func subexpressions() -> Array[AlgebraicExpression]:
 func replace_subexpression(new: AlgebraicExpression, index: int) -> void:
 	match index:
 		0:
-			replace_left_term(new)
+			left_term = new
 		1:
-			replace_right_term(new)
+			right_term = new
 		var n:
 			push_error("Index %d out of range" % n)
 
@@ -64,17 +62,3 @@ func mark() -> void:
 	color = marked_color
 	left_term.set_color(_sub_colors[0])
 	right_term.set_color(_sub_colors[1])
-
-
-func replace_left_term(new: AlgebraicExpression) -> void:
-	remove_child(left_term)
-	left_term.queue_free()
-	add_child(new)
-	left_term = new
-
-
-func replace_right_term(new: AlgebraicExpression) -> void:
-	remove_child(right_term)
-	right_term.queue_free()
-	add_child(new)
-	right_term = new

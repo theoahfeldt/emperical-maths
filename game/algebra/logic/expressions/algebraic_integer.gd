@@ -2,7 +2,7 @@ class_name AlgebraicInteger
 extends AlgebraicExpression
 
 
-@export var value: int
+var value: int
 
 
 static func create(

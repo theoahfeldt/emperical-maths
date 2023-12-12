@@ -2,7 +2,7 @@ class_name AlgebraicVariable
 extends AlgebraicExpression
 
 
-@export var variable_name: String
+var variable_name: String
 
 
 static func create(

@@ -2,19 +2,19 @@ class_name AlgebraicEquality
 extends AlgebraicObject
 
 
-@export var left_expression: AlgebraicExpression
-@export var right_expression: AlgebraicExpression
+var left_expression: AlgebraicExpression
+var right_expression: AlgebraicExpression
 
 
 static func create(
-		a: AlgebraicExpression,
-		b: AlgebraicExpression,
+		left: AlgebraicExpression,
+		right: AlgebraicExpression,
+		p_color: Color = default_color,
 		) -> AlgebraicEquality:
 	var new = AlgebraicEquality.new()
-	new.add_child(a)
-	new.add_child(b)
-	new.left_expression = a
-	new.right_expression = b
+	new.left_expression = left
+	new.right_expression = right
+	new.color = p_color
 	return new
 
 
@@ -30,9 +30,9 @@ func subexpressions() -> Array[AlgebraicExpression]:
 func replace_subexpression(new: AlgebraicExpression, index: int) -> void:
 	match index:
 		0:
-			replace_left_expression(new)
+			left_expression = new
 		1:
-			replace_right_expression(new)
+			right_expression = new
 		var n:
 			push_error("Invalid index: ", n)
 
@@ -56,17 +56,3 @@ func mark() -> void:
 	color = marked_color
 	left_expression.set_color(_sub_colors[0])
 	right_expression.set_color(_sub_colors[1])
-
-
-func replace_left_expression(new: AlgebraicExpression) -> void:
-	remove_child(left_expression)
-	left_expression.queue_free()
-	add_child(new)
-	left_expression = new
-
-
-func replace_right_expression(new: AlgebraicExpression) -> void:
-	remove_child(right_expression)
-	right_expression.queue_free()
-	add_child(new)
-	right_expression = new
