@@ -19,17 +19,10 @@ static func create(
 		p_center_position := Vector2.ZERO,
 		) -> GraphicalBase:
 	var new := GraphicalBase.new()
-	new.initialize(p_expression, p_center_position)
+	new.add_child(p_expression)
+	new.expression = p_expression
+	new.center_position = p_center_position
 	return new
-
-
-func initialize(
-		p_expression: GraphicalExpressionOrMenu,
-		p_center_position := Vector2.ZERO,
-		) -> void:
-	add_child(p_expression)
-	expression = p_expression
-	center_position = p_center_position
 
 
 func replace_expression(new: GraphicalExpressionOrMenu) -> void:
