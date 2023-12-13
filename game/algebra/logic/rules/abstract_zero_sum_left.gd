@@ -1,5 +1,5 @@
-class_name SubstitutionSumLeft
-extends Substitution
+class_name AbstractZeroSumLeft
+extends AbstractExpression
 
 
 func substitute(expression: AlgebraicExpression) -> AlgebraicSum:

@@ -1,5 +1,5 @@
 class_name SumIdentityLeftBackward
-extends AlgebraicRule
+extends ConcreteRule
 ## a -> 0 + a
 
 

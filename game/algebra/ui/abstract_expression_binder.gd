@@ -1,10 +1,10 @@
-class_name SubstitutionSelector
+class_name AbstractExpressionBinder
 extends Node
 
 
-signal substituted(new_expression: AlgebraicExpression)
+signal bound(new_expression: AlgebraicExpression)
 
-var _substitution: Substitution
+var _abstract_expression: AbstractExpression
 var _expression_creator: ExpressionCreator
 
 
@@ -14,10 +14,10 @@ func _ready() -> void:
 
 
 static func create(
-		substitution: Substitution, center_position: Vector2
-		) -> SubstitutionSelector:
-	var new := SubstitutionSelector.new()
-	new._substitution = substitution
+		expression: AbstractExpression, center_position: Vector2
+		) -> AbstractExpressionBinder:
+	var new := AbstractExpressionBinder.new()
+	new._abstract_expression = expression
 	var expression_creator := ExpressionCreator.create(center_position)
 	new.add_child(expression_creator)
 	new._expression_creator = expression_creator
@@ -27,5 +27,5 @@ static func create(
 func _on_expression_creator_created_expression(
 		algebraic: AlgebraicExpression, graphical: GraphicalExpression) -> void:
 	graphical.queue_free()
-	var new_expression := _substitution.substitute(algebraic)
-	substituted.emit(new_expression)
+	var new_expression := _abstract_expression.bind(algebraic)
+	bound.emit(new_expression)

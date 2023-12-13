@@ -1,5 +1,5 @@
 class_name Identity
-extends AlgebraicRule
+extends ConcreteRule
 ## a -> a
 
 

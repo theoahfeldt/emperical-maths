@@ -1,5 +1,5 @@
 class_name SumInverseLeftBackward
-extends SubstitutionRule
+extends AbstractRule
 ## 0 -> -a + a
 
 
@@ -9,5 +9,5 @@ func applicable(expression: AlgebraicExpression) -> bool:
 	return false
 
 
-func apply(_expression) -> SubstitutionSumLeft:
-	return SubstitutionSumLeft.new()
+func apply(_expression) -> AbstractZeroSumLeft:
+	return AbstractZeroSumLeft.new()

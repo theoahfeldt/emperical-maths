@@ -14,4 +14,4 @@ static func create() -> Level:
 		SumIdentityRightBackward.new(),
 		SumIdentityLeftBackward.new(),
 	]
-	return Level.create(equality, algebraic_rules, [])
+	return Level.create(equality, algebraic_rules)

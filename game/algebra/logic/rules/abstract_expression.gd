@@ -1,7 +1,7 @@
-class_name Substitution
+class_name AbstractExpression
 
 
-func substitute(_expression: AlgebraicExpression) -> AlgebraicExpression:
+func bind(_expression: AlgebraicExpression) -> AlgebraicExpression:
 	push_error("Function not implemented")
 	return AlgebraicExpression.new()
 

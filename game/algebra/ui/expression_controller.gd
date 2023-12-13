@@ -5,13 +5,12 @@ extends Node2D
 signal updated_algebraic()
 
 var _algebraic_rules: Array[AlgebraicRule]
-var _substitution_rules: Array[SubstitutionRule]
 var _algebraic_base: AlgebraicBase
 var _graphical_base: GraphicalBase
 
 # The following will be null when not in use:
 var _expression_selector: ExpressionSelector
-var _substitution_selector: SubstitutionSelector
+var _abstract_expression_binder: AbstractExpressionBinder
 var _menu: SelectionMenu
 var _menu_selector: MenuSelector
 var _current_index: Array[int] = [0]
@@ -28,21 +27,11 @@ func _ready() -> void:
 static func create(
 		algebraic_object: AlgebraicObject,
 		algebraic_rules: Array[AlgebraicRule],
-		substitution_rules: Array[SubstitutionRule],
 		) -> ExpressionController:
 	var new := ExpressionController.new()
-	new.initialize(algebraic_object, algebraic_rules, substitution_rules)
+	new._algebraic_base = AlgebraicBase.create(algebraic_object)
+	new._algebraic_rules = algebraic_rules
 	return new
-
-
-func initialize(
-		algebraic_object: AlgebraicObject,
-		algeraic_rules: Array[AlgebraicRule],
-		substitution_rules: Array[SubstitutionRule],
-		) -> void:
-	_algebraic_base = AlgebraicBase.create(algebraic_object)
-	_algebraic_rules = algeraic_rules
-	_substitution_rules = substitution_rules
 
 
 func _start_expression_selector() -> void:
@@ -63,13 +52,15 @@ func _start_alternative_expressions_menu(
 			_graphical_base, _menu, index)
 
 
-func _start_substitution_selector(substitution: Substitution) -> void:
+func _start_abstract_expression_binder(
+		abstract_expression: AbstractExpression) -> void:
 	var center: Vector2 = get_viewport_rect().size / 2.0
 	center.y += 100
-	_substitution_selector = SubstitutionSelector.create(substitution, center)
-	add_child(_substitution_selector)
-	_substitution_selector.substituted.connect(
-			_on_substitution_selector_substituted)
+	_abstract_expression_binder = AbstractExpressionBinder.create(
+			abstract_expression, center)
+	add_child(_abstract_expression_binder)
+	_abstract_expression_binder.substituted.connect(
+			_on_abstract_expression_binder_substituted)
 
 
 func _replace_subexpression(
@@ -87,7 +78,7 @@ func _on_expression_selector_selected(
 	remove_child(_expression_selector)
 	_expression_selector.queue_free()
 	var menu: SelectionMenu = AlternativeExpressionsMenu.create_from_expression(
-			selected, _algebraic_rules, _substitution_rules)
+			selected, _algebraic_rules)
 	_start_alternative_expressions_menu(menu, index)
 
 
@@ -97,17 +88,17 @@ func _on_alternative_expressions_menu_selected(
 	_menu_selector.queue_free()
 	if option is AlgebraicExpression:
 		_replace_subexpression(option, graphical)
-	elif option is Substitution:
+	elif option is AbstractExpression:
 		ExpressionIndexer.replace_graphical_subexpression(
 				_graphical_base, graphical, _current_index)
-		_start_substitution_selector(option)
+		_start_abstract_expression_binder(option)
 	else:
 		push_error("Invalid option: ", option)
 
 
-func _on_substitution_selector_substituted(
+func _on_abstract_expression_binder_substituted(
 		new_expression: AlgebraicExpression) -> void:
-	remove_child(_substitution_selector)
-	_substitution_selector.queue_free()
+	remove_child(_abstract_expression_binder)
+	_abstract_expression_binder.queue_free()
 	var graphical := new_expression.to_graphical()
 	_replace_subexpression(new_expression, graphical)

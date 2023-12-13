@@ -1,5 +1,5 @@
 class_name SumCommutativity
-extends AlgebraicRule
+extends ConcreteRule
 ## a + b -> b + a
 
 

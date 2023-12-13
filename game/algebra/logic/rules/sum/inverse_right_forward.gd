@@ -1,5 +1,5 @@
 class_name SumInverseRightForward
-extends AlgebraicRule
+extends ConcreteRule
 ## a + -a -> 0
 
 

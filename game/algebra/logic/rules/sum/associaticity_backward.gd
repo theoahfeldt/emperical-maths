@@ -1,5 +1,5 @@
 class_name SumAssociativityBackward
-extends AlgebraicRule
+extends ConcreteRule
 ## a + (b + c) -> (a + b) + c
 
 func applicable(expression: AlgebraicExpression) -> bool:

@@ -3,34 +3,31 @@ class_name AlternativeExpressionsMenu
 
 static func create_from_expression(
 		expression: AlgebraicExpression,
-		algebraic_rules: Array[AlgebraicRule],
-		substitution_rules: Array[SubstitutionRule],
+		rules: Array[AlgebraicRule],
 		) -> SelectionMenu:
-	var applicable_algebraic := algebraic_rules.filter(
+	var applicable := rules.filter(
 			func(r): return r.applicable(expression))
-	@warning_ignore("unassigned_variable")
-	var alternative_expressions: Array[AlgebraicExpression]
-	alternative_expressions.assign(
-			applicable_algebraic.map(func(r): return r.apply(expression)))
-	var unique := _get_unique(alternative_expressions)
-	var applicable_substitutions := substitution_rules.filter(
-			func(r): return r.applicable(expression))
-	@warning_ignore("unassigned_variable")
-	var subs: Array[Substitution]
-	subs.assign(applicable_substitutions.map(
-			func(r): return r.apply(expression)))
-	return AlternativeExpressionsMenu.create(unique, subs)
+	var concrete_alternatives: Array[AlgebraicExpression] = []
+	var abstract_alternatives: Array[AbstractExpression] = []
+	for rule: AlgebraicRule in applicable:
+		if rule is ConcreteRule:
+			concrete_alternatives.append(rule.apply(expression))
+		elif rule is AbstractRule:
+			abstract_alternatives.append(rule.apply(expression))
+		else:
+			push_error("Invalid rule")
+	concrete_alternatives = _unique(concrete_alternatives)
+	return AlternativeExpressionsMenu.create(
+			concrete_alternatives, abstract_alternatives)
 
 
 static func create(
-		expressions: Array[AlgebraicExpression],
-		substitutions: Array[Substitution] = [],
+		algebraic_expressions: Array[AlgebraicExpression],
+		substitutions: Array[AbstractExpression] = [],
 		) -> SelectionMenu:
-	if expressions.is_empty():
-		push_error("Created empty menu.")
-	var options: Array = expressions + substitutions
+	var options: Array = algebraic_expressions + substitutions
 	var graphical_options: Array[GraphicalExpression] = []
-	for algebraic in expressions:
+	for algebraic in algebraic_expressions:
 		var graphical := algebraic.to_graphical()
 		graphical.set_color_from_algebraic(algebraic)
 		graphical_options.append(graphical)
@@ -39,7 +36,7 @@ static func create(
 	return SelectionMenu.create(options, graphical_options)
 
 
-static func _get_unique(
+static func _unique(
 		expressions: Array[AlgebraicExpression]) -> Array[AlgebraicExpression]:
 	var unique: Array[AlgebraicExpression] = []
 	for expression in expressions:
