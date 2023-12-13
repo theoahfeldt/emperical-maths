@@ -2,6 +2,7 @@ class_name ExpressionController
 extends Node2D
 
 
+signal updated_algebraic()
 
 var _algebraic_rules: Array[AlgebraicRule]
 var _substitution_rules: Array[SubstitutionRule]
@@ -76,6 +77,7 @@ func _replace_subexpression(
 	_algebraic_base.replace_subexpression(algebraic, _current_index)
 	ExpressionIndexer.replace_graphical_subexpression(
 			_graphical_base, graphical, _current_index)
+	updated_algebraic.emit()
 	_start_expression_selector()
 
 
