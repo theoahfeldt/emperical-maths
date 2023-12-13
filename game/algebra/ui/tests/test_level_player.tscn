@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://drry2l756r67r"]
 
-[ext_resource type="Script" path="res://algebra/ui/test_level_player.gd" id="1_sxcyh"]
+[ext_resource type="Script" path="res://algebra/ui/tests/test_level_player.gd" id="1_sxcyh"]
 
 [node name="TestLevelPlayer" type="Node2D"]
 script = ExtResource("1_sxcyh")
