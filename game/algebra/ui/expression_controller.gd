@@ -2,11 +2,9 @@ class_name ExpressionController
 extends Node2D
 
 
-const AlgebraicRules := preload("res://algebra/logic/rules/algebraic_rules.gd")
-const SubstitutionRules := preload("res://algebra/logic/rules/substitution_rules.gd")
 
-var algebraic_rules := AlgebraicRules.rules()
-var substitution_rules := SubstitutionRules.rules()
+var _algebraic_rules: Array[AlgebraicRule]
+var _substitution_rules: Array[SubstitutionRule]
 var _algebraic_base: AlgebraicBase
 var _graphical_base: GraphicalBase
 
@@ -15,23 +13,35 @@ var _expression_selector: ExpressionSelector
 var _substitution_selector: SubstitutionSelector
 var _menu: SelectionMenu
 var _menu_selector: MenuSelector
-var _current_index: Array[int] = []
+var _current_index: Array[int] = [0]
 
 
 func _ready() -> void:
+	_graphical_base = GraphicalBase.create(
+		_algebraic_base.to_graphical(), get_viewport_rect().size / 2.0)
+	add_child(_graphical_base)
 	_graphical_base.center()
 	_start_expression_selector()
 
 
 static func create(
-		base: AlgebraicBase, center_pos: Vector2
+		algebraic_object: AlgebraicObject,
+		algebraic_rules: Array[AlgebraicRule],
+		substitution_rules: Array[SubstitutionRule],
 		) -> ExpressionController:
 	var new := ExpressionController.new()
-	new._algebraic_base = base
-	var graphical_base := GraphicalBase.create(base.to_graphical(), center_pos)
-	new._graphical_base = graphical_base
-	new.add_child(graphical_base)
+	new.initialize(algebraic_object, algebraic_rules, substitution_rules)
 	return new
+
+
+func initialize(
+		algebraic_object: AlgebraicObject,
+		algeraic_rules: Array[AlgebraicRule],
+		substitution_rules: Array[SubstitutionRule],
+		) -> void:
+	_algebraic_base = AlgebraicBase.create(algebraic_object)
+	_algebraic_rules = algeraic_rules
+	_substitution_rules = substitution_rules
 
 
 func _start_expression_selector() -> void:
@@ -75,7 +85,7 @@ func _on_expression_selector_selected(
 	remove_child(_expression_selector)
 	_expression_selector.queue_free()
 	var menu: SelectionMenu = AlternativeExpressionsMenu.create_from_expression(
-			selected, algebraic_rules, substitution_rules)
+			selected, _algebraic_rules, _substitution_rules)
 	_start_alternative_expressions_menu(menu, index)
 
 

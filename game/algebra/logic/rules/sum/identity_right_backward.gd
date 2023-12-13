@@ -1,3 +1,4 @@
+class_name SumIdentityRightBackward
 extends AlgebraicRule
 ## a -> a + 0
 

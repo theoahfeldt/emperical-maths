@@ -1,3 +1,4 @@
+class_name SumCommutativity
 extends AlgebraicRule
 ## a + b -> b + a
 

@@ -1,3 +1,4 @@
+class_name SumAssociativityBackward
 extends AlgebraicRule
 ## a + (b + c) -> (a + b) + c
 

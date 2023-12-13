@@ -1,3 +1,4 @@
+class_name SumIdentityLeftForward
 extends AlgebraicRule
 ## 0 + a -> a
 

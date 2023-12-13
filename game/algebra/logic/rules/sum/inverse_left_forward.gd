@@ -1,3 +1,4 @@
+class_name SumInverseLeftForward
 extends AlgebraicRule
 ## -a + a -> 0
 

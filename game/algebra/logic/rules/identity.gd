@@ -1,3 +1,4 @@
+class_name Identity
 extends AlgebraicRule
 ## a -> a
 

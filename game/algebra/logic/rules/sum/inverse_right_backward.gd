@@ -1,3 +1,4 @@
+class_name SumInverseRightBackward
 extends SubstitutionRule
 ## 0 -> a + -a
 
