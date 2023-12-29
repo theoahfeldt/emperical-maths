@@ -5,9 +5,9 @@ extends VBoxContainer
 signal selected(level_path: String)
 
 var levels: Array[String] = [
-	"res://levels/level1.gd",
-	"res://levels/level2.gd",
-	"res://levels/level3.gd",
+	"res://levels/sum_identity_right.gd",
+	"res://levels/sum_identity_left.gd",
+	"res://levels/sum_identity.gd",
 	]
 var _buttons: Array[Button]
 
