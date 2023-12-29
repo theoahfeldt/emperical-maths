@@ -1,0 +1,85 @@
+#+TAGS: IDENTITY(i) INVERSE(n)
+* Sum
+
+** Group axioms
+
+*** Identity
+
+**** Definition
+- [ ] a + 0 = a
+- [ ] 0 + a = a
+- [ ] a + 0 = 0 + a
+
+
+**** Variation
+- [ ] (a + b) + 0 = a + b
+- [ ] x + (y + 0) = x + y
+
+**** Composition
+- [ ] n = (n + 0) + 0
+
+*** Inverse
+
+**** Definition
+- [ ] a + -a = 0
+- [ ] -a + a = 0
+
+**** Variation
+- [ ] (a + b) + -(a + b) = 0
+
+*** Associativity
+Should introduce shortcut
+
+**** Definition
+- [ ] a + (b + c) = (a + b) + c
+
+*** Compositions
+- [ ] a + b + -b + -a = 0
+- [ ]
+
+** Commutativity
+Should introduce shortcut
+
+*** Definition
+- [ ] a + b = b + a
+
+*** Compositions
+- [ ] a + b + c = c + a + b
+
+** Left cancellation
+a + x = b + x <=> a = b
+
+** Inverse of inverse
+-(-a) = a
+
+** Uniqueness of inverse
+a + -a = 0 ^ a + -a' = 0 => -a = -a'
+
+* Product
+
+** Group axioms
+Same as for sum.
+
+** Distributivity
+
+*** Definition
+- [ ] a(b + c) = ab + bc
+- [ ] (a + b)c = ac + bc
+
+** Compositions
+- [ ] 0x = 0
+<=>
+0x + 0x = 0 + 0x
+0x = (0 + 0)x = 0x + 0x = 0 + 0x = 0x
+- [ ] 2x = x + x
+
+** (-a)x = -(ax)
+proof:
+ax + (-a)x = ax + -(ax)
+ax + (-a)x = (a + -a)x = 0x = 0 = ax + -ax
+
+*** Applications
+
+- [ ] (-1)x = -x
+- [ ] (-a)(-b) = ab
+(-a)(-b) = -(a(-b)) = -(-(ab)) = ab

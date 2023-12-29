@@ -1,0 +1,76 @@
+* Features
+
+** TODO Implement undo
+Keep a history of previous expressions and assign a button to undo.
+
+** TODO Remove parentheses of top level sum
+- [ ] Add unparenthesized sum as a graphical expression
+- [ ] In sum's to_graphical add a parameter is_top: bool that determines whether to use parentheses.
+- [ ] Use unparenthesized sum in equality's to_graphical()
+- [ ] Do the same for pretty_string()
+
+** TODO Add sound effects
+
+** TODO Add controller support
+
+** TODO Structure levels in a dependency DAG [1/3]
+Available rules defined per level and all dependencies.
+
+- [X] Add level buttons in a level structure
+- [ ] Start level on button press
+- [ ] 
+
+** TODO Implement "factor out variable" levels
+
+** TODO Change to a math font
+Use a font like latex uses.
+
+** TODO Randomly generate "factor out variable" levels
+
+** TODO Implement expressions
+
+*** TODO Multi-sum
+Sum containing more than two terms, without nesting. Indexing left and right marks term or sum of two terms.
+
+**** TODO Add multi-sum shortcuts
+Keyboard shortcuts or button on controller to immediately perform a rule.
+- [ ] Shortcut for commutativity
+- [ ] Shortcut for toggling parenthesis
+
+**** TODO Add toggle for only marking terms or sums
+
+** TODO Subtraction
+
+** TODO Product
+
+** TODO Multi-product
+
+** TODO Fractions
+
+** TODO Compute expression rules
+Add a rule to replace a computable expression with another equal computable expression. A computable expression is an expression who's leaf expressions are all integers. Let the user build any computable expression and allow the substitution only if the new expression is equal to the old.
+
+** TODO Implement rules
+
+*** TODO Distributivity
+
+*** TODO Multiplicative identity
+
+*** TODO Multiplicative commutativity
+
+
+** TODO Add rule types
+- [ ] Axioms
+- [ ] Composite
+- [ ] Assumptions
+
+** TODO Implement level creator
+
+* Ideas
+
+* Refactors
+** TODO Replace CreationMenu and AlternativeExpressionsMenu classes with functions
+Functions could go in new Menus class.
+
+** TODO Make Rule super class for AlgebraicRule and SubstitutionRule
+

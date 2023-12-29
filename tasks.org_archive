@@ -1,0 +1,16 @@
+#    -*- mode: org -*-
+
+
+Archived entries from file /home/theo/base/private/programming/godot/emperical-maths/tasks.org
+
+
+* DONE Convert algebraic objects from nodes to refcounted
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2023-12-14 tor 19:33
+  :ARCHIVE_FILE: ~/base/private/programming/godot/emperical-maths/tasks.org
+  :ARCHIVE_OLPATH: Tasks
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+Achieved by removing "extends Node".
+
