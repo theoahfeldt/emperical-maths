@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://bs1dsw77c7yvo"]
 
-[ext_resource type="Theme" uid="uid://bnsjv02gqa43q" path="res://algebra/graphics/glyph_theme.tres" id="1_pp4gx"]
+[ext_resource type="Theme" uid="uid://bnsjv02gqa43q" path="res://math_theme.tres" id="1_footy"]
 
 [node name="GlyphLabel" type="Label"]
 offset_right = 40.0
 offset_bottom = 23.0
-theme = ExtResource("1_pp4gx")
+theme = ExtResource("1_footy")
