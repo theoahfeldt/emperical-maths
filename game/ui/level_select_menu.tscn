@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://ui/level_select_menu.gd" id="1_81e3b"]
 [ext_resource type="PackedScene" uid="uid://dm2vdch6b0wgd" path="res://ui/level_button.tscn" id="1_wrdac"]
-[ext_resource type="Script" path="res://levels/sum_identity_right.gd" id="2_di3na"]
-[ext_resource type="Script" path="res://levels/sum_identity_left.gd" id="3_6krlc"]
-[ext_resource type="Script" path="res://levels/sum_identity.gd" id="3_fj7i5"]
+[ext_resource type="Script" path="res://levels/levels/sum_identity.gd" id="3_n0pyt"]
+[ext_resource type="Script" path="res://levels/levels/sum_identity_right.gd" id="4_owq63"]
+[ext_resource type="Script" path="res://levels/levels/sum_identity_left.gd" id="5_cbk27"]
 
 [node name="LevelGraph" type="VBoxContainer"]
 anchors_preset = 15
@@ -25,7 +25,7 @@ size_flags_horizontal = 3
 [node name="LevelButton" parent="HBoxContainer/CenterContainer" instance=ExtResource("1_wrdac")]
 layout_mode = 2
 text = "a+0=0+a"
-level_creator = ExtResource("3_fj7i5")
+level_creator = ExtResource("3_n0pyt")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -38,7 +38,7 @@ size_flags_horizontal = 3
 [node name="LevelButton" parent="HBoxContainer2/CenterContainer" instance=ExtResource("1_wrdac")]
 layout_mode = 2
 text = "a+0=0"
-level_creator = ExtResource("2_di3na")
+level_creator = ExtResource("4_owq63")
 
 [node name="CenterContainer2" type="CenterContainer" parent="HBoxContainer2"]
 layout_mode = 2
@@ -47,4 +47,4 @@ size_flags_horizontal = 3
 [node name="LevelButton" parent="HBoxContainer2/CenterContainer2" instance=ExtResource("1_wrdac")]
 layout_mode = 2
 text = "0+a=0"
-level_creator = ExtResource("3_6krlc")
+level_creator = ExtResource("5_cbk27")
