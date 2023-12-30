@@ -13,11 +13,11 @@ Keep a history of previous expressions and assign a button to undo.
 
 ** TODO Add controller support
 
-** TODO Structure levels in a dependency DAG [1/3]
+** TODO Structure levels in a dependency DAG [2/3]
 Available rules defined per level and all dependencies.
 
 - [X] Add level buttons in a level structure
-- [ ] Start level on button press
+- [X] Start level on button press
 - [ ] 
 
 ** TODO Implement "factor out variable" levels

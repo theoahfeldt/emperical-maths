@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://c2wlu6iasfet8"]
+
+[ext_resource type="Script" path="res://ui/level_select_menu.gd" id="1_81e3b"]
+[ext_resource type="PackedScene" uid="uid://dm2vdch6b0wgd" path="res://ui/level_button.tscn" id="1_wrdac"]
+[ext_resource type="Script" path="res://levels/sum_identity_right.gd" id="2_di3na"]
+[ext_resource type="Script" path="res://levels/sum_identity_left.gd" id="3_6krlc"]
+[ext_resource type="Script" path="res://levels/sum_identity.gd" id="3_fj7i5"]
+
+[node name="LevelGraph" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_81e3b")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LevelButton" parent="HBoxContainer/CenterContainer" instance=ExtResource("1_wrdac")]
+layout_mode = 2
+text = "a+0=0+a"
+level_creator = ExtResource("3_fj7i5")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LevelButton" parent="HBoxContainer2/CenterContainer" instance=ExtResource("1_wrdac")]
+layout_mode = 2
+text = "a+0=0"
+level_creator = ExtResource("2_di3na")
+
+[node name="CenterContainer2" type="CenterContainer" parent="HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LevelButton" parent="HBoxContainer2/CenterContainer2" instance=ExtResource("1_wrdac")]
+layout_mode = 2
+text = "0+a=0"
+level_creator = ExtResource("3_6krlc")
