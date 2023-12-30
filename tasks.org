@@ -22,7 +22,7 @@ Available rules defined per level and all dependencies.
 
 ** TODO Implement "factor out variable" levels
 
-** TODO Implement a parser
+** DONE Implement a parser
 Make it possible to define a level just by text, e.g. "(a+0)=0"
 
 ** TODO Change to a math font
