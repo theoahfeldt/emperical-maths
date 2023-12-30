@@ -26,6 +26,8 @@ func _parse_expression() -> AlgebraicExpression:
 		return AlgebraicVariable.create(token)
 	if _is_integer(token):
 		return AlgebraicInteger.create(int(token))
+	if token == "-":
+		return AlgebraicNegation.create(_parse_expression())
 	if token == "(":
 		return _parse_sum()
 	push_error("Parsing error: Unexpected character")
