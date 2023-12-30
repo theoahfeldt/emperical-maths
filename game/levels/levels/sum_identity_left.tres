@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Axiom" load_steps=5 format=3 uid="uid://cjx86ya2txv31"]
+
+[ext_resource type="Script" path="res://algebra/logic/rules/identity.gd" id="1_mond2"]
+[ext_resource type="Script" path="res://algebra/logic/rules/sum/identity_left_forward.gd" id="2_b7ei8"]
+[ext_resource type="Script" path="res://algebra/logic/rules/sum/identity_left_backward.gd" id="3_7jt34"]
+[ext_resource type="Script" path="res://levels/axiom.gd" id="4_b3pew"]
+
+[resource]
+script = ExtResource("4_b3pew")
+rules = Array[Resource]([ExtResource("1_mond2"), ExtResource("2_b7ei8"), ExtResource("3_7jt34")])
+equality = "(0+a)=a"

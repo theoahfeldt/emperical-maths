@@ -16,10 +16,10 @@ func _start_level_select_menu() -> void:
 	_level_select_menu.selected.connect(_on_level_select_menu_selected)
 
 
-func _on_level_select_menu_selected(level_creator: Resource) -> void:
+func _on_level_select_menu_selected(assertion: Assertion) -> void:
 	remove_child(_level_select_menu)
 	_level_select_menu.queue_free()
-	var level = level_creator.create()
+	var level = assertion.create_level()
 	_level_player = LevelPlayer.create(level)
 	add_child(_level_player)
 	_level_player.cleared.connect(_on_level_player_cleared)

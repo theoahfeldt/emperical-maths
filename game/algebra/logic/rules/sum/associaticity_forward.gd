@@ -2,6 +2,7 @@ class_name SumAssociativityForward
 extends ConcreteRule
 ## (a + b) + c -> a + (b + c)
 
+
 func applicable(expression: AlgebraicExpression) -> bool:
 	if expression is AlgebraicSum:
 		return expression.left_term is AlgebraicSum
