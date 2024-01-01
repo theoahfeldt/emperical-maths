@@ -7,5 +7,5 @@
 
 [resource]
 script = ExtResource("4_tgau2")
-rules = Array[Resource]([ExtResource("1_ktrs1"), ExtResource("2_6mg0w"), ExtResource("3_euayl")])
+rules = Array[Script]([ExtResource("1_ktrs1"), ExtResource("2_6mg0w"), ExtResource("3_euayl")])
 equality = "(a+0)=a"
