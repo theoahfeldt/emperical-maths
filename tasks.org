@@ -1,5 +1,18 @@
 * Features
 
+** TODO Structure levels in a dependency DAG [2/4]
+Available rules defined per level and all dependencies.
+
+- [X] Add level buttons in a level structure
+- [X] Start level on button press
+- [ ] Draw lines from consequence to its premises
+- [ ] Add scrolling
+
+** TODO Add levels
+
+** TODO Change to a math font
+Use a font like latex uses.
+
 ** TODO Implement undo
 Keep a history of previous expressions and assign a button to undo.
 
@@ -11,22 +24,10 @@ Keep a history of previous expressions and assign a button to undo.
 
 ** TODO Add sound effects
 
-** TODO Add controller support
-
-** TODO Structure levels in a dependency DAG [2/3]
-Available rules defined per level and all dependencies.
-
-- [X] Add level buttons in a level structure
-- [X] Start level on button press
-- [ ] 
-
-** TODO Implement "factor out variable" levels
-
 ** DONE Implement a parser
 Make it possible to define a level just by text, e.g. "(a+0)=0"
 
-** TODO Change to a math font
-Use a font like latex uses.
+** TODO Implement "factor out variable" levels
 
 ** TODO Randomly generate "factor out variable" levels
 
@@ -42,25 +43,25 @@ Keyboard shortcuts or button on controller to immediately perform a rule.
 
 **** TODO Add toggle for only marking terms or sums
 
-** TODO Subtraction
+*** TODO Subtraction
 
-** TODO Product
+*** TODO Product
 
-** TODO Multi-product
+**** TODO Implement multiplication axioms
 
-** TODO Fractions
+***** TODO Distributivity
+
+***** TODO Multiplicative identity
+
+***** TODO Multiplicative commutativity
+
+
+**** TODO Multi-product
+
+*** TODO Fractions
 
 ** TODO Compute expression rules
 Add a rule to replace a computable expression with another equal computable expression. A computable expression is an expression who's leaf expressions are all integers. Let the user build any computable expression and allow the substitution only if the new expression is equal to the old.
-
-** TODO Implement rules
-
-*** TODO Distributivity
-
-*** TODO Multiplicative identity
-
-*** TODO Multiplicative commutativity
-
 
 ** TODO Add rule types
 - [ ] Axioms
@@ -68,6 +69,8 @@ Add a rule to replace a computable expression with another equal computable expr
 - [ ] Assumptions
 
 ** TODO Implement level creator
+
+** TODO Add controller support
 
 * Ideas
 
