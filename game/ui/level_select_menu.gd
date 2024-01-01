@@ -1,5 +1,5 @@
 class_name LevelSelectMenu
-extends VBoxContainer
+extends ScrollContainer
 
 
 signal selected(assertion: Resource)

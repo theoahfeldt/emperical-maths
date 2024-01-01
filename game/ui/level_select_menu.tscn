@@ -6,45 +6,51 @@
 [ext_resource type="Resource" uid="uid://cfp388qakl1cv" path="res://levels/levels/sum_identity.tres" id="3_b86hu"]
 [ext_resource type="Resource" uid="uid://dx7c2q6hc1q3l" path="res://levels/levels/sum_identity_right.tres" id="4_unpbs"]
 
-[node name="LevelSelectMenu" type="VBoxContainer"]
+[node name="LevelSelectMenu" type="ScrollContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+horizontal_scroll_mode = 0
 script = ExtResource("1_81e3b")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 100
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LevelButton" parent="HBoxContainer/CenterContainer" instance=ExtResource("2_cbbnw")]
-layout_mode = 2
-text = "a+0=0+a"
-assertion = ExtResource("3_b86hu")
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="."]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="LevelButton" parent="HBoxContainer2/CenterContainer" instance=ExtResource("2_cbbnw")]
+[node name="LevelButton" parent="VBoxContainer/HBoxContainer2/CenterContainer" instance=ExtResource("2_cbbnw")]
 layout_mode = 2
 text = "a+0=a"
 assertion = ExtResource("4_unpbs")
 
-[node name="CenterContainer2" type="CenterContainer" parent="HBoxContainer2"]
+[node name="CenterContainer2" type="CenterContainer" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LevelButton" parent="HBoxContainer2/CenterContainer2" instance=ExtResource("2_cbbnw")]
+[node name="LevelButton" parent="VBoxContainer/HBoxContainer2/CenterContainer2" instance=ExtResource("2_cbbnw")]
 layout_mode = 2
 text = "0+a=a"
 assertion = ExtResource("3_1e06o")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LevelButton" parent="VBoxContainer/HBoxContainer/CenterContainer" instance=ExtResource("2_cbbnw")]
+layout_mode = 2
+text = "a+0=0+a"
+assertion = ExtResource("3_b86hu")

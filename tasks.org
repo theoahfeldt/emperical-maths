@@ -1,12 +1,12 @@
 * Features
 
-** TODO Structure levels in a dependency DAG [2/4]
+** TODO Structure levels in a dependency DAG [3/4]
 Available rules defined per level and all dependencies.
 
 - [X] Add level buttons in a level structure
 - [X] Start level on button press
 - [ ] Draw lines from consequence to its premises
-- [ ] Add scrolling
+- [X] Add scrolling
 
 ** TODO Add levels
 
