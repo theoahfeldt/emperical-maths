@@ -1,11 +1,11 @@
 * Features
 
-** TODO Structure levels in a dependency DAG [3/4]
+** DONE Structure levels in a dependency DAG [4/4]
 Available rules defined per level and all dependencies.
 
 - [X] Add level buttons in a level structure
 - [X] Start level on button press
-- [ ] Draw lines from consequence to its premises
+- [X] Draw lines from consequence to its premises
 - [X] Add scrolling
 
 ** TODO Add levels
@@ -63,10 +63,8 @@ Keyboard shortcuts or button on controller to immediately perform a rule.
 ** TODO Compute expression rules
 Add a rule to replace a computable expression with another equal computable expression. A computable expression is an expression who's leaf expressions are all integers. Let the user build any computable expression and allow the substitution only if the new expression is equal to the old.
 
-** TODO Add rule types
-- [ ] Axioms
-- [ ] Composite
-- [ ] Assumptions
+** TODO Add assumptions
+To prove left and right cancellation requires an assumption. Implement assumptions as rules that are only available for that level (proof).
 
 ** TODO Implement level creator
 
