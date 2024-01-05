@@ -47,3 +47,4 @@ offset_right = 482.0
 offset_bottom = 325.0
 text = "a+0=0+a"
 assertion = ExtResource("3_b86hu")
+dependencies = [NodePath("../a+0=a"), NodePath("../0+a=a")]
