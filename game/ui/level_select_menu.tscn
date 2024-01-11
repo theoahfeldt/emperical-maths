@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://c2wlu6iasfet8"]
+[gd_scene load_steps=9 format=3 uid="uid://c2wlu6iasfet8"]
 
 [ext_resource type="Script" path="res://ui/level_select_menu.gd" id="1_81e3b"]
 [ext_resource type="PackedScene" uid="uid://c1wy4aqwsvet0" path="res://ui/level_button.tscn" id="2_cbbnw"]
 [ext_resource type="Resource" uid="uid://cjx86ya2txv31" path="res://levels/levels/sum_identity_left.tres" id="3_1e06o"]
 [ext_resource type="Resource" uid="uid://cfp388qakl1cv" path="res://levels/levels/sum_identity.tres" id="3_b86hu"]
 [ext_resource type="Resource" uid="uid://dx7c2q6hc1q3l" path="res://levels/levels/sum_identity_right.tres" id="4_unpbs"]
+[ext_resource type="Resource" uid="uid://cpkghs136becf" path="res://levels/levels/sum_inverse_right.tres" id="6_7gctx"]
+[ext_resource type="Resource" uid="uid://bjmk63x60saw7" path="res://levels/levels/sum_inverse_left.tres" id="7_ifaq4"]
+[ext_resource type="Resource" uid="uid://djxjvjdl3tak7" path="res://levels/levels/sum_inverse.tres" id="8_3w8kc"]
 
 [node name="LevelSelectMenu" type="ScrollContainer"]
 clip_contents = false
@@ -48,3 +51,34 @@ offset_bottom = 325.0
 text = "a+0=0+a"
 assertion = ExtResource("3_b86hu")
 dependencies = [NodePath("../a+0=a"), NodePath("../0+a=a")]
+
+[node name="a+-a=0" parent="LevelChart" instance=ExtResource("2_cbbnw")]
+layout_mode = 2
+offset_left = 900.0
+offset_top = 116.0
+offset_right = 1064.0
+offset_bottom = 175.0
+text = "a+-a=0
+"
+assertion = ExtResource("6_7gctx")
+
+[node name="-a+a=0" parent="LevelChart" instance=ExtResource("2_cbbnw")]
+layout_mode = 2
+offset_left = 1211.0
+offset_top = 114.0
+offset_right = 1375.0
+offset_bottom = 173.0
+text = "-a+a=0
+"
+assertion = ExtResource("7_ifaq4")
+
+[node name="a+-a=-a+a" parent="LevelChart" node_paths=PackedStringArray("dependencies") instance=ExtResource("2_cbbnw")]
+layout_mode = 2
+offset_left = 1023.0
+offset_top = 261.0
+offset_right = 1265.0
+offset_bottom = 320.0
+text = "a+-a=-a+a
+"
+assertion = ExtResource("8_3w8kc")
+dependencies = [NodePath("../a+-a=0"), NodePath("../-a+a=0")]

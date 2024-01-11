@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Consequence" load_steps=4 format=3 uid="uid://djxjvjdl3tak7"]
+
+[ext_resource type="Resource" uid="uid://cpkghs136becf" path="res://levels/levels/sum_inverse_right.tres" id="1_507ui"]
+[ext_resource type="Resource" uid="uid://bjmk63x60saw7" path="res://levels/levels/sum_inverse_left.tres" id="2_blrev"]
+[ext_resource type="Script" path="res://levels/consequence.gd" id="3_u8tv4"]
+
+[resource]
+script = ExtResource("3_u8tv4")
+premises = Array[Resource("res://levels/assertion.gd")]([ExtResource("1_507ui"), ExtResource("2_blrev")])
+equality = "(a+-a)=(-a+a)  "

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=7 format=3 uid="uid://bvp8bhnt12qs7"]
+[gd_resource type="Resource" load_steps=11 format=3 uid="uid://bvp8bhnt12qs7"]
 
 [ext_resource type="Script" path="res://algebra/logic/rules/identity.gd" id="1_fwl1g"]
 [ext_resource type="Script" path="res://algebra/logic/rules/sum/identity_right_forward.gd" id="2_1tk0u"]
@@ -6,7 +6,11 @@
 [ext_resource type="Script" path="res://algebra/logic/rules/sum/identity_right_backward.gd" id="4_h6e4p"]
 [ext_resource type="Script" path="res://algebra/logic/rules/sum/identity_left_backward.gd" id="5_ou3vc"]
 [ext_resource type="Script" path="res://algebra/logic/rules/rule_ordering.gd" id="6_c8xhh"]
+[ext_resource type="Script" path="res://algebra/logic/rules/sum/inverse_right_forward.gd" id="6_tq2xc"]
+[ext_resource type="Script" path="res://algebra/logic/rules/sum/inverse_left_forward.gd" id="7_7se14"]
+[ext_resource type="Script" path="res://algebra/logic/rules/sum/inverse_right_backward.gd" id="8_03q34"]
+[ext_resource type="Script" path="res://algebra/logic/rules/sum/inverse_left_backward.gd" id="9_qr5gl"]
 
 [resource]
 script = ExtResource("6_c8xhh")
-rule_ordering = Array[Script]([ExtResource("1_fwl1g"), ExtResource("2_1tk0u"), ExtResource("3_yy3g7"), ExtResource("4_h6e4p"), ExtResource("5_ou3vc")])
+rule_ordering = Array[Script]([ExtResource("1_fwl1g"), ExtResource("2_1tk0u"), ExtResource("3_yy3g7"), ExtResource("4_h6e4p"), ExtResource("5_ou3vc"), ExtResource("6_tq2xc"), ExtResource("7_7se14"), ExtResource("8_03q34"), ExtResource("9_qr5gl")])
