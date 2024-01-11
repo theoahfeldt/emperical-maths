@@ -2,7 +2,7 @@ class_name AbstractZeroSumLeft
 extends AbstractExpression
 
 
-func substitute(expression: AlgebraicExpression) -> AlgebraicSum:
+func bind(expression: AlgebraicExpression) -> AlgebraicSum:
 	return AlgebraicSum.create(
 			AlgebraicNegation.create(expression), expression.copy())
 

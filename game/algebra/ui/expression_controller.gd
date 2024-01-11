@@ -59,7 +59,7 @@ func _start_abstract_expression_binder(
 	_abstract_expression_binder = AbstractExpressionBinder.create(
 			abstract_expression, center)
 	add_child(_abstract_expression_binder)
-	_abstract_expression_binder.substituted.connect(
+	_abstract_expression_binder.bound.connect(
 			_on_abstract_expression_binder_substituted)
 
 
