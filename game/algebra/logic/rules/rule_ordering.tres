@@ -13,4 +13,4 @@
 
 [resource]
 script = ExtResource("6_c8xhh")
-rule_ordering = Array[Script]([ExtResource("1_fwl1g"), ExtResource("2_1tk0u"), ExtResource("3_yy3g7"), ExtResource("4_h6e4p"), ExtResource("5_ou3vc"), ExtResource("6_tq2xc"), ExtResource("7_7se14"), ExtResource("8_03q34"), ExtResource("9_qr5gl")])
+rule_ordering = Array[Script]([ExtResource("1_fwl1g"), ExtResource("6_tq2xc"), ExtResource("7_7se14"), ExtResource("2_1tk0u"), ExtResource("3_yy3g7"), ExtResource("8_03q34"), ExtResource("9_qr5gl"), ExtResource("4_h6e4p"), ExtResource("5_ou3vc")])

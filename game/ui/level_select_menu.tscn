@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c2wlu6iasfet8"]
+[gd_scene load_steps=10 format=3 uid="uid://c2wlu6iasfet8"]
 
 [ext_resource type="Script" path="res://ui/level_select_menu.gd" id="1_81e3b"]
 [ext_resource type="PackedScene" uid="uid://c1wy4aqwsvet0" path="res://ui/level_button.tscn" id="2_cbbnw"]
@@ -8,6 +8,7 @@
 [ext_resource type="Resource" uid="uid://cpkghs136becf" path="res://levels/levels/sum_inverse_right.tres" id="6_7gctx"]
 [ext_resource type="Resource" uid="uid://bjmk63x60saw7" path="res://levels/levels/sum_inverse_left.tres" id="7_ifaq4"]
 [ext_resource type="Resource" uid="uid://djxjvjdl3tak7" path="res://levels/levels/sum_inverse.tres" id="8_3w8kc"]
+[ext_resource type="Resource" uid="uid://cmgxqvjavc4tm" path="res://levels/levels/zero_inverse.tres" id="9_ykh5k"]
 
 [node name="LevelSelectMenu" type="ScrollContainer"]
 clip_contents = false
@@ -82,3 +83,13 @@ text = "a+-a=-a+a
 "
 assertion = ExtResource("8_3w8kc")
 dependencies = [NodePath("../a+-a=0"), NodePath("../-a+a=0")]
+
+[node name="-0=0" parent="LevelChart" node_paths=PackedStringArray("dependencies") instance=ExtResource("2_cbbnw")]
+layout_mode = 0
+offset_left = 694.0
+offset_top = 449.0
+offset_right = 806.0
+offset_bottom = 508.0
+text = "-0=0"
+assertion = ExtResource("9_ykh5k")
+dependencies = [NodePath("../a+0=0+a"), NodePath("../a+-a=-a+a")]
