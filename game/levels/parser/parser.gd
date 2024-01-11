@@ -2,22 +2,22 @@ class_name AlgebraicParser
 
 
 var _tokens: String
-var _index: int
+var _index: int = 0
 
 
-func parse_equality(equality: String) -> AlgebraicEquality:
-	_tokens = equality
-	_index = 0
-	var left: AlgebraicExpression = _parse_expression()
-	assert(_pop_token() == "=")
-	var right: AlgebraicExpression = _parse_expression()
+static func parse_equality(equality: String) -> AlgebraicEquality:
+	var parser := AlgebraicParser.new()
+	parser._tokens = equality
+	var left: AlgebraicExpression = parser._parse_expression()
+	assert(parser._pop_token() == "=")
+	var right: AlgebraicExpression = parser._parse_expression()
 	return AlgebraicEquality.create(left, right)
 
 
-func parse_expression(expression: String) -> AlgebraicExpression:
-	_tokens = expression
-	_index = 0
-	return _parse_expression()
+static func parse_expression(expression: String) -> AlgebraicExpression:
+	var parser := AlgebraicParser.new()
+	parser._tokens = expression
+	return parser._parse_expression()
 
 
 func _parse_expression() -> AlgebraicExpression:

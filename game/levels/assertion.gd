@@ -11,5 +11,4 @@ func get_rules() -> Array[AlgebraicRule]:
 
 
 func create_level() -> Level:
-	var parser := AlgebraicParser.new()
-	return Level.create(parser.parse_equality(equality), get_rules())
+	return Level.create(AlgebraicParser.parse_equality(equality), get_rules())
