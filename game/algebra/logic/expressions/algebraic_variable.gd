@@ -35,5 +35,9 @@ func to_graphical() -> GraphicalVariable:
 	return GraphicalVariable.create(variable_name)
 
 
+func pattern_match(object: AlgebraicObject) -> PatternMatchResult:
+	return PatternMatchResult.match({variable_name: object})
+
+
 func mark() -> void:
 	color = _sub_colors[0]

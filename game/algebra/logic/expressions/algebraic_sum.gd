@@ -52,6 +52,15 @@ func to_graphical() -> GraphicalSum:
 			left_term.to_graphical(), right_term.to_graphical())
 
 
+func pattern_match(object: AlgebraicObject) -> PatternMatchResult:
+	if object is AlgebraicSum:
+		var left_match := left_term.pattern_match(object.left_term)
+		var right_match := right_term.pattern_match(object.right_term)
+		return PatternMatchResult.merge(left_match, right_match)
+	else:
+		return PatternMatchResult.no_match()
+
+
 func set_color(p_color: Color) -> void:
 	color = p_color
 	left_term.set_color(p_color)

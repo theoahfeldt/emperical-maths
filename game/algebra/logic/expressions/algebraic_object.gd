@@ -36,6 +36,11 @@ func to_graphical() -> GraphicalExpression:
 	return GraphicalExpression.new()
 
 
+func pattern_match(_object: AlgebraicObject) -> PatternMatchResult:
+	push_error("Function not implemented")
+	return PatternMatchResult.no_match()
+
+
 func set_color(p_color: Color) -> void:
 	color = p_color
 

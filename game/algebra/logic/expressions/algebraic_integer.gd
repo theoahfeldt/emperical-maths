@@ -39,6 +39,13 @@ func to_graphical() -> GraphicalInteger:
 	return GraphicalInteger.create(value)
 
 
+func pattern_match(object: AlgebraicObject) -> PatternMatchResult:
+	if identical_to(object):
+		return PatternMatchResult.match({})
+	else:
+		return PatternMatchResult.no_match()
+
+
 func mark() -> void:
 	color = _sub_colors[0]
 

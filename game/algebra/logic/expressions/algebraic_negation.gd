@@ -43,6 +43,13 @@ func to_graphical() -> GraphicalNegation:
 	return GraphicalNegation.create(expression.to_graphical())
 
 
+func pattern_match(object: AlgebraicObject) -> PatternMatchResult:
+	if object is AlgebraicNegation:
+		return expression.pattern_match(object.expression)
+	else:
+		return PatternMatchResult.no_match()
+
+
 func set_color(p_color: Color) -> void:
 	color = p_color
 	expression.set_color(p_color)
