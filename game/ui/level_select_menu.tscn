@@ -30,7 +30,7 @@ offset_left = 169.0
 offset_top = 122.0
 offset_right = 307.0
 offset_bottom = 181.0
-text = "a+0=a"
+text = "(a+0)=a"
 assertion = ExtResource("4_unpbs")
 
 [node name="0+a=a" parent="LevelChart" instance=ExtResource("2_cbbnw")]
@@ -39,7 +39,7 @@ offset_left = 448.0
 offset_top = 117.0
 offset_right = 586.0
 offset_bottom = 176.0
-text = "0+a=a"
+text = "(0+a)=a"
 assertion = ExtResource("3_1e06o")
 
 [node name="a+0=0+a" parent="LevelChart" node_paths=PackedStringArray("dependencies") instance=ExtResource("2_cbbnw")]
@@ -49,7 +49,7 @@ offset_left = 292.0
 offset_top = 266.0
 offset_right = 482.0
 offset_bottom = 325.0
-text = "a+0=0+a"
+text = "(a+0)=(0+a)"
 assertion = ExtResource("3_b86hu")
 dependencies = [NodePath("../a+0=a"), NodePath("../0+a=a")]
 
@@ -59,8 +59,7 @@ offset_left = 900.0
 offset_top = 116.0
 offset_right = 1064.0
 offset_bottom = 175.0
-text = "a+-a=0
-"
+text = "(a+-a)=0"
 assertion = ExtResource("6_7gctx")
 
 [node name="-a+a=0" parent="LevelChart" instance=ExtResource("2_cbbnw")]
@@ -69,8 +68,7 @@ offset_left = 1211.0
 offset_top = 114.0
 offset_right = 1375.0
 offset_bottom = 173.0
-text = "-a+a=0
-"
+text = "(-a+a)=0"
 assertion = ExtResource("7_ifaq4")
 
 [node name="a+-a=-a+a" parent="LevelChart" node_paths=PackedStringArray("dependencies") instance=ExtResource("2_cbbnw")]
@@ -79,8 +77,7 @@ offset_left = 1023.0
 offset_top = 261.0
 offset_right = 1265.0
 offset_bottom = 320.0
-text = "a+-a=-a+a
-"
+text = "(a+-a)=(-a+a)"
 assertion = ExtResource("8_3w8kc")
 dependencies = [NodePath("../a+-a=0"), NodePath("../-a+a=0")]
 

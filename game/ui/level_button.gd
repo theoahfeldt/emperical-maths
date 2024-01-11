@@ -6,7 +6,7 @@ extends Button
 @export var assertion: Assertion:
 	set(value):
 		assertion = value
-		if Engine.is_editor_hint():
+		if Engine.is_editor_hint() and is_inside_tree():
 			text = value.equality
 			_find_dependencies()
 @export var dependencies: Array[LevelButton]
