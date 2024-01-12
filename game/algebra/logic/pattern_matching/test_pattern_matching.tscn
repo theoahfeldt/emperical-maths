@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ct3b5p1r38s15"]
 
-[ext_resource type="Script" path="res://algebra/logic/rules/pattern_matching/test_pattern_matching.gd" id="1_h5sds"]
+[ext_resource type="Script" path="res://algebra/logic/pattern_matching/test_pattern_matching.gd" id="1_h5sds"]
 
 [node name="TestPatternMatching" type="Node"]
 script = ExtResource("1_h5sds")

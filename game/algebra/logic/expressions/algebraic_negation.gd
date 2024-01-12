@@ -47,7 +47,7 @@ func pattern_match(object: AlgebraicObject) -> PatternMatchResult:
 	if object is AlgebraicNegation:
 		return expression.pattern_match(object.expression)
 	else:
-		return PatternMatchResult.no_match()
+		return PatternMatchFailure.new()
 
 
 func set_color(p_color: Color) -> void:

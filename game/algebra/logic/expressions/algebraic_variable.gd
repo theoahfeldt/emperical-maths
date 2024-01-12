@@ -36,7 +36,7 @@ func to_graphical() -> GraphicalVariable:
 
 
 func pattern_match(object: AlgebraicObject) -> PatternMatchResult:
-	return PatternMatchResult.match({variable_name: object})
+	return PatternMatchSuccess.create({variable_name: object})
 
 
 func mark() -> void:

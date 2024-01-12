@@ -58,7 +58,7 @@ func pattern_match(object: AlgebraicObject) -> PatternMatchResult:
 		var right_match := right_term.pattern_match(object.right_term)
 		return PatternMatchResult.merge(left_match, right_match)
 	else:
-		return PatternMatchResult.no_match()
+		return PatternMatchFailure.new()
 
 
 func set_color(p_color: Color) -> void:

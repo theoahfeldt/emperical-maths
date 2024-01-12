@@ -41,9 +41,9 @@ func to_graphical() -> GraphicalInteger:
 
 func pattern_match(object: AlgebraicObject) -> PatternMatchResult:
 	if identical_to(object):
-		return PatternMatchResult.match({})
+		return PatternMatchSuccess.create({})
 	else:
-		return PatternMatchResult.no_match()
+		return PatternMatchFailure.new()
 
 
 func mark() -> void:

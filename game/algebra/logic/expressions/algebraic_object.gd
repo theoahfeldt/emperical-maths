@@ -38,7 +38,7 @@ func to_graphical() -> GraphicalExpression:
 
 func pattern_match(_object: AlgebraicObject) -> PatternMatchResult:
 	push_error("Function not implemented")
-	return PatternMatchResult.no_match()
+	return PatternMatchFailure.new()
 
 
 func set_color(p_color: Color) -> void:
