@@ -14,12 +14,6 @@ static func create(
 	return new
 
 
-func identical_to(other: AlgebraicExpression) -> bool:
-	if other is AlgebraicNegation:
-		return expression.identical_to(other.expression)
-	return false
-
-
 func copy() -> AlgebraicNegation:
 	return AlgebraicNegation.create(expression.copy(), color)
 
@@ -43,13 +37,6 @@ func to_graphical() -> GraphicalNegation:
 	return GraphicalNegation.create(expression.to_graphical())
 
 
-func pattern_match(p_expression: AlgebraicExpression) -> PatternMatchResult:
-	if p_expression is AlgebraicNegation:
-		return expression.pattern_match(p_expression.expression)
-	else:
-		return PatternMatchFailure.new()
-
-
 func set_color(p_color: Color) -> void:
 	color = p_color
 	expression.set_color(p_color)
@@ -58,3 +45,21 @@ func set_color(p_color: Color) -> void:
 func mark() -> void:
 	color = _sub_colors[0]
 	expression.set_color(_sub_colors[0])
+
+
+func identical_to(other: AlgebraicExpression) -> bool:
+	if other is AlgebraicNegation:
+		return expression.identical_to(other.expression)
+	return false
+
+
+func pattern_match(p_expression: AlgebraicExpression) -> PatternMatchResult:
+	if p_expression is AlgebraicNegation:
+		return expression.pattern_match(p_expression.expression)
+	else:
+		return PatternMatchFailure.new()
+
+
+func bind(bindings: Dictionary) -> AlgebraicExpression:
+	var bound_expression := expression.bind(bindings)
+	return AlgebraicNegation.create(bound_expression)

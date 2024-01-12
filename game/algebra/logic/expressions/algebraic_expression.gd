@@ -11,3 +11,8 @@ func identical_to(_other: AlgebraicExpression) -> bool:
 func pattern_match(_expression: AlgebraicExpression) -> PatternMatchResult:
 	push_error("Function not implemented")
 	return PatternMatchFailure.new()
+
+
+func bind(_bindings: Dictionary) -> AlgebraicExpression:
+	push_error("Function not implemented")
+	return AlgebraicExpression.new()

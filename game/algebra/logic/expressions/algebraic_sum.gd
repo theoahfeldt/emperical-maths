@@ -18,13 +18,6 @@ static func create(
 	return new
 
 
-func identical_to(other: AlgebraicExpression) -> bool:
-	if other is AlgebraicSum:
-		return (left_term.identical_to(other.left_term)
-				and right_term.identical_to(other.right_term))
-	return false
-
-
 func copy() -> AlgebraicSum:
 	return AlgebraicSum.create(left_term.copy(), right_term.copy(), color)
 
@@ -52,15 +45,6 @@ func to_graphical() -> GraphicalSum:
 			left_term.to_graphical(), right_term.to_graphical())
 
 
-func pattern_match(expression: AlgebraicExpression) -> PatternMatchResult:
-	if expression is AlgebraicSum:
-		var left_match := left_term.pattern_match(expression.left_term)
-		var right_match := right_term.pattern_match(expression.right_term)
-		return PatternMatchResult.merge(left_match, right_match)
-	else:
-		return PatternMatchFailure.new()
-
-
 func set_color(p_color: Color) -> void:
 	color = p_color
 	left_term.set_color(p_color)
@@ -71,3 +55,25 @@ func mark() -> void:
 	color = marked_color
 	left_term.set_color(_sub_colors[0])
 	right_term.set_color(_sub_colors[1])
+
+
+func pattern_match(expression: AlgebraicExpression) -> PatternMatchResult:
+	if expression is AlgebraicSum:
+		var left_match := left_term.pattern_match(expression.left_term)
+		var right_match := right_term.pattern_match(expression.right_term)
+		return PatternMatchResult.merge(left_match, right_match)
+	else:
+		return PatternMatchFailure.new()
+
+
+func identical_to(other: AlgebraicExpression) -> bool:
+	if other is AlgebraicSum:
+		return (left_term.identical_to(other.left_term)
+				and right_term.identical_to(other.right_term))
+	return false
+
+
+func bind(bindings: Dictionary) -> AlgebraicExpression:
+	var bound_left := left_term.bind(bindings)
+	var bound_right := right_term.bind(bindings)
+	return AlgebraicSum.create(bound_left, bound_right)

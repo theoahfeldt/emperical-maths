@@ -17,12 +17,6 @@ static func zero() -> AlgebraicInteger:
 	return create(0)
 
 
-func identical_to(other: AlgebraicExpression) -> bool:
-	if other is AlgebraicInteger:
-		return value == other.value
-	return false
-
-
 func copy() -> AlgebraicInteger:
 	return AlgebraicInteger.create(value, color)
 
@@ -39,6 +33,16 @@ func to_graphical() -> GraphicalInteger:
 	return GraphicalInteger.create(value)
 
 
+func mark() -> void:
+	color = _sub_colors[0]
+
+
+func identical_to(other: AlgebraicExpression) -> bool:
+	if other is AlgebraicInteger:
+		return value == other.value
+	return false
+
+
 func pattern_match(expression: AlgebraicExpression) -> PatternMatchResult:
 	if identical_to(expression):
 		return PatternMatchSuccess.create({})
@@ -46,8 +50,8 @@ func pattern_match(expression: AlgebraicExpression) -> PatternMatchResult:
 		return PatternMatchFailure.new()
 
 
-func mark() -> void:
-	color = _sub_colors[0]
+func bind(_bindings: Dictionary) -> AlgebraicExpression:
+	return copy()
 
 
 func is_zero() -> bool:

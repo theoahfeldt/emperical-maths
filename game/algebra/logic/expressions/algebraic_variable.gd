@@ -13,12 +13,6 @@ static func create(
 	return new
 
 
-func identical_to(other: AlgebraicExpression) -> bool:
-	if other is AlgebraicVariable:
-		return variable_name == other.variable_name
-	return false
-
-
 func copy() -> AlgebraicVariable:
 	return AlgebraicVariable.create(variable_name, color)
 
@@ -35,9 +29,21 @@ func to_graphical() -> GraphicalVariable:
 	return GraphicalVariable.create(variable_name)
 
 
+func mark() -> void:
+	color = _sub_colors[0]
+
+
+func identical_to(other: AlgebraicExpression) -> bool:
+	if other is AlgebraicVariable:
+		return variable_name == other.variable_name
+	return false
+
+
 func pattern_match(expression: AlgebraicExpression) -> PatternMatchResult:
 	return PatternMatchSuccess.create({variable_name: expression})
 
 
-func mark() -> void:
-	color = _sub_colors[0]
+func bind(bindings: Dictionary) -> AlgebraicExpression:
+	if variable_name in bindings:
+		return bindings[variable_name]
+	return copy()
