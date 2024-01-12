@@ -39,8 +39,8 @@ func to_graphical() -> GraphicalInteger:
 	return GraphicalInteger.create(value)
 
 
-func pattern_match(object: AlgebraicObject) -> PatternMatchResult:
-	if identical_to(object):
+func pattern_match(expression: AlgebraicExpression) -> PatternMatchResult:
+	if identical_to(expression):
 		return PatternMatchSuccess.create({})
 	else:
 		return PatternMatchFailure.new()

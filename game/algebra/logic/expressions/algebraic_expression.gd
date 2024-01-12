@@ -6,3 +6,8 @@ extends AlgebraicObject
 func identical_to(_other: AlgebraicExpression) -> bool:
 	push_error("Function not implemented")
 	return false
+
+
+func pattern_match(_expression: AlgebraicExpression) -> PatternMatchResult:
+	push_error("Function not implemented")
+	return PatternMatchFailure.new()

@@ -43,9 +43,9 @@ func to_graphical() -> GraphicalNegation:
 	return GraphicalNegation.create(expression.to_graphical())
 
 
-func pattern_match(object: AlgebraicObject) -> PatternMatchResult:
-	if object is AlgebraicNegation:
-		return expression.pattern_match(object.expression)
+func pattern_match(p_expression: AlgebraicExpression) -> PatternMatchResult:
+	if p_expression is AlgebraicNegation:
+		return expression.pattern_match(p_expression.expression)
 	else:
 		return PatternMatchFailure.new()
 

@@ -52,10 +52,10 @@ func to_graphical() -> GraphicalSum:
 			left_term.to_graphical(), right_term.to_graphical())
 
 
-func pattern_match(object: AlgebraicObject) -> PatternMatchResult:
-	if object is AlgebraicSum:
-		var left_match := left_term.pattern_match(object.left_term)
-		var right_match := right_term.pattern_match(object.right_term)
+func pattern_match(expression: AlgebraicExpression) -> PatternMatchResult:
+	if expression is AlgebraicSum:
+		var left_match := left_term.pattern_match(expression.left_term)
+		var right_match := right_term.pattern_match(expression.right_term)
 		return PatternMatchResult.merge(left_match, right_match)
 	else:
 		return PatternMatchFailure.new()
