@@ -46,4 +46,4 @@ func pattern_match(expression: AlgebraicExpression) -> PatternMatchResult:
 func bind(bindings: Dictionary) -> AlgebraicExpression:
 	if variable_name in bindings:
 		return bindings[variable_name]
-	return copy()
+	return AlgebraicVariable.create("?")

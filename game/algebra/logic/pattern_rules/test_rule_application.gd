@@ -10,3 +10,8 @@ func _ready() -> void:
 	var expression2 := AlgebraicParser.parse_expression("(0+b)")
 	var result2 := rule.apply(expression2)
 	assert(result2 is ApplicationFailure)
+	var rule2 := Rule.parse("0", "(a+-a)")
+	var expression3 := AlgebraicParser.parse_expression("0")
+	var result3 := rule2.apply(expression3)
+	assert(result3 is ApplicationSuccess)
+	print(result3.result.pretty_string())
