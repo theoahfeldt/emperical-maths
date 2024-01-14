@@ -4,7 +4,7 @@ extends Node
 
 signal bound(new_expression: AlgebraicExpression)
 
-var _abstract_expression: AbstractExpression
+var _abstract_expression: AlgebraicExpression
 var _expression_creator: ExpressionCreator
 
 
@@ -14,7 +14,7 @@ func _ready() -> void:
 
 
 static func create(
-		expression: AbstractExpression, center_position: Vector2
+		expression: AlgebraicExpression, center_position: Vector2
 		) -> AbstractExpressionBinder:
 	var new := AbstractExpressionBinder.new()
 	new._abstract_expression = expression
@@ -27,5 +27,5 @@ static func create(
 func _on_expression_creator_created_expression(
 		algebraic: AlgebraicExpression, graphical: GraphicalExpression) -> void:
 	graphical.queue_free()
-	var new_expression := _abstract_expression.bind(algebraic)
+	var new_expression := _abstract_expression.bind({"?": algebraic})
 	bound.emit(new_expression)

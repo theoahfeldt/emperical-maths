@@ -53,7 +53,7 @@ func _start_alternative_expressions_menu(
 
 
 func _start_abstract_expression_binder(
-		abstract_expression: AbstractExpression) -> void:
+		abstract_expression: AlgebraicExpression) -> void:
 	var center: Vector2 = get_viewport_rect().size / 2.0
 	center.y += 100
 	_abstract_expression_binder = AbstractExpressionBinder.create(
@@ -77,23 +77,21 @@ func _on_expression_selector_selected(
 	_current_index = index
 	remove_child(_expression_selector)
 	_expression_selector.queue_free()
-	var menu: SelectionMenu = AlternativeExpressionsMenu.create_from_expression(
+	var menu: SelectionMenu = SelectionMenu.create_from_rule_applications(
 			selected, _algebraic_rules)
 	_start_alternative_expressions_menu(menu, index)
 
 
 func _on_alternative_expressions_menu_selected(
-		option, graphical: GraphicalExpression) -> void:
+		option: AlgebraicExpression, graphical: GraphicalExpression) -> void:
 	remove_child(_menu_selector)
 	_menu_selector.queue_free()
-	if option is AlgebraicExpression:
-		_replace_subexpression(option, graphical)
-	elif option is AbstractExpression:
+	if "?" in option.pretty_string():
 		ExpressionIndexer.replace_graphical_subexpression(
 				_graphical_base, graphical, _current_index)
 		_start_abstract_expression_binder(option)
 	else:
-		push_error("Invalid option: ", option)
+		_replace_subexpression(option, graphical)
 
 
 func _on_abstract_expression_binder_substituted(

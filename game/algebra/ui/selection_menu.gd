@@ -33,6 +33,37 @@ static func create(
 	return menu
 
 
+static func create_from_rule_applications(
+		expression: AlgebraicExpression,
+		rules: Array[AlgebraicRule],
+		) -> SelectionMenu:
+	var alternatives: Array[AlgebraicExpression] = [expression]
+	for rule in rules:
+		var result := rule.apply(expression)
+		if result is ApplicationSuccess:
+			alternatives.append(result.result)
+	return SelectionMenu.create_from_expressions(_unique(alternatives))
+
+
+static func create_from_expressions(
+		expressions: Array[AlgebraicExpression]) -> SelectionMenu:
+	var graphical_expressions: Array[GraphicalExpression] = []
+	for expression in expressions:
+		var graphical := expression.to_graphical()
+		graphical.set_color_from_algebraic(expression)
+		graphical_expressions.append(graphical)
+	return SelectionMenu.create(expressions, graphical_expressions)
+
+
+static func _unique(
+		expressions: Array[AlgebraicExpression]) -> Array[AlgebraicExpression]:
+	var unique: Array[AlgebraicExpression] = []
+	for expression in expressions:
+		if not unique.any(expression.identical_to):
+			unique.append(expression)
+	return unique
+
+
 func num_options() -> int:
 	return _options.size()
 

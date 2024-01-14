@@ -73,8 +73,11 @@ To prove left and right cancellation requires an assumption. Implement assumptio
 * Ideas
 
 * Refactors
-** TODO Replace CreationMenu and AlternativeExpressionsMenu classes with functions
+** DONE Remove identity rule
+** TODO Make Identity and Implication subclasses of Consequence
+** TODO Rename bind to instantiate
+** TODO Rename pretty_string to to_string and add from_string using parser
+** DONE Replace CreationMenu and AlternativeExpressionsMenu classes with functions
 Functions could go in new Menus class.
 
-** TODO Make Rule super class for AlgebraicRule and SubstitutionRule
 

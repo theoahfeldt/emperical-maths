@@ -64,7 +64,7 @@ func _variable_menu() -> SelectionMenu:
 		AlgebraicVariable.create("c"),
 		AlgebraicVariable.create("d"),
 	]
-	return AlternativeExpressionsMenu.create(expressions)
+	return SelectionMenu.create_from_expressions(expressions)
 
 
 func _integer_menu() -> SelectionMenu:
@@ -74,7 +74,7 @@ func _integer_menu() -> SelectionMenu:
 		AlgebraicInteger.create(2),
 		AlgebraicInteger.create(3),
 	]
-	return AlternativeExpressionsMenu.create(expressions)
+	return SelectionMenu.create_from_expressions(expressions)
 
 
 func _start_creation_menu(menu: SelectionMenu, index: Array[int]) -> void:

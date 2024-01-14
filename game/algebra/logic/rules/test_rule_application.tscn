@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c00s6f4ormfjs"]
 
-[ext_resource type="Script" path="res://algebra/logic/pattern_rules/test_rule_application.gd" id="1_ppwnx"]
+[ext_resource type="Script" path="res://algebra/logic/rules/test_rule_application.gd" id="1_ppwnx"]
 
 [node name="TestRuleApplication" type="Node"]
 script = ExtResource("1_ppwnx")
