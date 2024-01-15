@@ -6,6 +6,10 @@ var left_term: AlgebraicExpression
 var right_term: AlgebraicExpression
 
 
+func _to_string() -> String:
+	return "(%s+%s)" % [left_term, right_term]
+
+
 static func create(
 		left: AlgebraicExpression,
 		right: AlgebraicExpression,
@@ -34,10 +38,6 @@ func replace_subexpression(new: AlgebraicExpression, index: int) -> void:
 			right_term = new
 		var n:
 			push_error("Index %d out of range" % n)
-
-
-func pretty_string() -> String:
-	return "(%s + %s)" % [left_term.pretty_string(), right_term.pretty_string()]
 
 
 func to_graphical() -> GraphicalSum:

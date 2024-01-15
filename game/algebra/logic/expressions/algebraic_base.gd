@@ -26,9 +26,5 @@ func replace_subexpression(
 		ExpressionIndexer.replace_algebraic_subexpression(object, new, index)
 
 
-func pretty_string() -> String:
-	return object.pretty_string()
-
-
 func to_graphical() -> GraphicalExpression:
 	return object.to_graphical()

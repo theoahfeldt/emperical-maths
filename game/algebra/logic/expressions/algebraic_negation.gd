@@ -5,6 +5,10 @@ extends AlgebraicExpression
 var expression: AlgebraicExpression
 
 
+func _to_string() -> String:
+	return "-%s" % expression
+
+
 static func create(
 		a: AlgebraicExpression, p_color: Color = default_color
 		) -> AlgebraicNegation:
@@ -27,10 +31,6 @@ func replace_subexpression(new: AlgebraicExpression, index: int) -> void:
 		expression = new
 	else:
 		push_error("Index %d out of range" % index)
-
-
-func pretty_string() -> String:
-	return "-%s" % expression.pretty_string()
 
 
 func to_graphical() -> GraphicalNegation:

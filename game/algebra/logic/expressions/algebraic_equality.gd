@@ -6,6 +6,10 @@ var left_expression: AlgebraicExpression
 var right_expression: AlgebraicExpression
 
 
+func _to_string() -> String:
+	return "%s=%s" % [left_expression, right_expression]
+
+
 static func create(
 		left: AlgebraicExpression,
 		right: AlgebraicExpression,
@@ -35,10 +39,6 @@ func replace_subexpression(new: AlgebraicExpression, index: int) -> void:
 			right_expression = new
 		var n:
 			push_error("Invalid index: ", n)
-
-
-func pretty_string() -> String:
-	return "%s = %s" % [left_expression.pretty_string(), right_expression.pretty_string()]
 
 
 func to_graphical() -> GraphicalEquality:

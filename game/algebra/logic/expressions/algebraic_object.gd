@@ -26,11 +26,6 @@ func replace_subexpression(_new: AlgebraicExpression, _index: int) -> void:
 	push_error("Function not implemented")
 
 
-func pretty_string() -> String:
-	push_error("Function not implemented")
-	return ""
-
-
 func to_graphical() -> GraphicalExpression:
 	push_error("Function not implemented")
 	return GraphicalExpression.new()

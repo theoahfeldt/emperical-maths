@@ -5,6 +5,10 @@ extends AlgebraicExpression
 var variable_name: String
 
 
+func _to_string() -> String:
+	return variable_name
+
+
 static func create(
 		p_name: String, p_color: Color = default_color) -> AlgebraicVariable:
 	var new = AlgebraicVariable.new()
@@ -19,10 +23,6 @@ func copy() -> AlgebraicVariable:
 
 func subexpressions() -> Array[AlgebraicExpression]:
 	return []
-
-
-func pretty_string() -> String:
-	return variable_name
 
 
 func to_graphical() -> GraphicalVariable:

@@ -5,6 +5,10 @@ extends AlgebraicExpression
 var value: int
 
 
+func _to_string() -> String:
+	return str(value)
+
+
 static func create(
 		p_value: int, p_color: Color = default_color) -> AlgebraicInteger:
 	var new = AlgebraicInteger.new()
@@ -23,10 +27,6 @@ func copy() -> AlgebraicInteger:
 
 func subexpressions() -> Array[AlgebraicExpression]:
 	return []
-
-
-func pretty_string() -> String:
-	return str(value)
 
 
 func to_graphical() -> GraphicalInteger:

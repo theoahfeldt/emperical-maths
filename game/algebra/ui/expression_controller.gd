@@ -86,7 +86,7 @@ func _on_alternative_expressions_menu_selected(
 		option: AlgebraicExpression, graphical: GraphicalExpression) -> void:
 	remove_child(_menu_selector)
 	_menu_selector.queue_free()
-	if "?" in option.pretty_string():
+	if "?" in option.to_string():
 		ExpressionIndexer.replace_graphical_subexpression(
 				_graphical_base, graphical, _current_index)
 		_start_expression_instantiator(option)
