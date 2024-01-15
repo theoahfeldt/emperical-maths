@@ -10,7 +10,7 @@ var _graphical_base: GraphicalBase
 
 # The following will be null when not in use:
 var _expression_selector: ExpressionSelector
-var _abstract_expression_binder: AbstractExpressionBinder
+var _expression_instantiator: ExpressionInstantiator
 var _menu: SelectionMenu
 var _menu_selector: MenuSelector
 var _current_index: Array[int] = [0]
@@ -52,15 +52,15 @@ func _start_alternative_expressions_menu(
 			_graphical_base, _menu, index)
 
 
-func _start_abstract_expression_binder(
+func _start_expression_instantiator(
 		abstract_expression: AlgebraicExpression) -> void:
 	var center: Vector2 = get_viewport_rect().size / 2.0
 	center.y += 100
-	_abstract_expression_binder = AbstractExpressionBinder.create(
+	_expression_instantiator = ExpressionInstantiator.create(
 			abstract_expression, center)
-	add_child(_abstract_expression_binder)
-	_abstract_expression_binder.bound.connect(
-			_on_abstract_expression_binder_substituted)
+	add_child(_expression_instantiator)
+	_expression_instantiator.substituted_instance.connect(
+			_on_expression_instantiator_substituted)
 
 
 func _replace_subexpression(
@@ -89,14 +89,14 @@ func _on_alternative_expressions_menu_selected(
 	if "?" in option.pretty_string():
 		ExpressionIndexer.replace_graphical_subexpression(
 				_graphical_base, graphical, _current_index)
-		_start_abstract_expression_binder(option)
+		_start_expression_instantiator(option)
 	else:
 		_replace_subexpression(option, graphical)
 
 
-func _on_abstract_expression_binder_substituted(
+func _on_expression_instantiator_substituted(
 		new_expression: AlgebraicExpression) -> void:
-	remove_child(_abstract_expression_binder)
-	_abstract_expression_binder.queue_free()
+	remove_child(_expression_instantiator)
+	_expression_instantiator.queue_free()
 	var graphical := new_expression.to_graphical()
 	_replace_subexpression(new_expression, graphical)

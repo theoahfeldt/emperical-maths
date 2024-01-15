@@ -2,10 +2,11 @@ class_name PatternMatchSuccess
 extends PatternMatchResult
 
 
-var bindings: Dictionary
+# Maps variable name (String) to AlgebraicExpression
+var assignments: Dictionary
 
 
-static func create(p_bindings: Dictionary) -> PatternMatchSuccess:
+static func create(p_assignments: Dictionary) -> PatternMatchSuccess:
 	var new := PatternMatchSuccess.new()
-	new.bindings = p_bindings
+	new.assignments = p_assignments
 	return new

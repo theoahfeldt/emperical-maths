@@ -23,5 +23,5 @@ func apply(expression: AlgebraicExpression) -> ApplicationResult:
 	var match_result := _before.pattern_match(expression)
 	if match_result is PatternMatchFailure:
 		return ApplicationFailure.new()
-	var bound_expression := _after.bind(match_result.bindings)
-	return ApplicationSuccess.create(bound_expression)
+	var instance := _after.substitute(match_result.assignments)
+	return ApplicationSuccess.create(instance)

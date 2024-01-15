@@ -60,6 +60,6 @@ func pattern_match(p_expression: AlgebraicExpression) -> PatternMatchResult:
 		return PatternMatchFailure.new()
 
 
-func bind(bindings: Dictionary) -> AlgebraicExpression:
-	var bound_expression := expression.bind(bindings)
+func substitute(substitution: Dictionary) -> AlgebraicExpression:
+	var bound_expression := expression.substitute(substitution)
 	return AlgebraicNegation.create(bound_expression)

@@ -11,8 +11,8 @@ func test_match() -> void:
 	var expression := AlgebraicParser.parse_expression("((a+b)+2)")
 	var result := pattern.pattern_match(expression)
 	assert(result is PatternMatchSuccess)
-	print(result.bindings["a"].pretty_string())
-	print(result.bindings["b"].pretty_string())
+	print(result.assignments["a"].pretty_string())
+	print(result.assignments["b"].pretty_string())
 
 
 func test_no_match() -> void:

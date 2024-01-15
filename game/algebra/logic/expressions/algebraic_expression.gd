@@ -13,6 +13,6 @@ func pattern_match(_expression: AlgebraicExpression) -> PatternMatchResult:
 	return PatternMatchFailure.new()
 
 
-func bind(_bindings: Dictionary) -> AlgebraicExpression:
+func substitute(_substitution: Dictionary) -> AlgebraicExpression:
 	push_error("Function not implemented")
 	return AlgebraicExpression.new()

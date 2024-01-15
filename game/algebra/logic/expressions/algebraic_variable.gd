@@ -43,7 +43,7 @@ func pattern_match(expression: AlgebraicExpression) -> PatternMatchResult:
 	return PatternMatchSuccess.create({variable_name: expression})
 
 
-func bind(bindings: Dictionary) -> AlgebraicExpression:
-	if variable_name in bindings:
-		return bindings[variable_name]
+func substitute(substitution: Dictionary) -> AlgebraicExpression:
+	if variable_name in substitution:
+		return substitution[variable_name]
 	return AlgebraicVariable.create("?")

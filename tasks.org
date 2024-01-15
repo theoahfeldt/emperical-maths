@@ -74,7 +74,7 @@ To prove left and right cancellation requires an assumption. Implement assumptio
 
 * Refactors
 ** TODO Rename pretty_string to to_string and add from_string using parser
-** TODO Rename bind to instantiate
+** DONE Rename bind to instantiate
 ** DONE Create level directly from level button string
 ** DONE Remove identity rule
 ** DONE Replace CreationMenu and AlternativeExpressionsMenu classes with functions

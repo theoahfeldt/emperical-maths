@@ -5,10 +5,10 @@ static func merge(
 		a: PatternMatchResult, b: PatternMatchResult) -> PatternMatchResult:
 	if a is PatternMatchFailure or b is PatternMatchFailure:
 		return PatternMatchFailure.new()
-	for name in b.bindings:
-		if name in a.bindings:
-			if not a.bindings[name].identical_to(b.bindings[name]):
+	for name in b.assignments:
+		if name in a.assignments:
+			if not a.assignments[name].identical_to(b.assignments[name]):
 				return PatternMatchFailure.new()
 		else:
-			a.bindings[name] = b.bindings[name]
+			a.assignments[name] = b.assignments[name]
 	return a

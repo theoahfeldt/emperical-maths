@@ -73,7 +73,7 @@ func identical_to(other: AlgebraicExpression) -> bool:
 	return false
 
 
-func bind(bindings: Dictionary) -> AlgebraicExpression:
-	var bound_left := left_term.bind(bindings)
-	var bound_right := right_term.bind(bindings)
+func substitute(substitution: Dictionary) -> AlgebraicExpression:
+	var bound_left := left_term.substitute(substitution)
+	var bound_right := right_term.substitute(substitution)
 	return AlgebraicSum.create(bound_left, bound_right)

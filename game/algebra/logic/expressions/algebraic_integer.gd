@@ -50,7 +50,7 @@ func pattern_match(expression: AlgebraicExpression) -> PatternMatchResult:
 		return PatternMatchFailure.new()
 
 
-func bind(_bindings: Dictionary) -> AlgebraicExpression:
+func substitute(_substitution: Dictionary) -> AlgebraicExpression:
 	return copy()
 
 

@@ -1,10 +1,10 @@
-class_name AbstractExpressionBinder
+class_name ExpressionInstantiator
 extends Node
 
 
-signal bound(new_expression: AlgebraicExpression)
+signal substituted_instance(instance: AlgebraicExpression)
 
-var _abstract_expression: AlgebraicExpression
+var _expression: AlgebraicExpression
 var _expression_creator: ExpressionCreator
 
 
@@ -15,9 +15,9 @@ func _ready() -> void:
 
 static func create(
 		expression: AlgebraicExpression, center_position: Vector2
-		) -> AbstractExpressionBinder:
-	var new := AbstractExpressionBinder.new()
-	new._abstract_expression = expression
+		) -> ExpressionInstantiator:
+	var new := ExpressionInstantiator.new()
+	new._expression = expression
 	var expression_creator := ExpressionCreator.create(center_position)
 	new.add_child(expression_creator)
 	new._expression_creator = expression_creator
@@ -27,5 +27,5 @@ static func create(
 func _on_expression_creator_created_expression(
 		algebraic: AlgebraicExpression, graphical: GraphicalExpression) -> void:
 	graphical.queue_free()
-	var new_expression := _abstract_expression.bind({"?": algebraic})
-	bound.emit(new_expression)
+	var instance := _expression.substitute({"?": algebraic})
+	substituted_instance.emit(instance)
