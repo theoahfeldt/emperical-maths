@@ -10,6 +10,10 @@ func _to_string() -> String:
 	return "%s=%s" % [left_expression, right_expression]
 
 
+static func from_string(string: String) -> AlgebraicEquality:
+	return AlgebraicParser.parse_equality(string)
+
+
 static func create(
 		left: AlgebraicExpression,
 		right: AlgebraicExpression,

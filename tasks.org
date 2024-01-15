@@ -73,7 +73,7 @@ To prove left and right cancellation requires an assumption. Implement assumptio
 * Ideas
 
 * Refactors
-** TODO Rename pretty_string to to_string and add from_string using parser
+** DONE Rename pretty_string to to_string and add from_string using parser
 ** DONE Rename bind to instantiate
 ** DONE Create level directly from level button string
 ** DONE Remove identity rule

@@ -6,7 +6,7 @@ extends Button
 
 
 func construct_level() -> Level:
-	var equality := AlgebraicParser.parse_equality(text)
+	var equality := AlgebraicEquality.from_string(text)
 	var rules: Array[AlgebraicRule]
 	if dependencies.is_empty():
 		rules = level_rules()
@@ -16,7 +16,7 @@ func construct_level() -> Level:
 
 
 func level_rules() -> Array[AlgebraicRule]:
-	var equality := AlgebraicParser.parse_equality(text)
+	var equality := AlgebraicEquality.from_string(text)
 	return [
 		AlgebraicRule.create(equality.left_expression, equality.right_expression),
 		AlgebraicRule.create(equality.right_expression, equality.left_expression),

@@ -3,6 +3,10 @@ extends AlgebraicObject
 # Abstract class
 
 
+static func from_string(string: String) -> AlgebraicExpression:
+	return AlgebraicParser.parse_expression(string)
+
+
 func identical_to(_other: AlgebraicExpression) -> bool:
 	push_error("Function not implemented")
 	return false

@@ -12,6 +12,11 @@ var _sub_colors: Array[Color] = [
 var color: Color
 
 
+static func from_string(_string: String) -> AlgebraicObject:
+	push_error("Function not implemented")
+	return AlgebraicObject.new()
+
+
 func copy() -> AlgebraicObject:
 	push_error("Function not implemented")
 	return AlgebraicObject.new()

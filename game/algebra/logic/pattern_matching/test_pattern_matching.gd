@@ -7,8 +7,8 @@ func _ready() -> void:
 
 
 func test_match() -> void:
-	var pattern := AlgebraicParser.parse_expression("(a+b)")
-	var expression := AlgebraicParser.parse_expression("((a+b)+2)")
+	var pattern := AlgebraicExpression.from_string("(a+b)")
+	var expression := AlgebraicExpression.from_string("((a+b)+2)")
 	var result := pattern.pattern_match(expression)
 	assert(result is PatternMatchSuccess)
 	print(result.assignments["a"])
@@ -16,7 +16,7 @@ func test_match() -> void:
 
 
 func test_no_match() -> void:
-	var pattern := AlgebraicParser.parse_expression("(a+a)")
-	var expression := AlgebraicParser.parse_expression("(1+2)")
+	var pattern := AlgebraicExpression.from_string("(a+a)")
+	var expression := AlgebraicExpression.from_string("(1+2)")
 	var result := pattern.pattern_match(expression)
 	assert(result is PatternMatchFailure)
