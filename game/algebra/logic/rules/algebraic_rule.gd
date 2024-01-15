@@ -5,11 +5,18 @@ var _before: AlgebraicExpression
 var _after: AlgebraicExpression
 
 
-static func parse(before: String, after: String) -> AlgebraicRule:
+static func create(
+		before: AlgebraicExpression, after: AlgebraicExpression
+		) -> AlgebraicRule:
 	var new := AlgebraicRule.new()
-	new._before = AlgebraicParser.parse_expression(before)
-	new._after = AlgebraicParser.parse_expression(after)
+	new._before = before
+	new._after = after
 	return new
+
+
+static func parse(before: String, after: String) -> AlgebraicRule:
+	return AlgebraicRule.create(AlgebraicParser.parse_expression(before),
+			AlgebraicParser.parse_expression(after))
 
 
 func apply(expression: AlgebraicExpression) -> ApplicationResult:
