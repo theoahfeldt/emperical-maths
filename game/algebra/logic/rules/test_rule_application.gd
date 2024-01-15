@@ -15,3 +15,13 @@ func _ready() -> void:
 	var result3 := rule2.apply(expression3)
 	assert(result3 is ApplicationSuccess)
 	print(result3.result)
+	test_equality()
+
+
+func test_equality() -> void:
+	var rule := AlgebraicRule.create(AlgebraicEquality.from_string("a=b"),
+			AlgebraicEquality.from_string("(a+r)=(b+r)"))
+	var equality := AlgebraicEquality.from_string("x=y")
+	var result := rule.apply(equality)
+	assert(result is ApplicationSuccess)
+	print(result.result)

@@ -36,6 +36,21 @@ func to_graphical() -> GraphicalExpression:
 	return GraphicalExpression.new()
 
 
+func identical_to(_other: AlgebraicObject) -> bool:
+	push_error("Function not implemented")
+	return false
+
+
+func pattern_match(_expression: AlgebraicObject) -> PatternMatchResult:
+	push_error("Function not implemented")
+	return PatternMatchFailure.new()
+
+
+func substitute(_substitution: Dictionary) -> AlgebraicObject:
+	push_error("Function not implemented")
+	return AlgebraicObject.new()
+
+
 func set_color(p_color: Color) -> void:
 	color = p_color
 

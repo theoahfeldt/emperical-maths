@@ -57,23 +57,23 @@ func mark() -> void:
 	right_term.set_color(_sub_colors[1])
 
 
-func pattern_match(expression: AlgebraicExpression) -> PatternMatchResult:
-	if expression is AlgebraicSum:
-		var left_match := left_term.pattern_match(expression.left_term)
-		var right_match := right_term.pattern_match(expression.right_term)
-		return PatternMatchResult.merge(left_match, right_match)
-	else:
-		return PatternMatchFailure.new()
-
-
-func identical_to(other: AlgebraicExpression) -> bool:
+func identical_to(other: AlgebraicObject) -> bool:
 	if other is AlgebraicSum:
 		return (left_term.identical_to(other.left_term)
 				and right_term.identical_to(other.right_term))
 	return false
 
 
-func substitute(substitution: Dictionary) -> AlgebraicExpression:
-	var bound_left := left_term.substitute(substitution)
-	var bound_right := right_term.substitute(substitution)
-	return AlgebraicSum.create(bound_left, bound_right)
+func pattern_match(object: AlgebraicObject) -> PatternMatchResult:
+	if object is AlgebraicSum:
+		var left_match := left_term.pattern_match(object.left_term)
+		var right_match := right_term.pattern_match(object.right_term)
+		return PatternMatchResult.merge(left_match, right_match)
+	else:
+		return PatternMatchFailure.new()
+
+
+func substitute(substitution: Dictionary) -> AlgebraicSum:
+	var instance_left := left_term.substitute(substitution)
+	var instance_right := right_term.substitute(substitution)
+	return AlgebraicSum.create(instance_left, instance_right)

@@ -2,10 +2,10 @@ class_name ApplicationSuccess
 extends ApplicationResult
 
 
-var result: AlgebraicExpression
+var result: AlgebraicObject
 
 
-static func create(expression: AlgebraicExpression) -> ApplicationSuccess:
+static func create(object: AlgebraicObject) -> ApplicationSuccess:
 	var new := ApplicationSuccess.new()
-	new.result = expression
+	new.result = object
 	return new

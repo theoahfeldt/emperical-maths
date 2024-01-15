@@ -1,13 +1,12 @@
 class_name AlgebraicRule
 
 
-var _before: AlgebraicExpression
-var _after: AlgebraicExpression
+var _before: AlgebraicObject
+var _after: AlgebraicObject
 
 
 static func create(
-		before: AlgebraicExpression, after: AlgebraicExpression
-		) -> AlgebraicRule:
+		before: AlgebraicObject, after: AlgebraicObject) -> AlgebraicRule:
 	var new := AlgebraicRule.new()
 	new._before = before
 	new._after = after
@@ -19,8 +18,8 @@ static func parse(before: String, after: String) -> AlgebraicRule:
 			AlgebraicParser.parse_expression(after))
 
 
-func apply(expression: AlgebraicExpression) -> ApplicationResult:
-	var match_result := _before.pattern_match(expression)
+func apply(object: AlgebraicObject) -> ApplicationResult:
+	var match_result := _before.pattern_match(object)
 	if match_result is PatternMatchFailure:
 		return ApplicationFailure.new()
 	var instance := _after.substitute(match_result.assignments)

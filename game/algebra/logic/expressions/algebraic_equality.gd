@@ -50,6 +50,30 @@ func to_graphical() -> GraphicalEquality:
 			left_expression.to_graphical(), right_expression.to_graphical())
 
 
+func identical_to(other: AlgebraicObject) -> bool:
+	if other is AlgebraicEquality:
+		return (left_expression.identical_to(other.left_expression)
+				and right_expression.identical_to(other.right_expression))
+	return false
+
+
+func pattern_match(object: AlgebraicObject) -> PatternMatchResult:
+	if object is AlgebraicEquality:
+		var left_match := left_expression.pattern_match(
+				object.left_expression)
+		var right_match := right_expression.pattern_match(
+				object.right_expression)
+		return PatternMatchResult.merge(left_match, right_match)
+	else:
+		return PatternMatchFailure.new()
+
+
+func substitute(substitution: Dictionary) -> AlgebraicEquality:
+	var instance_left := left_expression.substitute(substitution)
+	var instance_right := right_expression.substitute(substitution)
+	return AlgebraicEquality.create(instance_left, instance_right)
+
+
 func set_color(p_color: Color) -> void:
 	color = p_color
 	left_expression.set_color(p_color)

@@ -47,19 +47,19 @@ func mark() -> void:
 	expression.set_color(_sub_colors[0])
 
 
-func identical_to(other: AlgebraicExpression) -> bool:
+func identical_to(other: AlgebraicObject) -> bool:
 	if other is AlgebraicNegation:
 		return expression.identical_to(other.expression)
 	return false
 
 
-func pattern_match(p_expression: AlgebraicExpression) -> PatternMatchResult:
-	if p_expression is AlgebraicNegation:
-		return expression.pattern_match(p_expression.expression)
+func pattern_match(object: AlgebraicObject) -> PatternMatchResult:
+	if object is AlgebraicNegation:
+		return expression.pattern_match(object.expression)
 	else:
 		return PatternMatchFailure.new()
 
 
-func substitute(substitution: Dictionary) -> AlgebraicExpression:
-	var bound_expression := expression.substitute(substitution)
-	return AlgebraicNegation.create(bound_expression)
+func substitute(substitution: Dictionary) -> AlgebraicNegation:
+	var instance := expression.substitute(substitution)
+	return AlgebraicNegation.create(instance)
