@@ -25,6 +25,14 @@ offset_right = 307.0
 offset_bottom = 181.0
 text = "(a+0)=a"
 
+[node name="(a+b)+c=a+(b+c)" parent="LevelChart" instance=ExtResource("2_cbbnw")]
+layout_mode = 2
+offset_left = 1281.0
+offset_top = 241.0
+offset_right = 1783.0
+offset_bottom = 300.0
+text = "((a+b)+c)=(a+(b+c))"
+
 [node name="0+a=a" parent="LevelChart" instance=ExtResource("2_cbbnw")]
 layout_mode = 0
 offset_left = 448.0
