@@ -6,21 +6,36 @@ extends Button
 
 
 func construct_level() -> Level:
-	var equality := AlgebraicEquality.from_string(text)
 	var rules: Array[AlgebraicRule]
 	if dependencies.is_empty():
 		rules = level_rules()
 	else:
 		rules = imported_rules()
-	return Level.create(equality, rules)
+	var parts := text.split("=>")
+	if len(parts) == 1:
+		return Level.create(AlgebraicEquality.from_string(parts[0]), rules)
+	elif len(parts) == 2:
+		return conditional_level(parts[0], parts[1], rules)
+	else:
+		push_error("Cannot construct level out of string: ", text)
+		return Level.new()
+
+
+func conditional_level(
+		antecedent: String, consequent: String, rules: Array[AlgebraicRule]
+		) -> Level:
+	var assumption := AlgebraicEquality.from_string(antecedent)
+	var assumption_rules: Array[AlgebraicRule] = []
+	assumption_rules.assign(AssumptionRule.from_equality(assumption))
+	var level_equality := AlgebraicEquality.from_string(consequent)
+	return Level.create(level_equality, assumption_rules + rules)
 
 
 func level_rules() -> Array[AlgebraicRule]:
 	var equality := AlgebraicEquality.from_string(text)
-	return [
-		AlgebraicRule.create(equality.left_expression, equality.right_expression),
-		AlgebraicRule.create(equality.right_expression, equality.left_expression),
-	]
+	var rules: Array[AlgebraicRule] = []
+	rules.assign(IdentityRule.from_equality(equality))
+	return rules
 
 
 func imported_rules() -> Array[AlgebraicRule]:
