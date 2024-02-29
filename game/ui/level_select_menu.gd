@@ -19,7 +19,8 @@ func _process(_delta: float) -> void:
 
 func _draw() -> void:
 	for button: LevelButton in get_tree().get_nodes_in_group("level_buttons"):
-		_draw_dependencies(button)
+		if button is LevelButton:
+			_draw_dependencies(button)
 
 
 func _draw_dependencies(button: LevelButton) -> void:
