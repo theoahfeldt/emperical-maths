@@ -26,7 +26,7 @@ static func parse(before: String, after: String) -> AssumptionRule:
 			AlgebraicParser.parse_expression(after))
 
 
-func apply(object: AlgebraicObject) -> ApplicationResult:
-	if object.identical_to(_before):
+func apply(expression: ManipulableExpression) -> ApplicationResult:
+	if expression.identical_to(_before):
 		return ApplicationSuccess.create(_after)
 	return ApplicationFailure.new()

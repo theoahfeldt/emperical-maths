@@ -5,7 +5,7 @@ extends GraphicalComponent
 signal created_expression(
 		algebraic: AlgebraicExpression, graphical: GraphicalExpression)
 
-var _algebraic_base: AlgebraicBase
+var _manipulable_base: ManipulableBase
 var _graphical_base: GraphicalBase
 var _index_stack = []
 
@@ -31,8 +31,8 @@ func get_size() -> Vector2i:
 
 static func create(center_position: Vector2) -> ExpressionCreator:
 	var new := ExpressionCreator.new()
-	new._algebraic_base = AlgebraicBase.create(AlgebraicVariable.create("_"))
-	var graphical_expression := new._algebraic_base.to_graphical()
+	new._manipulable_base = ManipulableBase.create(AlgebraicVariable.create("_"))
+	var graphical_expression := new._manipulable_base.to_graphical()
 	new._graphical_base = GraphicalBase.create(
 			graphical_expression, center_position)
 	new.add_child(new._graphical_base)
@@ -42,7 +42,7 @@ static func create(center_position: Vector2) -> ExpressionCreator:
 
 func _start_expression_selector() -> void:
 	_expression_selector = ExpressionSelector.create(
-			_algebraic_base, _graphical_base, _current_index)
+			_manipulable_base, _graphical_base, _current_index)
 	add_child(_expression_selector)
 	_expression_selector.update_marked()
 	_expression_selector.selected.connect(_on_expression_selector_selected)
@@ -50,7 +50,7 @@ func _start_expression_selector() -> void:
 
 func _create_expression() -> void:
 #	TODO: Check that expression does not contain _
-	var algebraic := _algebraic_base.object
+	var algebraic := _manipulable_base.expression
 	var graphical := _graphical_base.expression
 	_graphical_base.remove_child(graphical)
 	_graphical_base.queue_free()
@@ -98,7 +98,7 @@ func _start_menu(
 
 func _replace_subexpression(
 		algebraic: AlgebraicExpression, graphical: GraphicalExpression) -> void:
-	_algebraic_base.replace_subexpression(algebraic, _current_index)
+	_manipulable_base.replace_subexpression(algebraic, _current_index)
 	ExpressionIndexer.replace_graphical_subexpression(
 			_graphical_base, graphical, _current_index)
 	_start_expression_selector()
@@ -132,13 +132,13 @@ func _on_creation_menu_selected(
 					_integer_menu(), _current_index)
 		CreationMenu.Option.NEGATION:
 			var algebraic := AlgebraicNegation.create(AlgebraicVariable.create("_"))
-			graphical.set_color_from_algebraic(algebraic)
+			graphical.set_color_from_expression(algebraic)
 			_replace_subexpression(algebraic, graphical)
 			_expression_selector.mark_inner()
 		CreationMenu.Option.SUM:
 			var algebraic := AlgebraicSum.create(
 					AlgebraicVariable.create("_"), AlgebraicVariable.create("_"))
-			graphical.set_color_from_algebraic(algebraic)
+			graphical.set_color_from_expression(algebraic)
 			_replace_subexpression(algebraic, graphical)
 			_expression_selector.mark_inner()
 			_index_stack.append(_expression_selector.get_mark_right())

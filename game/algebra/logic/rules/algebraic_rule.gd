@@ -1,6 +1,6 @@
 class_name AlgebraicRule
 
 
-func apply(_object: AlgebraicObject) -> ApplicationResult:
+func apply(_expression: ManipulableExpression) -> ApplicationResult:
 	push_error("Not implemented")
 	return ApplicationFailure.new()

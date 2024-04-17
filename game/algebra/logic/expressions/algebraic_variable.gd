@@ -33,14 +33,14 @@ func mark() -> void:
 	color = _sub_colors[0]
 
 
-func identical_to(other: AlgebraicObject) -> bool:
+func identical_to(other: ManipulableExpression) -> bool:
 	if other is AlgebraicVariable:
 		return variable_name == other.variable_name
 	return false
 
 
-func pattern_match(object: AlgebraicObject) -> PatternMatchResult:
-	return PatternMatchSuccess.create({variable_name: object})
+func pattern_match(expression: ManipulableExpression) -> PatternMatchResult:
+	return PatternMatchSuccess.create({variable_name: expression})
 
 
 func substitute(substitution: Dictionary) -> AlgebraicExpression:

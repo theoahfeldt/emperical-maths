@@ -47,15 +47,15 @@ func mark() -> void:
 	expression.set_color(_sub_colors[0])
 
 
-func identical_to(other: AlgebraicObject) -> bool:
+func identical_to(other: ManipulableExpression) -> bool:
 	if other is AlgebraicNegation:
 		return expression.identical_to(other.expression)
 	return false
 
 
-func pattern_match(object: AlgebraicObject) -> PatternMatchResult:
-	if object is AlgebraicNegation:
-		return expression.pattern_match(object.expression)
+func pattern_match(manipulable_expression: ManipulableExpression) -> PatternMatchResult:
+	if manipulable_expression is AlgebraicNegation:
+		return expression.pattern_match(manipulable_expression.expression)
 	else:
 		return PatternMatchFailure.new()
 

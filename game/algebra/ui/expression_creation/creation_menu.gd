@@ -13,7 +13,7 @@ static func create(original: AlgebraicExpression) -> SelectionMenu:
 		Option.SUM,
 	]
 	var graphical := original.to_graphical()
-	graphical.set_color_from_algebraic(original)
+	graphical.set_color_from_expression(original)
 	var graphical_options: Array[GraphicalExpression] = [
 		graphical,
 		GraphicalVariable.create("a"),

@@ -1,5 +1,5 @@
 class_name AlgebraicEquality
-extends AlgebraicObject
+extends ManipulableExpression
 
 
 var left_expression: AlgebraicExpression
@@ -50,19 +50,19 @@ func to_graphical() -> GraphicalEquality:
 			left_expression.to_graphical(), right_expression.to_graphical())
 
 
-func identical_to(other: AlgebraicObject) -> bool:
+func identical_to(other: ManipulableExpression) -> bool:
 	if other is AlgebraicEquality:
 		return (left_expression.identical_to(other.left_expression)
 				and right_expression.identical_to(other.right_expression))
 	return false
 
 
-func pattern_match(object: AlgebraicObject) -> PatternMatchResult:
-	if object is AlgebraicEquality:
+func pattern_match(expression: ManipulableExpression) -> PatternMatchResult:
+	if expression is AlgebraicEquality:
 		var left_match := left_expression.pattern_match(
-				object.left_expression)
+				expression.left_expression)
 		var right_match := right_expression.pattern_match(
-				object.right_expression)
+				expression.right_expression)
 		return PatternMatchResult.merge(left_match, right_match)
 	else:
 		return PatternMatchFailure.new()

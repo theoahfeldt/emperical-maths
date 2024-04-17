@@ -1,5 +1,5 @@
 class_name AlgebraicExpression
-extends AlgebraicObject
+extends ManipulableExpression
 # Abstract class
 
 

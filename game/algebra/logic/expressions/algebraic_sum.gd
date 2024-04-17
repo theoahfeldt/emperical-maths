@@ -57,17 +57,17 @@ func mark() -> void:
 	right_term.set_color(_sub_colors[1])
 
 
-func identical_to(other: AlgebraicObject) -> bool:
+func identical_to(other: ManipulableExpression) -> bool:
 	if other is AlgebraicSum:
 		return (left_term.identical_to(other.left_term)
 				and right_term.identical_to(other.right_term))
 	return false
 
 
-func pattern_match(object: AlgebraicObject) -> PatternMatchResult:
-	if object is AlgebraicSum:
-		var left_match := left_term.pattern_match(object.left_term)
-		var right_match := right_term.pattern_match(object.right_term)
+func pattern_match(expression: ManipulableExpression) -> PatternMatchResult:
+	if expression is AlgebraicSum:
+		var left_match := left_term.pattern_match(expression.left_term)
+		var right_match := right_term.pattern_match(expression.right_term)
 		return PatternMatchResult.merge(left_match, right_match)
 	else:
 		return PatternMatchFailure.new()

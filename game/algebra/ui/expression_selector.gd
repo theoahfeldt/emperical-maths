@@ -4,7 +4,7 @@ extends Node
 
 signal selected(expression: AlgebraicExpression, index: Array[int])
 
-var _algebraic_base: AlgebraicBase
+var _manipulable_base: ManipulableBase
 var _graphical_base: GraphicalBase
 var _mark: Array[int] = []
 
@@ -23,12 +23,12 @@ func _process(_delta: float) -> void:
 
 
 static func create(
-		algebraic_base: AlgebraicBase,
+		manipulable_base: ManipulableBase,
 		graphical_base: GraphicalBase,
 		mark: Array[int] = [],
 		) -> ExpressionSelector:
 	var new := ExpressionSelector.new()
-	new._algebraic_base = algebraic_base
+	new._manipulable_base = manipulable_base
 	new._graphical_base = graphical_base
 	new._mark = mark
 	return new
@@ -39,8 +39,8 @@ func select_expression():
 		selected.emit(marked_expression(), _mark)
 
 
-func marked_expression() -> AlgebraicObject:
-	return _algebraic_base.subexpression(_mark)
+func marked_expression() -> ManipulableExpression:
+	return _manipulable_base.subexpression(_mark)
 
 
 func set_mark(mark: Array[int]) -> void:
@@ -49,7 +49,7 @@ func set_mark(mark: Array[int]) -> void:
 
 
 func mark_inner() -> void:
-	ExpressionIndexer.move_index_in(_algebraic_base.object, _mark)
+	ExpressionIndexer.move_index_in(_manipulable_base.expression, _mark)
 	update_marked()
 
 
@@ -59,18 +59,18 @@ func mark_outer() -> void:
 
 
 func mark_left() -> void:
-	ExpressionIndexer.move_index_left(_algebraic_base.object, _mark)
+	ExpressionIndexer.move_index_left(_manipulable_base.expression, _mark)
 	update_marked()
 
 
 func mark_right() -> void:
-	ExpressionIndexer.move_index_right(_algebraic_base.object, _mark)
+	ExpressionIndexer.move_index_right(_manipulable_base.expression, _mark)
 	update_marked()
 
 
 func get_mark_inner() -> Array[int]:
 	var new_mark := _mark.duplicate()
-	ExpressionIndexer.move_index_in(_algebraic_base.object, new_mark)
+	ExpressionIndexer.move_index_in(_manipulable_base.expression, new_mark)
 	return new_mark
 
 
@@ -82,13 +82,13 @@ func get_mark_outer() -> Array[int]:
 
 func get_mark_left() -> Array[int]:
 	var new_mark := _mark.duplicate()
-	ExpressionIndexer.move_index_left(_algebraic_base.object, new_mark)
+	ExpressionIndexer.move_index_left(_manipulable_base.expression, new_mark)
 	return new_mark
 
 
 func get_mark_right() -> Array[int]:
 	var new_mark := _mark.duplicate()
-	ExpressionIndexer.move_index_right(_algebraic_base.object, new_mark)
+	ExpressionIndexer.move_index_right(_manipulable_base.expression, new_mark)
 	return new_mark
 
 
@@ -96,6 +96,6 @@ func update_marked() -> void:
 	_graphical_base.clear_color()
 	var marked_graphical: GraphicalExpression = ExpressionIndexer.graphical_subexpression(
 			_graphical_base, _mark)
-	var marked_algebraic: AlgebraicObject = marked_expression()
+	var marked_algebraic: ManipulableExpression = marked_expression()
 	marked_algebraic.mark()
-	marked_graphical.set_color_from_algebraic(marked_algebraic)
+	marked_graphical.set_color_from_expression(marked_algebraic)

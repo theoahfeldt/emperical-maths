@@ -1,4 +1,5 @@
-class_name AlgebraicObject
+class_name ManipulableExpression
+# An equality or expression that can be manipulated according to rules.
 
 
 const default_color := Color.AQUA
@@ -12,14 +13,14 @@ var _sub_colors: Array[Color] = [
 var color: Color
 
 
-static func from_string(_string: String) -> AlgebraicObject:
+static func from_string(_string: String) -> ManipulableExpression:
 	push_error("Function not implemented")
-	return AlgebraicObject.new()
+	return ManipulableExpression.new()
 
 
-func copy() -> AlgebraicObject:
+func copy() -> ManipulableExpression:
 	push_error("Function not implemented")
-	return AlgebraicObject.new()
+	return ManipulableExpression.new()
 
 
 func subexpressions() -> Array[AlgebraicExpression]:
@@ -36,19 +37,19 @@ func to_graphical() -> GraphicalExpression:
 	return GraphicalExpression.new()
 
 
-func identical_to(_other: AlgebraicObject) -> bool:
+func identical_to(_other: ManipulableExpression) -> bool:
 	push_error("Function not implemented")
 	return false
 
 
-func pattern_match(_expression: AlgebraicObject) -> PatternMatchResult:
+func pattern_match(_expression: ManipulableExpression) -> PatternMatchResult:
 	push_error("Function not implemented")
 	return PatternMatchFailure.new()
 
 
-func substitute(_substitution: Dictionary) -> AlgebraicObject:
+func substitute(_substitution: Dictionary) -> ManipulableExpression:
 	push_error("Function not implemented")
-	return AlgebraicObject.new()
+	return ManipulableExpression.new()
 
 
 func set_color(p_color: Color) -> void:

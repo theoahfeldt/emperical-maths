@@ -2,12 +2,12 @@ class_name IdentityRule
 extends AlgebraicRule
 
 
-var _before: AlgebraicObject
-var _after: AlgebraicObject
+var _before: ManipulableExpression
+var _after: ManipulableExpression
 
 
 static func create(
-		before: AlgebraicObject, after: AlgebraicObject) -> IdentityRule:
+		before: ManipulableExpression, after: ManipulableExpression) -> IdentityRule:
 	var new := IdentityRule.new()
 	new._before = before
 	new._after = after
@@ -26,8 +26,8 @@ static func parse(before: String, after: String) -> IdentityRule:
 			AlgebraicParser.parse_expression(after))
 
 
-func apply(object: AlgebraicObject) -> ApplicationResult:
-	var match_result := _before.pattern_match(object)
+func apply(expression: ManipulableExpression) -> ApplicationResult:
+	var match_result := _before.pattern_match(expression)
 	if match_result is PatternMatchFailure:
 		return ApplicationFailure.new()
 	var instance := _after.substitute(match_result.assignments)

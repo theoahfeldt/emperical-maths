@@ -50,7 +50,7 @@ static func create_from_expressions(
 	var graphical_expressions: Array[GraphicalExpression] = []
 	for expression in expressions:
 		var graphical := expression.to_graphical()
-		graphical.set_color_from_algebraic(expression)
+		graphical.set_color_from_expression(expression)
 		graphical_expressions.append(graphical)
 	return SelectionMenu.create(expressions, graphical_expressions)
 

@@ -37,13 +37,13 @@ func mark() -> void:
 	color = _sub_colors[0]
 
 
-func identical_to(other: AlgebraicObject) -> bool:
+func identical_to(other: ManipulableExpression) -> bool:
 	if other is AlgebraicInteger:
 		return value == other.value
 	return false
 
 
-func pattern_match(expression: AlgebraicObject) -> PatternMatchResult:
+func pattern_match(expression: ManipulableExpression) -> PatternMatchResult:
 	if identical_to(expression):
 		return PatternMatchSuccess.create({})
 	else:

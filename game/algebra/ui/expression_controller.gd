@@ -5,7 +5,7 @@ extends Node2D
 signal updated_algebraic()
 
 var _algebraic_rules: Array[AlgebraicRule]
-var _algebraic_base: AlgebraicBase
+var _manipulable_base: ManipulableBase
 var _graphical_base: GraphicalBase
 
 # The following will be null when not in use:
@@ -18,25 +18,25 @@ var _current_index: Array[int] = [0]
 
 func _ready() -> void:
 	_graphical_base = GraphicalBase.create(
-		_algebraic_base.to_graphical(), get_viewport_rect().size / 2.0)
+		_manipulable_base.to_graphical(), get_viewport_rect().size / 2.0)
 	add_child(_graphical_base)
 	_graphical_base.center()
 	_start_expression_selector()
 
 
 static func create(
-		algebraic_object: AlgebraicObject,
+		expression: ManipulableExpression,
 		algebraic_rules: Array[AlgebraicRule],
 		) -> ExpressionController:
 	var new := ExpressionController.new()
-	new._algebraic_base = AlgebraicBase.create(algebraic_object)
+	new._manipulable_base = ManipulableBase.create(expression)
 	new._algebraic_rules = algebraic_rules
 	return new
 
 
 func _start_expression_selector() -> void:
 	_expression_selector = ExpressionSelector.create(
-			_algebraic_base, _graphical_base, _current_index)
+			_manipulable_base, _graphical_base, _current_index)
 	add_child(_expression_selector)
 	_expression_selector.update_marked()
 	_expression_selector.selected.connect(_on_expression_selector_selected)
@@ -65,7 +65,7 @@ func _start_expression_instantiator(
 
 func _replace_subexpression(
 		algebraic: AlgebraicExpression, graphical: GraphicalExpression) -> void:
-	_algebraic_base.replace_subexpression(algebraic, _current_index)
+	_manipulable_base.replace_subexpression(algebraic, _current_index)
 	ExpressionIndexer.replace_graphical_subexpression(
 			_graphical_base, graphical, _current_index)
 	updated_algebraic.emit()
