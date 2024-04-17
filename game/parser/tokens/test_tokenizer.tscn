@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dp2dhl1r7ta8"]
+
+[ext_resource type="Script" path="res://parser/tokens/test_tokenizer.gd" id="1_brjtu"]
+
+[node name="TestTokenizer" type="Node"]
+script = ExtResource("1_brjtu")
