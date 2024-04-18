@@ -50,7 +50,9 @@ func pattern_match(expression: ManipulableExpression) -> PatternMatchResult:
 		return PatternMatchFailure.new()
 
 
-func substitute(_substitution: Dictionary) -> AlgebraicInteger:
+func substitute(
+		_substitution: Dictionary, _replace_unspecified_variables: bool = false
+		) -> AlgebraicInteger:
 	return copy()
 
 

@@ -7,7 +7,7 @@ var _after: AlgebraicExpression
 
 
 func _to_string() -> String:
-	return "AssumptionRule(%s, %s)" % [_before.to_string(), _after.to_string()]
+	return "AssumptionRule(%s, %s)" % [_before, _after]
 
 
 static func create(before: AlgebraicExpression, after: AlgebraicExpression

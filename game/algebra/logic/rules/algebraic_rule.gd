@@ -7,7 +7,7 @@ var _after: ManipulableExpression
 
 
 func _to_string() -> String:
-	return "AlgebraicRule(%s, %s)" % [_before.to_string(), _after.to_string()]
+	return "AlgebraicRule(%s, %s)" % [_before, _after]
 
 
 static func create(
@@ -16,6 +16,10 @@ static func create(
 	new._before = before
 	new._after = after
 	return new
+
+
+static func from_implication(implication: Implication) -> AlgebraicRule:
+	return AlgebraicRule.create(implication.consequent, implication.antecedent)
 
 
 static func from_equality(equality: AlgebraicEquality) -> Array[AlgebraicRule]:
@@ -29,5 +33,5 @@ func apply(expression: ManipulableExpression) -> ApplicationResult:
 	var match_result := _before.pattern_match(expression)
 	if match_result is PatternMatchFailure:
 		return ApplicationFailure.new()
-	var instance := _after.substitute(match_result.assignments)
+	var instance := _after.substitute(match_result.assignments, true)
 	return ApplicationSuccess.create(instance)

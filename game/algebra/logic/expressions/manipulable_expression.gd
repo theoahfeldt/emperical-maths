@@ -48,9 +48,11 @@ func pattern_match(_expression: ManipulableExpression) -> PatternMatchResult:
 	return PatternMatchFailure.new()
 
 
-func substitute(_substitution: Dictionary) -> ManipulableExpression:
+func substitute(
+		_substitution: Dictionary, _replace_unspecified_variables: bool = false
+		) -> ManipulableExpression:
 	push_error("Function not implemented")
-	return ManipulableExpression.new()
+	return null
 
 
 func set_color(p_color: Color) -> void:

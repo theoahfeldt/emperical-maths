@@ -25,4 +25,5 @@ static func create(menu: SelectionMenu) -> MenuSelector:
 func _select() -> void:
 	var option = _menu.adopt_marked_option()
 	var graphical: GraphicalExpression = _menu.adopt_marked_graphical_option()
+	print("Selected menu option %s" % [option])
 	selected.emit(option, graphical)

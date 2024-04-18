@@ -2,7 +2,7 @@ class_name ExpressionSelector
 extends Node
 
 
-signal selected(expression: AlgebraicExpression, index: Array[int])
+signal selected(expression: ManipulableExpression, index: Array[int])
 
 var _manipulable_base: ManipulableBase
 var _graphical_base: GraphicalBase
@@ -35,8 +35,8 @@ static func create(
 
 
 func select_expression():
-	if not marked_expression() is AlgebraicEquality:
-		selected.emit(marked_expression(), _mark)
+	print_debug("Selected subexpression %s" % [marked_expression()])
+	selected.emit(marked_expression(), _mark)
 
 
 func marked_expression() -> ManipulableExpression:

@@ -40,10 +40,8 @@ func _level_rules() -> Array[ManipulationRule]:
 	var rules: Array[ManipulationRule] = []
 	if expression is AlgebraicEquality:
 		rules.assign(AlgebraicRule.from_equality(expression))
-		return rules
 	if expression is Implication:
-		#TODO
-		pass
+		rules.append(AlgebraicRule.from_implication(expression))
 	return rules
 
 

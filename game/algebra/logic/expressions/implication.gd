@@ -7,7 +7,7 @@ var consequent: ManipulableExpression
 
 
 func _to_string() -> String:
-	return "%s=>%s" % [antecedent.to_string(), consequent.to_string()]
+	return "%s=>%s" % [antecedent, consequent]
 
 
 static func create(

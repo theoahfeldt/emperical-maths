@@ -73,7 +73,11 @@ func pattern_match(expression: ManipulableExpression) -> PatternMatchResult:
 		return PatternMatchFailure.new()
 
 
-func substitute(substitution: Dictionary) -> AlgebraicSum:
-	var instance_left := left_term.substitute(substitution)
-	var instance_right := right_term.substitute(substitution)
+func substitute(
+		substitution: Dictionary, replace_unspecified_variables: bool = false
+		) -> AlgebraicSum:
+	var instance_left := left_term.substitute(
+			substitution, replace_unspecified_variables)
+	var instance_right := right_term.substitute(
+			substitution, replace_unspecified_variables)
 	return AlgebraicSum.create(instance_left, instance_right)

@@ -13,7 +13,3 @@ static func create(
 	new.equality = p_equality
 	new.rules = p_rules
 	return new
-
-
-func is_cleared() -> bool:
-	return equality.left_expression.identical_to(equality.right_expression)

@@ -68,9 +68,13 @@ func pattern_match(expression: ManipulableExpression) -> PatternMatchResult:
 		return PatternMatchFailure.new()
 
 
-func substitute(substitution: Dictionary) -> AlgebraicEquality:
-	var instance_left := left_expression.substitute(substitution)
-	var instance_right := right_expression.substitute(substitution)
+func substitute(
+		substitution: Dictionary, replace_unspecified_variables: bool = false
+		) -> AlgebraicEquality:
+	var instance_left := left_expression.substitute(
+			substitution, replace_unspecified_variables)
+	var instance_right := right_expression.substitute(
+			substitution, replace_unspecified_variables)
 	return AlgebraicEquality.create(instance_left, instance_right)
 
 

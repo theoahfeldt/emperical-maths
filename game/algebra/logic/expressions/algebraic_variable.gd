@@ -40,10 +40,16 @@ func identical_to(other: ManipulableExpression) -> bool:
 
 
 func pattern_match(expression: ManipulableExpression) -> PatternMatchResult:
-	return PatternMatchSuccess.create({variable_name: expression})
+	if expression is AlgebraicExpression:
+		return PatternMatchSuccess.create({variable_name: expression})
+	return PatternMatchFailure.new()
 
 
-func substitute(substitution: Dictionary) -> AlgebraicExpression:
+func substitute(
+		substitution: Dictionary, replace_unspecified_variables: bool = false
+		) -> AlgebraicExpression:
 	if variable_name in substitution:
 		return substitution[variable_name]
-	return AlgebraicVariable.create("?")
+	if replace_unspecified_variables:
+		return AlgebraicVariable.create("?")
+	return copy()

@@ -93,3 +93,12 @@ offset_right = 1144.0
 offset_bottom = 545.0
 text = "(a+c)=(b+c)=>a=b"
 dependencies = [NodePath("../a+0=0+a"), NodePath("../a+-a=-a+a"), NodePath("../(a+b)+c=a+(b+c)")]
+
+[node name="--a=a" parent="LevelChart" node_paths=PackedStringArray("dependencies") instance=ExtResource("2_cbbnw")]
+layout_mode = 0
+offset_left = 864.0
+offset_top = 690.0
+offset_right = 1002.0
+offset_bottom = 749.0
+text = "--a=a"
+dependencies = [NodePath("../a+c=b+c=>a=b")]

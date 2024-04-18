@@ -2,9 +2,9 @@ class_name ExpressionInstantiator
 extends Node
 
 
-signal substituted_instance(instance: AlgebraicExpression)
+signal substituted_instance(instance: ManipulableExpression)
 
-var _expression: AlgebraicExpression
+var _expression: ManipulableExpression
 var _expression_creator: ExpressionCreator
 
 
@@ -14,7 +14,7 @@ func _ready() -> void:
 
 
 static func create(
-		expression: AlgebraicExpression, center_position: Vector2
+		expression: ManipulableExpression, center_position: Vector2
 		) -> ExpressionInstantiator:
 	var new := ExpressionInstantiator.new()
 	new._expression = expression
@@ -25,7 +25,9 @@ static func create(
 
 
 func _on_expression_creator_created_expression(
-		algebraic: AlgebraicExpression, graphical: GraphicalExpression) -> void:
+		algebraic: AlgebraicExpression, graphical: GraphicalExpression
+		) -> void:
 	graphical.queue_free()
 	var instance := _expression.substitute({"?": algebraic})
+	print_debug("Created %s from %s" % [instance, _expression])
 	substituted_instance.emit(instance)

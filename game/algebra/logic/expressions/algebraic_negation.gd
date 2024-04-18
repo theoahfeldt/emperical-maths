@@ -60,6 +60,9 @@ func pattern_match(manipulable_expression: ManipulableExpression) -> PatternMatc
 		return PatternMatchFailure.new()
 
 
-func substitute(substitution: Dictionary) -> AlgebraicNegation:
-	var instance := expression.substitute(substitution)
+func substitute(
+		substitution: Dictionary, replace_unspecified_variables: bool = false
+		) -> AlgebraicNegation:
+	var instance := expression.substitute(
+			substitution, replace_unspecified_variables)
 	return AlgebraicNegation.create(instance)

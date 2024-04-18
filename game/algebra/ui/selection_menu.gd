@@ -34,10 +34,10 @@ static func create(
 
 
 static func create_from_rule_applications(
-		expression: AlgebraicExpression,
+		expression: ManipulableExpression,
 		rules: Array[ManipulationRule],
 		) -> SelectionMenu:
-	var alternatives: Array[AlgebraicExpression] = [expression]
+	var alternatives: Array[ManipulableExpression] = [expression]
 	for rule in rules:
 		var result := rule.apply(expression)
 		if result is ApplicationSuccess:
@@ -46,7 +46,7 @@ static func create_from_rule_applications(
 
 
 static func create_from_expressions(
-		expressions: Array[AlgebraicExpression]) -> SelectionMenu:
+		expressions: Array[ManipulableExpression]) -> SelectionMenu:
 	var graphical_expressions: Array[GraphicalExpression] = []
 	for expression in expressions:
 		var graphical := expression.to_graphical()
@@ -56,8 +56,8 @@ static func create_from_expressions(
 
 
 static func _unique(
-		expressions: Array[AlgebraicExpression]) -> Array[AlgebraicExpression]:
-	var unique: Array[AlgebraicExpression] = []
+		expressions: Array[ManipulableExpression]) -> Array[ManipulableExpression]:
+	var unique: Array[ManipulableExpression] = []
 	for expression in expressions:
 		if not unique.any(expression.identical_to):
 			unique.append(expression)

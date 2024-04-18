@@ -58,7 +58,7 @@ func _create_expression() -> void:
 
 
 func _variable_menu() -> SelectionMenu:
-	var expressions: Array[AlgebraicExpression] = [
+	var expressions: Array[ManipulableExpression] = [
 		AlgebraicVariable.create("a"),
 		AlgebraicVariable.create("b"),
 		AlgebraicVariable.create("c"),
@@ -68,7 +68,7 @@ func _variable_menu() -> SelectionMenu:
 
 
 func _integer_menu() -> SelectionMenu:
-	var expressions: Array[AlgebraicExpression] = [
+	var expressions: Array[ManipulableExpression] = [
 		AlgebraicInteger.create(0),
 		AlgebraicInteger.create(1),
 		AlgebraicInteger.create(2),

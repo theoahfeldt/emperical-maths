@@ -19,10 +19,14 @@ func _initialize_expression_controller() -> void:
 	_expression_controller = ExpressionController.create(
 			_level.equality, _level.rules)
 	add_child(_expression_controller)
-	_expression_controller.updated_algebraic.connect(
-			_on_expression_controller_updated_algebraic)
+	_expression_controller.updated_expression.connect(
+			_on_expression_controller_updated_expression)
 
 
-func _on_expression_controller_updated_algebraic() -> void:
-	if _level.is_cleared():
-		cleared.emit()
+func _on_expression_controller_updated_expression() -> void:
+	var equality := _expression_controller._manipulable_base.expression
+	if equality is AlgebraicEquality:
+		if equality.left_expression.identical_to(equality.right_expression):
+			cleared.emit()
+	else:
+		push_error("Base expression is not an equality")

@@ -2,7 +2,7 @@ class_name ExpressionController
 extends Node2D
 
 
-signal updated_algebraic()
+signal updated_expression()
 
 var _manipulation_rules: Array[ManipulationRule]
 var _manipulable_base: ManipulableBase
@@ -53,7 +53,7 @@ func _start_alternative_expressions_menu(
 
 
 func _start_expression_instantiator(
-		abstract_expression: AlgebraicExpression) -> void:
+		abstract_expression: ManipulableExpression) -> void:
 	var center: Vector2 = get_viewport_rect().size / 2.0
 	center.y += 100
 	_expression_instantiator = ExpressionInstantiator.create(
@@ -64,16 +64,16 @@ func _start_expression_instantiator(
 
 
 func _replace_subexpression(
-		algebraic: AlgebraicExpression, graphical: GraphicalExpression) -> void:
-	_manipulable_base.replace_subexpression(algebraic, _current_index)
+		expression: ManipulableExpression, graphical: GraphicalExpression) -> void:
+	_manipulable_base.replace_subexpression(expression, _current_index)
 	ExpressionIndexer.replace_graphical_subexpression(
 			_graphical_base, graphical, _current_index)
-	updated_algebraic.emit()
+	updated_expression.emit()
 	_start_expression_selector()
 
 
 func _on_expression_selector_selected(
-		selected: AlgebraicExpression, index: Array[int]) -> void:
+		selected: ManipulableExpression, index: Array[int]) -> void:
 	_current_index = index
 	remove_child(_expression_selector)
 	_expression_selector.queue_free()
@@ -83,7 +83,7 @@ func _on_expression_selector_selected(
 
 
 func _on_alternative_expressions_menu_selected(
-		option: AlgebraicExpression, graphical: GraphicalExpression) -> void:
+		option: ManipulableExpression, graphical: GraphicalExpression) -> void:
 	remove_child(_menu_selector)
 	_menu_selector.queue_free()
 	if "?" in option.to_string():
@@ -95,7 +95,7 @@ func _on_alternative_expressions_menu_selected(
 
 
 func _on_expression_instantiator_substituted(
-		new_expression: AlgebraicExpression) -> void:
+		new_expression: ManipulableExpression) -> void:
 	remove_child(_expression_instantiator)
 	_expression_instantiator.queue_free()
 	var graphical := new_expression.to_graphical()
