@@ -52,7 +52,7 @@ func _parse(expression: String) -> ParsableExpression:
 		_print_error()
 		return null
 	var second_equality := _parse_equality()
-	if next_token == null:
+	if _pop_token() == null:
 		return Implication.create(first_equality, second_equality)
 	return null
 
