@@ -1,4 +1,5 @@
 class_name ManipulableExpression
+extends ParsableExpression
 # An equality or expression that can be manipulated according to rules.
 
 

@@ -21,11 +21,6 @@ static func from_equality(equality: AlgebraicEquality) -> Array[AssumptionRule]:
 	]
 
 
-static func parse(before: String, after: String) -> AssumptionRule:
-	return AssumptionRule.create(AlgebraicParser.parse_expression(before),
-			AlgebraicParser.parse_expression(after))
-
-
 func apply(expression: ManipulableExpression) -> ApplicationResult:
 	if expression.identical_to(_before):
 		return ApplicationSuccess.create(_after)

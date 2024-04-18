@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" path="res://parser/test_parser.gd" id="1_npu0c"]
 
-[node name="Node" type="Node"]
+[node name="TestParser" type="Node"]
 script = ExtResource("1_npu0c")

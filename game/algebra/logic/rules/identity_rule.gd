@@ -21,11 +21,6 @@ static func from_equality(equality: AlgebraicEquality) -> Array[IdentityRule]:
 	]
 
 
-static func parse(before: String, after: String) -> IdentityRule:
-	return IdentityRule.create(AlgebraicParser.parse_expression(before),
-			AlgebraicParser.parse_expression(after))
-
-
 func apply(expression: ManipulableExpression) -> ApplicationResult:
 	var match_result := _before.pattern_match(expression)
 	if match_result is PatternMatchFailure:

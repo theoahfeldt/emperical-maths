@@ -4,4 +4,4 @@ extends ManipulableExpression
 
 
 static func from_string(string: String) -> AlgebraicExpression:
-	return AlgebraicParser.parse_expression(string)
+	return AlgebraicParser.parse_algebraic(string)

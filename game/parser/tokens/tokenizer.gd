@@ -36,19 +36,19 @@ func next_token() -> Token:
 func tokenize_SymbolToken() -> Token:
 	if _text.substr(_index, 2) == "=>":
 		_index += 2
-		return SymbolToken.create(SymbolToken.IMPLIES)
+		return ImpliesToken.new()
 	var token: Token
 	match _text[_index]:
 		"(":
-			token = SymbolToken.create(SymbolToken.LEFT_PARENTHESIS)
+			token = LeftParenthesisToken.new()
 		")":
-			token = SymbolToken.create(SymbolToken.RIGHT_PARENTHESIS)
+			token = RightParenthesisToken.new()
 		"+":
-			token = SymbolToken.create(SymbolToken.PLUS)
+			token = PlusToken.new()
 		"-":
-			token = SymbolToken.create(SymbolToken.MINUS)
+			token = MinusToken.new()
 		"=":
-			token = SymbolToken.create(SymbolToken.EQUALS)
+			token = EqualsToken.new()
 		_:
 			return null
 	_index += 1
@@ -56,8 +56,8 @@ func tokenize_SymbolToken() -> Token:
 
 
 func tokenize_integer() -> Token:
-	var regex := RegEx.create_from_string("[0-9]+")
-	var regex_match := regex.search(_text, _index)
+	var regex := RegEx.create_from_string("^[0-9]+")
+	var regex_match := regex.search(_text.substr(_index))
 	if regex_match:
 		var string := regex_match.get_string()
 		_index += len(string)
@@ -66,8 +66,8 @@ func tokenize_integer() -> Token:
 
 
 func tokenize_variable() -> Token:
-	var regex := RegEx.create_from_string("[a-z]")
-	var regex_match := regex.search(_text, _index)
+	var regex := RegEx.create_from_string("^[a-z]")
+	var regex_match := regex.search(_text.substr(_index))
 	if regex_match:
 		var string := regex_match.get_string()
 		_index += len(string)
