@@ -17,7 +17,7 @@ static func create(level: Level) -> LevelPlayer:
 
 func _initialize_expression_controller() -> void:
 	_expression_controller = ExpressionController.create(
-			_level.equality, _level.algebraic_rules)
+			_level.equality, _level.rules)
 	add_child(_expression_controller)
 	_expression_controller.updated_algebraic.connect(
 			_on_expression_controller_updated_algebraic)

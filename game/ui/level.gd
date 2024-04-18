@@ -2,16 +2,16 @@ class_name Level
 
 
 var equality: AlgebraicEquality
-var algebraic_rules: Array[AlgebraicRule]
+var rules: Array[ManipulationRule]
 
 
 static func create(
 		p_equality: AlgebraicEquality,
-		p_algebraic_rules: Array[AlgebraicRule],
+		p_rules: Array[ManipulationRule],
 		) -> Level:
 	var new := Level.new()
 	new.equality = p_equality
-	new.algebraic_rules = p_algebraic_rules
+	new.rules = p_rules
 	return new
 
 

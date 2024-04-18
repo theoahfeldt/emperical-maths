@@ -17,7 +17,7 @@ func construct_level() -> Level:
 	return null
 
 
-func exported_rules() -> Array[AlgebraicRule]:
+func exported_rules() -> Array[ManipulationRule]:
 	var rules := _distinct_rules(_imported_rules())
 	return _level_rules() + rules
 
@@ -31,15 +31,15 @@ func _identity_level(equality: AlgebraicEquality) -> Level:
 
 
 func _conditional_level(implication: Implication) -> Level:
-	var assumption_rules: Array[AlgebraicRule] = []
+	var assumption_rules: Array[ManipulationRule] = []
 	assumption_rules.assign(AssumptionRule.from_equality(implication.antecedent))
 	return Level.create(implication.consequent, assumption_rules + _imported_rules())
 
 
-func _level_rules() -> Array[AlgebraicRule]:
-	var rules: Array[AlgebraicRule] = []
+func _level_rules() -> Array[ManipulationRule]:
+	var rules: Array[ManipulationRule] = []
 	if expression is AlgebraicEquality:
-		rules.assign(IdentityRule.from_equality(expression))
+		rules.assign(AlgebraicRule.from_equality(expression))
 		return rules
 	if expression is Implication:
 		#TODO
@@ -47,15 +47,15 @@ func _level_rules() -> Array[AlgebraicRule]:
 	return rules
 
 
-func _imported_rules() -> Array[AlgebraicRule]:
-	var rules: Array[AlgebraicRule] = []
+func _imported_rules() -> Array[ManipulationRule]:
+	var rules: Array[ManipulationRule] = []
 	for dependency in dependencies:
 		rules += dependency.exported_rules()
 	return rules
 
 
-func _distinct_rules(rules: Array[AlgebraicRule]) -> Array[AlgebraicRule]:
-	var distinct: Array[AlgebraicRule] = []
+func _distinct_rules(rules: Array[ManipulationRule]) -> Array[ManipulationRule]:
+	var distinct: Array[ManipulationRule] = []
 	var dict := {}
 	for rule in rules:
 		dict[rule.to_string()] = rule

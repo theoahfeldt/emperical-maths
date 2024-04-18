@@ -4,7 +4,7 @@ extends Node2D
 
 signal updated_algebraic()
 
-var _algebraic_rules: Array[AlgebraicRule]
+var _manipulation_rules: Array[ManipulationRule]
 var _manipulable_base: ManipulableBase
 var _graphical_base: GraphicalBase
 
@@ -26,11 +26,11 @@ func _ready() -> void:
 
 static func create(
 		expression: ManipulableExpression,
-		algebraic_rules: Array[AlgebraicRule],
+		rules: Array[ManipulationRule],
 		) -> ExpressionController:
 	var new := ExpressionController.new()
 	new._manipulable_base = ManipulableBase.create(expression)
-	new._algebraic_rules = algebraic_rules
+	new._manipulation_rules = rules
 	return new
 
 
@@ -78,7 +78,7 @@ func _on_expression_selector_selected(
 	remove_child(_expression_selector)
 	_expression_selector.queue_free()
 	var menu: SelectionMenu = SelectionMenu.create_from_rule_applications(
-			selected, _algebraic_rules)
+			selected, _manipulation_rules)
 	_start_alternative_expressions_menu(menu, index)
 
 

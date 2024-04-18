@@ -1,5 +1,5 @@
 class_name AssumptionRule
-extends AlgebraicRule
+extends ManipulationRule
 
 
 var _before: AlgebraicExpression

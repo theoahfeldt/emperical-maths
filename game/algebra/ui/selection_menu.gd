@@ -35,7 +35,7 @@ static func create(
 
 static func create_from_rule_applications(
 		expression: AlgebraicExpression,
-		rules: Array[AlgebraicRule],
+		rules: Array[ManipulationRule],
 		) -> SelectionMenu:
 	var alternatives: Array[AlgebraicExpression] = [expression]
 	for rule in rules:
