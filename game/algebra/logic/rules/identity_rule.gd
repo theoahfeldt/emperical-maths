@@ -6,6 +6,10 @@ var _before: ManipulableExpression
 var _after: ManipulableExpression
 
 
+func _to_string() -> String:
+	return "IdentityRule(%s, %s)" % [_before.to_string(), _after.to_string()]
+
+
 static func create(
 		before: ManipulableExpression, after: ManipulableExpression) -> IdentityRule:
 	var new := IdentityRule.new()

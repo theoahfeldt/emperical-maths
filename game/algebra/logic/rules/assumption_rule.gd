@@ -6,6 +6,10 @@ var _before: AlgebraicExpression
 var _after: AlgebraicExpression
 
 
+func _to_string() -> String:
+	return "AssumptionRule(%s, %s)" % [_before.to_string(), _after.to_string()]
+
+
 static func create(before: AlgebraicExpression, after: AlgebraicExpression
 		) -> AssumptionRule:
 	var new := AssumptionRule.new()
