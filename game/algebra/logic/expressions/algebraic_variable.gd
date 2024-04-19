@@ -49,7 +49,7 @@ func substitute(
 		substitution: Dictionary, replace_unspecified_variables: bool = false
 		) -> AlgebraicExpression:
 	if variable_name in substitution:
-		return substitution[variable_name]
+		return substitution[variable_name].copy()
 	if replace_unspecified_variables:
 		return AlgebraicVariable.create("?")
 	return copy()
