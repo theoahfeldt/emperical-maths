@@ -25,7 +25,7 @@ func _process(_delta: float) -> void:
 		_create_expression()
 
 
-func get_size() -> Vector2i:
+func get_size() -> Vector2:
 	return _graphical_base.get_size()
 
 

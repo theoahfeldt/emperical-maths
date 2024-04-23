@@ -9,11 +9,11 @@ var _graphical_options: Array[GraphicalExpression]
 var _marked_index: int = 0
 
 
-func get_width() -> int:
+func get_width() -> float:
 	return _graphical_options.map(func(e): return e.get_width()).max()
 
 
-func get_height() -> int:
+func get_height() -> float:
 	return _graphical_options[0].get_height()
 
 

@@ -1,8 +1,8 @@
 class_name GraphicalVariable
-extends GraphicalExpression
+extends HorizontalExpression
 
 
-func _get_components() -> Array[GraphicalComponent]:
+func _get_ordered_components() -> Array[GraphicalComponent]:
 	return [_glyphs[0]]
 
 
@@ -10,5 +10,5 @@ static func create(variable_name: String) -> GraphicalVariable:
 	var new := GraphicalVariable.new()
 	new._glyphs = [Glyph.create(variable_name)]
 	new._add_components_as_children()
-	new.set_component_positions()
+	new.set_positions()
 	return new

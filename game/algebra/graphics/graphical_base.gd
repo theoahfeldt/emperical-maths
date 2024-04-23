@@ -10,7 +10,7 @@ func _process(delta: float) -> void:
 	update_position(delta)
 
 
-func get_size() -> Vector2i:
+func get_size() -> Vector2:
 	return expression.get_size()
 
 

@@ -7,7 +7,7 @@ const glyph_label_scene := preload("res://algebra/graphics/glyph_label.tscn")
 var _label: Label
 
 
-func get_size() -> Vector2i:
+func get_size() -> Vector2:
 	var font = _label.get_theme_font("")
 	return font.get_string_size(
 		_label.text,
@@ -31,6 +31,7 @@ static func create(text: String) -> Glyph:
 	label.set_text(text)
 	glyph.add_child(label)
 	glyph._label = label
+	glyph._label.set_position(Vector2(0, -glyph.get_height()))
 	return glyph
 
 

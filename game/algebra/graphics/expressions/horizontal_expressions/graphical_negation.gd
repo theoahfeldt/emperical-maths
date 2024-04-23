@@ -1,8 +1,8 @@
 class_name GraphicalNegation
-extends GraphicalExpression
+extends HorizontalExpression
 
 
-func _get_components() -> Array[GraphicalComponent]:
+func _get_ordered_components() -> Array[GraphicalComponent]:
 	return [_glyphs[0], subexpressions[0]]
 
 
@@ -12,5 +12,5 @@ static func create(expression: GraphicalExpressionOrMenu) -> GraphicalNegation:
 	new._glyphs = [minus_sign]
 	new.subexpressions = [expression]
 	new._add_components_as_children()
-	new.set_component_positions()
+	new.set_positions()
 	return new

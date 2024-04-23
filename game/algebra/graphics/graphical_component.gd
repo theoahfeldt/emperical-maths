@@ -7,15 +7,15 @@ var movement_duration: float = 0.08
 var _movement: Movement
 
 
-func get_size() -> Vector2i:
-	return Vector2i(get_width(), get_height())
+func get_size() -> Vector2:
+	return Vector2(get_width(), get_height())
 
 
-func get_width() -> int:
+func get_width() -> float:
 	return get_size().x
 
 
-func get_height() -> int:
+func get_height() -> float:
 	return get_size().y
 
 
@@ -28,11 +28,11 @@ func set_opacity(_alpha: float) -> void:
 
 
 func center_at(p_position: Vector2) -> void:
-	position = p_position - get_size() / 2.0
+	position = p_position + Vector2(-get_width(), get_height()) / 2.0
 
 
 func center_at_smooth(target: Vector2) -> void:
-	var compensated: Vector2 = target - get_size() / 2.0
+	var compensated: Vector2 = target + Vector2(-get_width(), get_height()) / 2.0
 	_movement = Movement.create(position, compensated, movement_duration)
 
 
