@@ -15,6 +15,10 @@ func set_opacity(alpha: float) -> void:
 	_get_components().map(func(c): c.set_opacity(alpha))
 
 
+func set_scales() -> void:
+	pass
+
+
 func set_positions() -> void:
 	push_error("Not implemented")
 
@@ -40,6 +44,7 @@ func replace_subexpression(new: GraphicalExpressionOrMenu, index: int) -> void:
 			old.position.y
 			)
 	subexpressions[index] = new
+	set_scales()
 	set_positions_smooth()
 	remove_child(old)
 	old.queue_free()
