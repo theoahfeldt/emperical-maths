@@ -43,12 +43,14 @@ func tokenize_SymbolToken() -> Token:
 			token = LeftParenthesisToken.new()
 		")":
 			token = RightParenthesisToken.new()
+		"=":
+			token = EqualsToken.new()
 		"+":
 			token = PlusToken.new()
 		"-":
 			token = MinusToken.new()
-		"=":
-			token = EqualsToken.new()
+		"*":
+			token = TimesToken.new()
 		"^":
 			token = CaretToken.new()
 		_:

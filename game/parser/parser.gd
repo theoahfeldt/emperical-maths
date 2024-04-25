@@ -89,6 +89,8 @@ func _parse_binary_expression() -> AlgebraicExpression:
 		return null
 	if operator is PlusToken:
 		return AlgebraicSum.create(first, second)
+	if operator is TimesToken:
+		return AlgebraicProduct.create(first, second)
 	if operator is CaretToken:
 		return AlgebraicPower.create(first, second)
 	push_error("Invalid operator %s" % operator)
