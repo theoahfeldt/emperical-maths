@@ -15,8 +15,7 @@ static func create(
 		right_expression: GraphicalExpressionOrMenu,
 		) -> GraphicalEquality:
 	var new := GraphicalEquality.new()
-	var equality_sign := Glyph.create("=")
-	new._glyphs = [equality_sign]
+	new._glyphs = [Glyph.create("=")]
 	new.subexpressions = [left_expression, right_expression]
 	new._add_components_as_children()
 	new.set_positions()

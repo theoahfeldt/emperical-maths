@@ -17,14 +17,7 @@ static func create(
 		right_term: GraphicalExpressionOrMenu,
 		) -> GraphicalSum:
 	var new := GraphicalSum.new()
-	var left_parenthesis := Glyph.create("(")
-	var plus_sign := Glyph.create("+")
-	var right_parenthesis := Glyph.create(")")
-	new._glyphs = [
-		left_parenthesis,
-		plus_sign,
-		right_parenthesis,
-	]
+	new._glyphs = [Glyph.create("("), Glyph.create("+"), Glyph.create(")")]
 	new.subexpressions = [left_term, right_term]
 	new._add_components_as_children()
 	new.set_positions()
