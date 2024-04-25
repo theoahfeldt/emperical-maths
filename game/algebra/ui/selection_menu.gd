@@ -5,16 +5,16 @@ extends GraphicalExpressionOrMenu
 const vertical_spacing: int = 100
 
 var _options: Array
-var _graphical_options: Array[GraphicalExpression]
+var _graphics: SelectionMenuGraphics
 var _marked_index: int = 0
 
 
 func get_width() -> float:
-	return _graphical_options.map(func(e): return e.get_width()).max()
+	return _graphics.get_width()
 
 
 func get_height() -> float:
-	return _graphical_options[0].get_height()
+	return _graphics.get_height()
 
 
 static func create(
@@ -27,9 +27,8 @@ static func create(
 	var menu = SelectionMenu.new()
 	menu._options = options
 	options.map(func(o): if o is Node: menu.add_child(o))
-	menu._graphical_options = graphical_options
-	graphical_options.map(menu.add_child)
-	menu._set_option_positions()
+	menu._graphics = SelectionMenuGraphics.create(graphical_options)
+	menu.add_child(menu._graphics)
 	return menu
 
 
@@ -80,12 +79,12 @@ func adopt_marked_option():
 
 
 func marked_graphical_option() -> GraphicalExpression:
-	return _graphical_options[_marked_index]
+	return _graphics.options[_marked_index]
 
 
 func adopt_marked_graphical_option() -> GraphicalExpression:
 	var option = marked_graphical_option()
-	remove_child(option)
+	_graphics.remove_child(option)
 	return option
 
 
@@ -101,17 +100,9 @@ func move_down() -> void:
 
 func _update_marked() -> void:
 	_set_opacities()
-	var new_position := Vector2(position.x, -vertical_spacing * _marked_index)
-	move_smooth_to(new_position)
+	var new_position := Vector2(0, -vertical_spacing * _marked_index)
+	_graphics.move_smooth_to(new_position)
 
 
 func _set_opacities() -> void:
-	for i in range(_graphical_options.size()):
-		var alpha: float = 0.5 ** abs(_marked_index - i)
-		_graphical_options[i].set_opacity(alpha)
-
-
-func _set_option_positions() -> void:
-	var width := get_width()
-	_graphical_options.reduce(
-			func(y, e): e.position = Vector2((width - e.get_width()) / 2.0, y); return y + vertical_spacing, 0)
+	_graphics.set_opacities(_marked_index)

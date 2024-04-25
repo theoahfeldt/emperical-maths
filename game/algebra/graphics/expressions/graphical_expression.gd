@@ -35,7 +35,10 @@ func set_color_from_expression(expression: ManipulableExpression) -> void:
 func replace_subexpression(new: GraphicalExpressionOrMenu, index: int) -> void:
 	add_child(new)
 	var old := subexpressions[index]
-	new.position = Vector2(old.position.x + (old.get_width() - new.get_width()) / 2.0, 0)
+	new.position = Vector2(
+			old.position.x + (old.get_width() - new.get_width()) / 2.0,
+			old.position.y
+			)
 	subexpressions[index] = new
 	set_positions_smooth()
 	remove_child(old)
