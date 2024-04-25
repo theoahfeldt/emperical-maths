@@ -13,7 +13,7 @@ static func parse_implication(expression: String) -> Implication:
 	var parsed := parse(expression)
 	if parsed is Implication:
 		return parsed
-	push_error("%s is not a valid implication" % [expression])
+	push_error("%s is not a valid implication" % expression)
 	return null
 
 
@@ -21,7 +21,7 @@ static func parse_equality(expression: String) -> AlgebraicEquality:
 	var parsed := parse(expression)
 	if parsed is AlgebraicEquality:
 		return parsed
-	push_error("%s is not a valid equality" % [expression])
+	push_error("%s is not a valid equality" % expression)
 	return null
 
 
@@ -29,7 +29,7 @@ static func parse_algebraic(expression: String) -> AlgebraicExpression:
 	var parsed := parse(expression)
 	if parsed is AlgebraicExpression:
 		return parsed
-	push_error("%s is not a valid algebraic expression" % [expression])
+	push_error("%s is not a valid algebraic expression" % expression)
 	return null
 
 
