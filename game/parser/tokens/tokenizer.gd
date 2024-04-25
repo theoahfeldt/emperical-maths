@@ -49,6 +49,8 @@ func tokenize_SymbolToken() -> Token:
 			token = MinusToken.new()
 		"=":
 			token = EqualsToken.new()
+		"^":
+			token = CaretToken.new()
 		_:
 			return null
 	_index += 1

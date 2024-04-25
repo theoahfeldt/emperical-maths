@@ -102,3 +102,11 @@ offset_right = 1002.0
 offset_bottom = 749.0
 text = "--a=a"
 dependencies = [NodePath("../a+c=b+c=>a=b")]
+
+[node name="a^0=1" parent="LevelChart" instance=ExtResource("2_cbbnw")]
+layout_mode = 0
+offset_left = 336.0
+offset_top = 718.0
+offset_right = 448.0
+offset_bottom = 777.0
+text = "(a^0)=1"

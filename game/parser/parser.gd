@@ -75,17 +75,24 @@ func _parse_algebraic() -> AlgebraicExpression:
 	if token is MinusToken:
 		return AlgebraicNegation.create(_parse_algebraic())
 	if token is LeftParenthesisToken:
-		return _parse_sum()
-	push_error("Parsing error: Unexpected character")
+		return _parse_binary_expression()
+	push_error("Unexpected token %s" % token)
 	return null
 
 
-func _parse_sum() -> AlgebraicSum:
-	var left: AlgebraicExpression = _parse_algebraic()
-	assert(_pop_token() is PlusToken)
-	var right: AlgebraicExpression = _parse_algebraic()
-	assert(_pop_token() is RightParenthesisToken)
-	return AlgebraicSum.create(left, right)
+func _parse_binary_expression() -> AlgebraicExpression:
+	var first: AlgebraicExpression = _parse_algebraic()
+	var operator := _pop_token()
+	var second: AlgebraicExpression = _parse_algebraic()
+	if not _pop_token() is RightParenthesisToken:
+		_print_error()
+		return null
+	if operator is PlusToken:
+		return AlgebraicSum.create(first, second)
+	if operator is CaretToken:
+		return AlgebraicExponentiation.create(first, second)
+	push_error("Invalid operator %s" % operator)
+	return null
 
 
 func _pop_token() -> Token:
