@@ -1,4 +1,4 @@
-class_name GraphicalExponentiation
+class_name GraphicalPower
 extends GraphicalExpression
 
 
@@ -35,8 +35,8 @@ func set_positions_smooth() -> void:
 static func create(
 		p_base: GraphicalExpressionOrMenu,
 		p_exponent: GraphicalExpressionOrMenu,
-		) -> GraphicalExponentiation:
-	var new := GraphicalExponentiation.new()
+		) -> GraphicalPower:
+	var new := GraphicalPower.new()
 	new.subexpressions = [p_base, p_exponent]
 	new._add_components_as_children()
 	new.set_scales()

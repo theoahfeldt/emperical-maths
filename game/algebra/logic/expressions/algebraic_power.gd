@@ -1,4 +1,4 @@
-class_name AlgebraicExponentiation
+class_name AlgebraicPower
 extends AlgebraicExpression
 
 
@@ -14,16 +14,16 @@ static func create(
 		p_base: AlgebraicExpression,
 		p_exponent: AlgebraicExpression,
 		p_color: Color = default_color,
-		) -> AlgebraicExponentiation:
-	var new = AlgebraicExponentiation.new()
+		) -> AlgebraicPower:
+	var new = AlgebraicPower.new()
 	new.base = p_base
 	new.exponent = p_exponent
 	new.color = p_color
 	return new
 
 
-func copy() -> AlgebraicExponentiation:
-	return AlgebraicExponentiation.create(base.copy(), exponent.copy(), color)
+func copy() -> AlgebraicPower:
+	return AlgebraicPower.create(base.copy(), exponent.copy(), color)
 
 
 func subexpressions() -> Array[AlgebraicExpression]:
@@ -40,8 +40,8 @@ func replace_subexpression(new: AlgebraicExpression, index: int) -> void:
 			push_error("Index %d out of range" % n)
 
 
-func to_graphical() -> GraphicalExponentiation:
-	return GraphicalExponentiation.create(
+func to_graphical() -> GraphicalPower:
+	return GraphicalPower.create(
 			base.to_graphical(), exponent.to_graphical())
 
 
@@ -58,14 +58,14 @@ func mark() -> void:
 
 
 func identical_to(other: ManipulableExpression) -> bool:
-	if other is AlgebraicExponentiation:
+	if other is AlgebraicPower:
 		return (base.identical_to(other.base)
 				and exponent.identical_to(other.exponent))
 	return false
 
 
 func pattern_match(expression: ManipulableExpression) -> PatternMatchResult:
-	if expression is AlgebraicExponentiation:
+	if expression is AlgebraicPower:
 		var base_match := base.pattern_match(expression.base)
 		var exponent_match := exponent.pattern_match(expression.exponent)
 		return PatternMatchResult.merge(base_match, exponent_match)
@@ -75,9 +75,9 @@ func pattern_match(expression: ManipulableExpression) -> PatternMatchResult:
 
 func substitute(
 		substitution: Dictionary, replace_unspecified_variables: bool = false
-		) -> AlgebraicExponentiation:
+		) -> AlgebraicPower:
 	var instance_base := base.substitute(
 			substitution, replace_unspecified_variables)
 	var instance_exponent := exponent.substitute(
 			substitution, replace_unspecified_variables)
-	return AlgebraicExponentiation.create(instance_base, instance_exponent)
+	return AlgebraicPower.create(instance_base, instance_exponent)
