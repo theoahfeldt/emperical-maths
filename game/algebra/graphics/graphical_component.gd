@@ -36,6 +36,15 @@ func center_at_smooth(target: Vector2) -> void:
 	_movement = Movement.create(position, compensated, movement_duration)
 
 
+func center_bottom_at(p_position: Vector2) -> void:
+	position = p_position + Vector2(-get_width() / 2, 0)
+
+
+func center_bottom_at_smooth(target: Vector2) -> void:
+	var compensated: Vector2 = target + Vector2(-get_width() / 2, 0)
+	_movement = Movement.create(position, compensated, movement_duration)
+
+
 func center_in_viewport() -> void:
 	center_at(get_viewport_rect().size / 2.0)
 

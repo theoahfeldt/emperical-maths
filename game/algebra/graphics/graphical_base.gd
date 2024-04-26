@@ -3,7 +3,7 @@ extends GraphicalComponent
 
 
 var expression: GraphicalExpressionOrMenu
-var center_position: Vector2
+var center_bottom_position: Vector2
 
 
 func _process(delta: float) -> void:
@@ -16,12 +16,12 @@ func get_size() -> Vector2:
 
 static func create(
 		p_expression: GraphicalExpressionOrMenu,
-		p_center_position := Vector2.ZERO,
+		p_center_bottom_position := Vector2.ZERO,
 		) -> GraphicalBase:
 	var new := GraphicalBase.new()
 	new.add_child(p_expression)
 	new.expression = p_expression
-	new.center_position = p_center_position
+	new.center_bottom_position = p_center_bottom_position
 	return new
 
 
@@ -35,11 +35,11 @@ func replace_expression(new: GraphicalExpressionOrMenu) -> void:
 
 
 func center() -> void:
-	center_at(center_position)
+	center_bottom_at(center_bottom_position)
 
 
 func center_smooth() -> void:
-	center_at_smooth(center_position)
+	center_bottom_at_smooth(center_bottom_position)
 
 
 func clear_color() -> void:
